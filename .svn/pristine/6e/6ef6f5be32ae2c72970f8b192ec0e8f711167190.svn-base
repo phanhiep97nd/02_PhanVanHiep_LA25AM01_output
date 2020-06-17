@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Check login</title>
+</head>
+<body>
+<form method="get" action = "Login">
+	<center>
+		<h1> Check Login</h1>
+		<label for="Uname"> Username </label> 
+		<input name = "Uname" type = "text"><br>
+		<label for="Upass"> Password </label> 
+		<input name = "Upass" type = "text"><br>
+		<button type="submit" >Login</button>		
+	</center>
+</form>
+</body>
+</html>

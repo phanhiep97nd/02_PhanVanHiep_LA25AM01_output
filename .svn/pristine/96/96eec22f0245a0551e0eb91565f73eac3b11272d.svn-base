@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài tập 2 - Mua báo dài hạn</title>
+</head>
+<body>
+<form action="" method="post">
+<fieldset>
+    <legend>Thông tin cá nhân</legend>
+    <h3>
+        Địa chỉ:
+        <input type="text">
+    </h3>
+    <p></p>
+    <h3>
+        Thành phố:
+        <input type="text">
+    </h3>
+    <h3>
+        Quốc gia:
+        <input type="text">
+    </h3>
+    <h3>
+        Số điện thoại:
+        <input type="number">
+    </h3>
+</fieldset>
+    <fieldset>
+        <legend>
+            Mua báo:
+        </legend>
+        <h3>
+        An ninh
+        <input type="checkbox">
+        | Xã hội
+        <input type="checkbox">
+        | Hà Nội mới
+        <input type="checkbox">
+        | Thể thao
+        <input type="checkbox">
+        | Thủ đô
+        <input type="checkbox">
+        </h3>
+    </fieldset>
+    <h3>
+        Thời hạn mua báo:
+    </h3>
+    <input type="radio" name="time">1 năm
+    <input type="radio" name="time">3 năm
+    <input type="radio" name="time">5 năm
+    <p></p>
+    <div>
+        <input type="Submit" value="Xác nhận">
+        <input type="reset" value="Hủy bỏ">
+    </div>
+</form>
+</body>
+</html>

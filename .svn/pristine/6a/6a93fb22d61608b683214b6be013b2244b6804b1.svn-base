@@ -1,0 +1,44 @@
+/**
+ * Copyright(C) 2020  Luvina Software
+ * CDDatabase.java, Jun 9, 2020 Phan Van Hiep
+ */
+package bai2;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import com.mysql.jdbc.PreparedStatement;
+
+/**
+ * Description:  
+ * @author Phan Van Hiep
+ */
+public class CDDatabase {
+	public ArrayList<CD> getAll(){
+		PreparedStatement ptm = null;
+		Connection conn = null;
+		ArrayList<CD> lstCD = new ArrayList<CD>();
+		try {
+			conn = ConnectionDB.openConnection();
+			String SQL = "select artist,title from cds";
+			ptm = (PreparedStatement) conn.prepareStatement(SQL);
+			ResultSet rs = ptm.executeQuery(SQL);
+			while(rs.next()){
+				CD cd = new CD();
+				cd.setArtist(rs.getString("artist"));
+				cd.setTitle(rs.getString("title"));
+				lstCD.add(cd);
+			}
+			rs.close();
+			conn.close();
+			ptm.close();
+		} catch (Exception e) {
+		}
+		return lstCD;
+	}
+	public boolean insertCD(CD cd){
+		boolean flag = true;
+		
+		return flag;
+	}
+}

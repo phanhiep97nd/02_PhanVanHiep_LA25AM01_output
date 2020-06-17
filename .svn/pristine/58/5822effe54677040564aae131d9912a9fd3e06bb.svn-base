@@ -1,0 +1,20 @@
+/**
+ * Copyright(C) 2020  Luvina Software
+ * Main.java, Jun 9, 2020 Phan Van Hiep
+ */
+package bai2;
+
+/**
+ * Description:
+ * 
+ * @author Phan Van Hiep
+ */
+public class Main {
+	public static void main(String[] args) {
+		CDDatabase cd = new CDDatabase();
+		for (CD c : cd.getAll()) {
+			System.out.println(c.getArtist());
+			System.out.println(c.getTitle());
+		}
+	}
+}
