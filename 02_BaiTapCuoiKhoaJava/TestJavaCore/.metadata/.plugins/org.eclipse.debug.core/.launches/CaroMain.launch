@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/LA25AM01_02_phanvanhiep_pro_caro/src/main/CaroMain.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="main.CaroMain"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="LA25AM01_02_phanvanhiep_pro_caro"/>
+</launchConfiguration>

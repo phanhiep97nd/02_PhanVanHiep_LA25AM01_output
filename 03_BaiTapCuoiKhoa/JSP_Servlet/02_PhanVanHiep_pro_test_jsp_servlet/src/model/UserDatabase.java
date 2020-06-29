@@ -12,9 +12,9 @@ public class UserDatabase {
 	 * Láº¥y ra táº¥t cáº£ CD
 	 * 
 	 * @return Tráº£ vá»� danh sÃ¡ch tÃ¬m kiáº¿m Ä‘Æ°á»£c!
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
-	public ArrayList<User> getAll() throws SQLException {
+	public ArrayList<User> getAll() throws Exception {
 		PreparedStatement pstm = null;
 		Connection conn = null;
 		ArrayList<User> lstUser = new ArrayList<User>();
@@ -33,11 +33,11 @@ public class UserDatabase {
 					lstUser.add(user);
 				}
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | NullPointerException e) {
 			throw e;
 		} finally {
-			ConnectionDB.closeConnection(conn, pstm);
-			return lstUser;
+			ConnectionDB.closeConnection(conn, pstm);			
 		}
+		return lstUser;
 	}
 }
