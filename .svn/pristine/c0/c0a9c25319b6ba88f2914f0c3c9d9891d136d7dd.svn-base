@@ -1,0 +1,5 @@
+package manageuser.controllers;
+
+public class ListUserController {
+
+}

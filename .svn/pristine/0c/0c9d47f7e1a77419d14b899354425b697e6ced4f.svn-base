@@ -1,0 +1,5 @@
+package manageuser.dao;
+
+public class TblUserDao {
+
+}
