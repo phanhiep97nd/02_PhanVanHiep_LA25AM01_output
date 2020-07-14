@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,7 +9,7 @@
 <title>ユーザ管理</title>
 </head>
 <body align="center" >
-<form action="ADM002.html" method="post">
+<form action="login.do" method="post">
 <center>
 	<table class="tbl_input" cellpadding="4" cellspacing="0" width="400px">
 		<tr>
@@ -17,10 +18,11 @@
 		<tr>
 			<th colspan="2" align="left">アカウント名およびパスワードを入力してください</th>
 		</tr>
-		
+		<c:forEach items="${listErr}" var="err">
 		<tr>
-			<td class="errMsg" colspan="2">&nbsp;</td>
-		</tr>	
+			<td class="errMsg" colspan="2" style="color: red;">${err}</td>
+		</tr>
+		</c:forEach>	
 		<tr align="left">
 			<td class="lbl_left">アカウント名:</td>
 			<td align="left">

@@ -41,6 +41,9 @@ public class ListUserServlet extends HttpServlet {
 			request.getRequestDispatcher("./View/ListUser.jsp").forward(request, response);
 		} catch (SQLException e) {
 			System.out.println("Error");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

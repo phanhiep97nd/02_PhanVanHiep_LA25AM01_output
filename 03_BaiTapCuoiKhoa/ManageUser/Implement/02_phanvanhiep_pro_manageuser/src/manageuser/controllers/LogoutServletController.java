@@ -8,6 +8,6 @@ package manageuser.controllers;
  * Description 
 @author Phan Van Hiep
  */
-public class LoginController {
+public class LogoutServletController {
 
 }
