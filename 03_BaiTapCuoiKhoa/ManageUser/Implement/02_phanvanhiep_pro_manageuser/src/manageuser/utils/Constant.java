@@ -9,6 +9,7 @@ package manageuser.utils;
  * @author Phan Van Hiep
  */
 public class Constant {
+	//constant database
 	public static final String URL = "URL";
 	public static final String DRIVER = "DRIVER";
 	public static final String USER_NAME = "USER_NAME";
@@ -17,6 +18,15 @@ public class Constant {
 	public static final String ER001_PASS = "ER001_PASS";
 	public static final String ER016 = "ER016";
 	
-	public static final String PROPERTIES_MESSAGE_PATH = "manageuser/utils/message.properties";
-	public static final String PROPERTIES_DATABASE_PATH = "manageuser/utils/database.properties";
+	//constant path properties
+	public static final String PROPERTIES_MESSAGE_PATH = "//message.properties";
+	public static final String PROPERTIES_DATABASE_PATH = "//database.properties";
+	
+	//constant path màn hình
+	public static final String PATH_ADM001 = "/Views/jsp/ADM001.jsp";
+	public static final String PATH_ADM002 = "/Views/jsp/ADM002.jsp";
+	public static final String PATH_SYSTEM_ERROR = "/Views/jsp/System_Error.jsp";
+	
+	
+	//constant
 }

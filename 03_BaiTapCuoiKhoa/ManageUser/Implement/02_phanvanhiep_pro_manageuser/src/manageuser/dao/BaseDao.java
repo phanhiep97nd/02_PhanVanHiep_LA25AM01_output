@@ -10,6 +10,7 @@ import com.mysql.jdbc.Connection;
 
 /**
  * Tạo ra các phương thức openConnection, closeConnection
+ * 
  * @author Phan Van Hiep
  */
 public interface BaseDao {
@@ -19,8 +20,8 @@ public interface BaseDao {
 	 * @return conn
 	 * @throws SQLException, ClassNotFoundException
 	 */
-	Connection openConnection() throws  SQLException, ClassNotFoundException;
-	
+	Connection openConnection() throws SQLException, ClassNotFoundException;
+
 	/**
 	 * closeDatabase đóng kết nối đến database
 	 */

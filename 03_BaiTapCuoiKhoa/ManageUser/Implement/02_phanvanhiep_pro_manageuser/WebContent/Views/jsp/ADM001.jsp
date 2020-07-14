@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
 <title>ユーザ管理</title>
 </head>
 <body align="center" >
@@ -20,13 +20,13 @@
 		</tr>
 		<c:forEach items="${listErr}" var="err">
 		<tr>
-			<td class="errMsg" colspan="2" style="color: red;">${err}</td>
+			<td class="errMsg" colspan="2"style="color: red;">&nbsp;${err}</td>
 		</tr>
 		</c:forEach>	
 		<tr align="left">
 			<td class="lbl_left">アカウント名:</td>
 			<td align="left">
-				<input class="txBox" type="text" name="loginId" value="" size="20" onfocus="this.style.borderColor='#0066ff';"
+				<input class="txBox" type="text" name="loginId" value="${loginName}" size="20" onfocus="this.style.borderColor='#0066ff';"
 				onblur="this.style.borderColor='#aaaaaa';" />
 			</td>
 		</tr>

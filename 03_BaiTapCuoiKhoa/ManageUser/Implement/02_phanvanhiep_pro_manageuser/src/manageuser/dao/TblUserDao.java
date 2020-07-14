@@ -9,12 +9,14 @@ import java.sql.SQLException;
 import manageuser.entities.TblUserEntity;
 
 /**
- * Description 
+ * Interface Thao tác với DB của các chức năng login + list/search user
+ * 
  * @author Phan Van Hiep
  */
-public interface TblUserDao extends BaseDao{
+public interface TblUserDao extends BaseDao {
 	/**
 	 * Lấy ra user trong bảng tbl_user bằng loginName
+	 * 
 	 * @param loginName loginName người dùng nhập vào
 	 * @return trả về một user tìm được trong DB
 	 * @throws SQLException

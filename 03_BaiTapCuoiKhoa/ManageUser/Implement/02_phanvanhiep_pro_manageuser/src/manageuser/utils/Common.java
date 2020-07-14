@@ -16,10 +16,11 @@ import java.util.Base64;
 public class Common {
 
 	/**
-	 * Description của method là làm gì
+	 * Hàm mã hóa password
 	 * 
-	 * @param [name] [giải thích]
-	 * @return [giải thích]
+	 * @param salt password người dùng nhập vào
+	 * @param salt chuỗi salt là ngày giờ hiện tại 
+	 * @return chuỗi khi đã được mã hóa
 	 * @throws NoSuchAlgorithmException 
 	 */
 	public static String enscryptPassword(String pass, String salt) throws NoSuchAlgorithmException {
@@ -29,6 +30,7 @@ public class Common {
 			byte[] messageDigest = md.digest(saltPassword.getBytes());
 			return Base64.getEncoder().encodeToString(messageDigest);
 		} catch (NoSuchAlgorithmException e) {
+			System.out.println("Error : Common.enscryptPassword " + e.getMessage());
 			throw e;
 		}
 	}

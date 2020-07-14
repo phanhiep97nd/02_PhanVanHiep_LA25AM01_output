@@ -17,29 +17,59 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
- * Description 
-@author Phan Van Hiep
+ * Controller để xử lý cho màn hình ADM001
+ * 
+ * @author Phan Van Hiep
  */
-public class LoginServletController extends HttpServlet{
+public class LoginServletController extends HttpServlet {
+
+	/**
+	 * Xử lí khi người dùng click button đăng nhập
+	 * 
+	 * @param req  request
+	 * @param resp response
+	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String loginName = req.getParameter("loginId");
 		String pass = req.getParameter("password");
 		try {
 			List<String> listErr = ValidateUser.validateLogin(loginName, pass);
-			if(listErr.size() == 0) {
-				HttpSession session = req.getSession();
+			HttpSession session = req.getSession();
+			if (listErr.size() == 0) {
+				resp.sendRedirect("listUser.do");
+				// resp.sendRedirect("./Views/jsp/ADM002.jsp");
+				// req.getRequestDispatcher("./Views/jsp/ADM002.html").forward(req, resp);
 				session.setAttribute("loginName", loginName);
-				resp.sendRedirect("./Views/jsp/ADM002.html");
-			}else {
+			} else {
 				req.setAttribute("listErr", listErr);
-				req.getRequestDispatcher("/Views/jsp/ADM001.jsp").forward(req, resp);
+				req.setAttribute("loginName", loginName);
+				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM001).forward(req, resp);
 			}
 		} catch (ClassNotFoundException | NoSuchAlgorithmException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-}}
+			System.out.println("Error : LoginServletController.doPost " + e.getMessage());
+			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
+		}
+	}
+
+	/**
+	 * Xử lí khi người dùng vào web và khi logout
+	 * 
+	 * @param req  request
+	 * @param resp response
+	 */
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			req.getServletContext().getRequestDispatcher(Constant.PATH_ADM001).forward(req, resp);
+		} catch (Exception e) {
+			System.out.println("Error : LoginServletController.doPost " + e.getMessage());
+			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
+		}
+
+	}
+}
