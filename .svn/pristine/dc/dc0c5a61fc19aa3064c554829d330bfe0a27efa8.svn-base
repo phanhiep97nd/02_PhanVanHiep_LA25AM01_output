@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import manageuser.validates.ValidateUser;
 
@@ -30,10 +29,8 @@ public class LoginServletController extends HttpServlet{
 		String pass = req.getParameter("password");
 		try {
 			List<String> listErr = ValidateUser.validateLogin(loginName, pass);
-			if(listErr.size() == 0) {
-				HttpSession session = req.getSession();
-				session.setAttribute("loginName", loginName);
-				resp.sendRedirect("./Views/jsp/ADM002.html");
+			if(listErr == null) {
+				resp.sendRedirect("/Views/jsp/ADM002.html");
 			}else {
 				req.setAttribute("listErr", listErr);
 				req.getRequestDispatcher("/Views/jsp/ADM001.jsp").forward(req, resp);

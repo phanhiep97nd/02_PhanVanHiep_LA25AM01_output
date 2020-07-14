@@ -11,7 +11,6 @@ import manageuser.dao.impl.TblUserDaoImpl;
 import manageuser.entities.TblUserEntity;
 import manageuser.logics.TblUserLogic;
 import manageuser.utils.Common;
-import manageuser.utils.MessageProperties;
 
 /**
  * Thực thi các hàm của TblUserLogic
@@ -23,8 +22,15 @@ public class TblUserLogicImpl implements TblUserLogic{
 	public Boolean checkExistLogin(String loginName, String pass) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		TblUserDaoImpl userDao = new TblUserDaoImpl();
 		TblUserEntity user = userDao.getTblUserByLoginName(loginName);
+		System.out.println(user.getPass());
+		System.out.println(user.getSalt());
 		String passEnscrypt = Common.enscryptPassword(pass, user.getSalt());
 		boolean check = Common.compareString(passEnscrypt, user.getPass());
 		return check;
+	}
+	public static void main(String[] args) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
+		System.out.println(Common.enscryptPassword("123456", "2020-07-14T05:48:22.198"));
+		TblUserLogicImpl t = new TblUserLogicImpl();
+		System.out.println(t.checkExistLogin("admin1","123456"));
 	}
 }

@@ -29,14 +29,16 @@ public class ValidateUser {
 		List<String> lstError = new ArrayList<String>();
 		TblUserLogicImpl userLogic = new TblUserLogicImpl();
 		if("".equals(loginName)) {
-			lstError.add(MessageProperties.getValueByKey((Constant.ER001_USERNAME)));
+			lstError.add(MessageProperties.readFileProperties(Constant.ER001_USERNAME));
 		}
 		if("".equals(pass)) {
-			lstError.add(MessageProperties.getValueByKey((Constant.ER001_PASS)));
+			lstError.add(MessageProperties.readFileProperties(Constant.ER001_PASS));
 		}
 		if(!"".equals(loginName) && !"".equals(pass)) {
 			if(!userLogic.checkExistLogin(loginName, pass)) {
-				lstError.add(MessageProperties.getValueByKey((Constant.ER016)));
+				lstError.add(MessageProperties.readFileProperties(Constant.ER016));
+				System.out.println(loginName);
+				System.out.println(pass);
 			}
 		}
 		return lstError;

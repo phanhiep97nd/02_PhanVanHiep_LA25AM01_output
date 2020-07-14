@@ -30,10 +30,10 @@ public class BaseDaoImpl implements BaseDao{
 	 */
 	@Override
 	public Connection openConnection() throws SQLException, ClassNotFoundException {
-			String driver = DatabaseProperties.getValueByKey((Constant.DRIVER));
-			String userName = DatabaseProperties.getValueByKey((Constant.USER_NAME));
-			String pass = DatabaseProperties.getValueByKey((Constant.PASS));
-			String url = DatabaseProperties.getValueByKey((Constant.URL));
+			String driver = DatabaseProperties.readFileProperties(Constant.DRIVER);
+			String userName = DatabaseProperties.readFileProperties(Constant.USER_NAME);
+			String pass = DatabaseProperties.readFileProperties(Constant.PASS);
+			String url = DatabaseProperties.readFileProperties(Constant.URL);
 			try {
 				Class.forName(driver);
 				conn = (Connection) DriverManager.getConnection(url, userName, pass);

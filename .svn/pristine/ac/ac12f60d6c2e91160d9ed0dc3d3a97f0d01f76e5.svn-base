@@ -42,5 +42,5 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			closeConnection();
 		}
 		return user;
-	} 
+	}
 }
