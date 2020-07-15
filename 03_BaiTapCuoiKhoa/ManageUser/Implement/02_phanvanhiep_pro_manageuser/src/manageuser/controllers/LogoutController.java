@@ -19,7 +19,7 @@ import manageuser.utils.Constant;
  * 
  * @author Phan Van Hiep
  */
-public class LogoutServletController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
 	/**
 	 * Xử lí khi người dùng click link logout

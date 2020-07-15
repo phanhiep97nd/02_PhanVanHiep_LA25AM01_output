@@ -15,14 +15,14 @@ import javax.servlet.http.HttpSession;
 import manageuser.utils.Constant;
 
 /**
- * Controller để xử lý cho màn hình ADM002
+ * Controller để xử lý Logout
  * 
  * @author Phan Van Hiep
  */
-public class ListUserServletController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
 	/**
-	 * Xử lí khi đăng nhập thành công
+	 * Xử lí khi người dùng click link logout
 	 * 
 	 * @param req  request
 	 * @param resp response
@@ -30,13 +30,15 @@ public class ListUserServletController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			// Khai báo và khởi tạo session từ request
 			HttpSession session = req.getSession();
-			req.getServletContext().getRequestDispatcher(Constant.PATH_ADM002).forward(req, resp);
-			// resp.sendRedirect("./Views/jsp/ADM002.jsp");
+			// Hủy session
+			session.invalidate();
+			// chuyển hướng về trang login
+			resp.sendRedirect("login.do");
 		} catch (Exception e) {
-			System.out.println("Error : ListUserServletController.doPost " + e.getMessage());
+			System.out.println("Error : LoginServletController.doGet " + e.getMessage());
 			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
 		}
-
 	}
 }

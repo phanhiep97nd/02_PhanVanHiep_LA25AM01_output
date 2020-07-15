@@ -25,7 +25,7 @@ import manageuser.validates.ValidateUser;
  * 
  * @author Phan Van Hiep
  */
-public class LoginServletController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
 	/**
 	 * Xử lí khi người dùng click button đăng nhập
