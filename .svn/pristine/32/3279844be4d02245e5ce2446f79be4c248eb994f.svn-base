@@ -35,10 +35,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		try {
 			// Khởi tạo một TblUserDao
-			TblUserDao userDaoImpl = new TblUserDaoImpl();
+			TblUserDao userDao = new TblUserDaoImpl();
 			// Khái báo một đối tượng TblUserEntity và gán bằng giá trị lấy về từ hàm
 			// getTblUserByLoginName
-			TblUserEntity user = userDaoImpl.getTblUserByLoginName(loginName);
+			TblUserEntity user = userDao.getTblUserByLoginName(loginName);
 			// Khởi tạo một String lấy giá trị trả về từ hàm enscryptPassword
 			String passEnscrypt = Common.enscryptPassword(pass, user.getSalt());
 			// Khởi tạo một biến boolean lấy giá trị trả về từ hàm ompareString
