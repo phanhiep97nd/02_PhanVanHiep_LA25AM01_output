@@ -35,4 +35,12 @@ public class Constant {
 	
 	//constant session
 	public static final String SESSION_LOGINNAME = "loginName";
+	
+	//constant các hạng mục ở MH listUser
+	public static final int RULE_ADMIN = 0;
+	public static final int RULE_USER = 1;
+	public static final String ASC = "ASC";
+	public static final String DESC = "DESC";
+	
+	
 }

@@ -37,17 +37,17 @@ public interface TblUserDao extends BaseDao {
 	 * @param limit
 	 *            số bản ghi tối đa trên 1 page
 	 * @param groupId
-	 *            là id của nhóm được chọn trong selectbox
+	 *            là id của nhóm được chọn trong pulldown
 	 * @param fullName
-	 *            là tên tìm kiếm nhập vào từ textbox
+	 *            là fullname tìm kiếm nhập vào từ textbox
 	 * @param sortType
 	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
 	 * @param sortByFullName
-	 *            giá trị sắp xếp (tăng/giảm của) cột fullName
+	 *            giá trị sắp xếp (ASC/DESC) cột fullName
 	 * @param sortByCodeLevel
-	 *            giá trị sắp xếp (tăng/giảm của) cột codelevel
+	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
 	 * @param sortByEndDate
-	 *            giá trị sắp xếp (tăng/giảm của) cột endDate
+	 *            giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException

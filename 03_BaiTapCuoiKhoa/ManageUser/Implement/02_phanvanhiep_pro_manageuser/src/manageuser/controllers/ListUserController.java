@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import manageuser.entities.MstGroupEntity;
+import manageuser.entities.UserInfoEntity;
 import manageuser.logics.MstGroupLogic;
+import manageuser.logics.TblUserLogic;
 import manageuser.logics.impl.MstGroupLogicImpl;
+import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
@@ -37,20 +40,43 @@ public class ListUserController extends HttpServlet {
 		try {
 			// Khởi tạo session từ request
 			HttpSession session = req.getSession();
-			// Nếu checkLogin trả về false (Chưa đăng nhập)
-			if (!Common.checkLogin(session)) {
-				// gọi đến URL login.do để về màn hình login
-				resp.sendRedirect(Constant.URL_LOGIN);
-				// Ngược lại nếu checkLogin trả về true (Đã đăng nhập thành công)
-			} else {
-				//Khởi tạo đối tượng groupLogicImpl
-				MstGroupLogic groupLogicImpl = new MstGroupLogicImpl();
-				//Khởi tạo listUser chứa kết quả trả về hàm getAllMstGroup()
+
+			// Khởi tạo đối tượng groupLogicImpl
+			MstGroupLogic groupLogicImpl = new MstGroupLogicImpl();
+			// khởi tạo đối tượng userLogicImpl
+			TblUserLogic userLogicImpl = new TblUserLogicImpl();
+			
+			// khai báo giá trị default cho các biến
+			int limit = 5;
+			int offset = 1;
+			int groupId = 0;
+			String fullName = "";
+			String sortType = "";
+			String sortByFullName = Constant.ASC;
+			String sortByCodeLevel = Constant.ASC;
+			String sortByEndDate = Constant.DESC;
+
+
+			// Nếu checkLogin trả về true (Đã đăng nhập)
+			if (Common.checkLogin(session)) {
+				// Khởi tạo listUser chứa kết quả trả về hàm getAllMstGroup()
 				ArrayList<MstGroupEntity> listGroup = groupLogicImpl.getAllMstGroup();
-				//gán danh sách group lên request
+				
+				//fullName = req.getParameter("name");
+				//groupId = Integer.parseInt(req.getParameter("group_id"));
+				//Khởi tạo listUserInfo để chứa kết qẩu trả về hàm 
+				ArrayList<UserInfoEntity> listUserInfo = userLogicImpl.getListUser(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel, sortByEndDate);
+				
+				// gán danh sách group lên request
 				req.setAttribute("listGroup", listGroup);
+				// gán danh sách userInfor lên request
+				req.setAttribute("listUserInfo", listUserInfo);
+
 				// Chuyển hướng sang trang ADM002
 				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM002).forward(req, resp);
+			} else {
+				// gọi đến URL login.do để về màn hình login
+				resp.sendRedirect(Constant.URL_LOGIN);
 			}
 		} catch (Exception e) {
 			// Hiển thị ở console lỗi
