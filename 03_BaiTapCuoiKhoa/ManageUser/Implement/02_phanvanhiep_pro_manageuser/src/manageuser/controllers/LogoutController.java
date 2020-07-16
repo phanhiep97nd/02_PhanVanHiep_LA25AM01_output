@@ -35,9 +35,12 @@ public class LogoutController extends HttpServlet {
 			// Hủy session
 			session.invalidate();
 			// chuyển hướng về trang login
-			resp.sendRedirect("login.do");
+			resp.sendRedirect(Constant.URL_LOGIN);
+			// Nếu có lỗi
 		} catch (Exception e) {
+			// Hiển thị ở console lỗi
 			System.out.println("Error : LoginServletController.doGet " + e.getMessage());
+			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
 		}
 	}

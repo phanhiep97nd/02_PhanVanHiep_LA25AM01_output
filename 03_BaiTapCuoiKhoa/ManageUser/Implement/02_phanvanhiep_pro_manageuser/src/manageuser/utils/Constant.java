@@ -28,5 +28,11 @@ public class Constant {
 	public static final String PATH_SYSTEM_ERROR = "/Views/jsp/System_Error.jsp";
 	
 	
-	//constant
+	//constant URL
+	public static final String URL_LOGIN = "login.do";
+	public static final String URL_OUT = "logout.do";
+	public static final String URL_LISTUSER = "listUser.do";
+	
+	//constant session
+	public static final String SESSION_LOGINNAME = "loginName";
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
@@ -30,11 +31,21 @@ public class ListUserController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			// Khởi tạo session từ request
 			HttpSession session = req.getSession();
-			req.getServletContext().getRequestDispatcher(Constant.PATH_ADM002).forward(req, resp);
-			// resp.sendRedirect("./Views/jsp/ADM002.jsp");
+			// Nếu checkLogin trả về false (Chưa đăng nhập)
+			if (!Common.checkLogin(session)) {
+				// gọi đến URL login.do để về màn hình login
+				resp.sendRedirect(Constant.URL_LOGIN);
+				// Ngược lại nếu checkLogin trả về true (Đã đăng nhập thành công)
+			} else {
+				// Chuyển hướng sang trang ADM002
+				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM002).forward(req, resp);
+			}
 		} catch (Exception e) {
+			// Hiển thị ở console lỗi
 			System.out.println("Error : ListUserServletController.doPost " + e.getMessage());
+			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
 		}
 

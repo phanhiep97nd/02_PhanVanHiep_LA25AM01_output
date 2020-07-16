@@ -19,7 +19,7 @@ public class DatabaseProperties {
 	// lưu các cặp <key, value> trong file properties
 			private static Map<String, String> mapDBProperties = new HashMap<String, String>();
 			static {
-				try {
+				try {					
 					// tạo đối tượng kiểu Properties
 					Properties properties = new Properties(); 
 					// đọc file properties

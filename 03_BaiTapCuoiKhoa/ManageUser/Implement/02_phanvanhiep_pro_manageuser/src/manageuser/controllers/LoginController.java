@@ -35,23 +35,34 @@ public class LoginController extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// Lấy giá trị từ request mà người dùng nhập
 		String loginName = req.getParameter("loginId");
 		String pass = req.getParameter("password");
 		try {
+			// Khai báo 1 list để lấy kết quả trả về từ hàm validateLogin
 			List<String> listErr = ValidateUser.validateLogin(loginName, pass);
+			// Khởi tạo session
 			HttpSession session = req.getSession();
+			// Nếu danh sách lỗi rỗng(Tồn tại loginName và pass trong DB)
 			if (listErr.size() == 0) {
-				resp.sendRedirect("listUser.do");
-				// resp.sendRedirect("./Views/jsp/ADM002.jsp");
-				// req.getRequestDispatcher("./Views/jsp/ADM002.html").forward(req, resp);
+				// chuyển hướng đến URL listuser.do
+				resp.sendRedirect(Constant.URL_LISTUSER);
+				// gán loginName lên session
 				session.setAttribute("loginName", loginName);
+				// Nếu có lỗi xảy ra
 			} else {
+				// gán danh sách lỗi lên Request
 				req.setAttribute("listErr", listErr);
+				// gán loginName lên request để giữ lại giá trị loginName trên textbox
 				req.setAttribute("loginName", loginName);
+				// forward đến trang ADM001.jsp
 				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM001).forward(req, resp);
 			}
-		} catch (ClassNotFoundException | NoSuchAlgorithmException | SQLException e) {
+			// Nếu có lỗi
+		} catch (Exception e) {
+			// Hiển thị ở console lỗi
 			System.out.println("Error : LoginServletController.doPost " + e.getMessage());
+			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
 		}
 	}
@@ -65,9 +76,13 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			// Di chuyển về màn hình ADM001
 			req.getServletContext().getRequestDispatcher(Constant.PATH_ADM001).forward(req, resp);
+			// Nếu có lỗi
 		} catch (Exception e) {
-			System.out.println("Error : LoginServletController.doPost " + e.getMessage());
+			// Hiển thị lỗi
+			System.out.println("Error : LoginServletController.doGet " + e.getMessage());
+			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
 		}
 

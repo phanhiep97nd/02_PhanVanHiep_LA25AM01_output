@@ -33,10 +33,16 @@ public class TblUserLogicImpl implements TblUserLogic {
 	public Boolean checkExistLogin(String loginName, String pass)
 			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		try {
+			// Khởi tạo một TblUserDaoImpl
 			TblUserDaoImpl userDao = new TblUserDaoImpl();
+			// Khái báo một đối tượng TblUserEntity và gán bằng giá trị lấy về từ hàm
+			// getTblUserByLoginName
 			TblUserEntity user = userDao.getTblUserByLoginName(loginName);
+			// Khởi tạo một String lấy giá trị trả về từ hàm enscryptPassword
 			String passEnscrypt = Common.enscryptPassword(pass, user.getSalt());
+			// Khởi tạo một biến boolean lấy giá trị trả về từ hàm ompareString
 			boolean check = Common.compareString(passEnscrypt, user.getPass());
+			// Trả về biến check
 			return check;
 		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
 			System.out.println("Error : TblUserLogicImpl.checkExistLogin " + e.getMessage());
