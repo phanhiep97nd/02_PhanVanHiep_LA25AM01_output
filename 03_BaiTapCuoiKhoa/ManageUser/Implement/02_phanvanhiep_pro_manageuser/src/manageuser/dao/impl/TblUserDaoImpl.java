@@ -85,7 +85,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
 		try {
-			System.out.println(fullName);
 			// mở kết nối đến cơ sở dữ liệu
 			openConnection();
 			// kiểm tra xem đã kết nối thành công?
@@ -102,7 +101,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				sql.append(" ON d.code_level = j.code_level)");
 				sql.append(" ON u.user_id = d.user_id");
 				sql.append(" WHERE u.Rule = ?");
-
 				// textbox fullName có giá trị thì thêm điều kiện tìm kiếm với full_name
 				if (!"".equals(fullName)) {
 					// thêm câu lệnh vào sql
