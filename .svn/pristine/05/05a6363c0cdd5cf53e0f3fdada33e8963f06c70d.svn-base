@@ -9,7 +9,7 @@ package manageuser.utils;
  * @author Phan Van Hiep
  */
 public class Constant {
-	//constant database va message
+	//constant database
 	public static final String URL = "URL";
 	public static final String DRIVER = "DRIVER";
 	public static final String USER_NAME = "USER_NAME";
@@ -17,8 +17,6 @@ public class Constant {
 	public static final String ER001_USERNAME = "ER001_USERNAME";
 	public static final String ER001_PASS = "ER001_PASS";
 	public static final String ER016 = "ER016";
-	public static final String MSG005 = "MSG005";
-	
 	
 	//constant path properties
 	public static final String PROPERTIES_MESSAGE_PATH = "//message.properties";
@@ -44,7 +42,5 @@ public class Constant {
 	public static final String ASC = "ASC";
 	public static final String DESC = "DESC";
 	
-	//constant URL type
-	public static final String TYPE_DEFAULT = "?type=default";
 	
 }
