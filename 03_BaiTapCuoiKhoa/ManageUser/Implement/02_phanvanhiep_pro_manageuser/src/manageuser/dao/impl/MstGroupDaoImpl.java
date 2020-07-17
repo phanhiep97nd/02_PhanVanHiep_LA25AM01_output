@@ -36,7 +36,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 			// Nếu mở thành công kết nối
 			if (conn != null) {
 				// Câu truy vấn DB
-				String sql = "SELECT group_id, group_name FROM mst_group";
+				String sql = "SELECT group_id, group_name FROM mst_group ORDER BY group_id ASC";
 				// Gọi đến prepareStatement truyền vào câu lệnh SQL
 				pstm = conn.prepareStatement(sql);
 				// Khởi tạo ResultSet để chứa kết quả từ executeQuery()

@@ -25,7 +25,7 @@ public class UserInfoEntity {
 	private String codeLevel;
 	private String endDate;
 	private String startDate;
-	private String total;
+	private int total;
 	private boolean isJapan;
 	/**
 	 * @return the userId
@@ -222,13 +222,13 @@ public class UserInfoEntity {
 	/**
 	 * @return the total
 	 */
-	public String getTotal() {
+	public int getTotal() {
 		return total;
 	}
 	/**
 	 * @param total the total to set
 	 */
-	public void setTotal(String total) {
+	public void setTotal(int total) {
 		this.total = total;
 	}
 	/**

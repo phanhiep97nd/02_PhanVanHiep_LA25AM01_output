@@ -17,7 +17,7 @@
 
 
 <!-- Begin vung dieu kien tim kiem -->	
-<form action="" method="post" name="mainform">
+<form action="listUser.do" method="get" name="mainform">
 	<table  class="tbl_input" border="0" width="90%"  cellpadding="0" cellspacing="0" >		
 		<tr>
 			<td>
@@ -95,151 +95,37 @@
 			</th>
 		</tr>
 		
+		<c:forEach items="${listUserInfo}" var="userInfor">	
 		<tr>
 			<td align="right">
-				<a href="ADM005.html">1</a>
+				<a href="ADM005.html">${userInfor.getUserId()}</a>
 			</td>
 			<td>
-				Nguyễn Thị Mai Hương
+				${userInfor.getFullName()}
 			</td>
 			<td align="center">
-				1983/07/08
+				${userInfor.getBirthday()}
 			</td>
 			<td>
-				Phòng QAT
+				${userInfor.getGroupName()}
 			</td>
 			<td>
-				ntmhuong@luvina.net
+				${userInfor.getEmail()}
 			</td>
 			<td>
-				0914326386
+				${userInfor.getTel()}
 			</td>
 			<td>
-				Trình độ tiếng nhật cấp 4
+				${userInfor.getNameLevel()}
 			</td>
 			<td align="center">
-				2011/07/08
+				${userInfor.getEndDate()}
 			</td>
 			<td align="right">
-				290
+				${userInfor.getTotal()}
 			</td>
 		</tr>
-		<tr>
-			<td align="right">
-				<a href="ADM005.html">2</a>
-			</td>
-			<td>
-				Lê Thị Xoa
-			</td>
-			<td align="center">
-				1983/07/08
-			</td>
-			<td>
-				Phòng DEV1
-			</td>
-			<td>
-				xoalt@luvina.net
-			</td>
-			<td>
-				1234567894
-			</td>
-			<td>
-				Trình độ tiếng nhật cấp 4
-			</td>
-			<td align="center">
-				2011/07/08
-			</td>
-			<td align="right">
-				290
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<a href="ADM005.html">3</a>
-			</td>
-			<td>
-				Đặng Thị Hân
-			</td>
-			<td align="center">
-				1983/07/08
-			</td>
-			<td>
-				Phòng DEV1
-			</td>
-			<td>
-				handt@luvina.net
-			</td>
-			<td>
-				1234567894
-			</td>
-			<td>
-				Trình độ tiếng nhật cấp 4
-			</td>
-			<td align="center">
-				2011/07/08
-			</td>
-			<td align="right">
-				290
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<a href="ADM005.html">4</a>
-			</td>
-			<td>
-				Lê Nghiêm Thủy
-			</td>			
-			<td align="center">
-				1983/07/08
-			</td>
-			<td>
-				Phòng DEV1
-			</td>
-			<td>
-				thuyln@luvina.net
-			</td>
-			<td>
-				1234567894
-			</td>
-			<td>
-				Trình độ tiếng nhật cấp 4
-			</td>
-			<td align="center">
-				2011/07/08
-			</td>
-			<td align="right">
-				290
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<a href="ADM005.html">5</a>
-			</td>
-			<td>
-				Lê Phương Anh
-			</td>
-			<td align="center">
-				1983/07/08
-			</td>
-			<td>
-				Phòng QAT
-			</td>
-			<td>
-				anhlp@luvina.net
-			</td>
-			<td>
-				1234567894
-			</td>
-			<td>
-				Trình độ tiếng nhật cấp 4
-			</td>
-			<td align="center">
-				2011/07/08
-			</td>
-			<td align="right">
-				290
-			</td>
-		</tr>
+		</c:forEach>
 		
 	</table>
 	<!-- End vung hien thi danh sach user -->
