@@ -87,7 +87,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			sql.append("INNER JOIN mst_japan j");
 			sql.append("ON d.code_level = j.code_level");
 			sql.append("ON u.user_id = d.user_id;");
-
 		}
 		return listUserInfo;
 	}
