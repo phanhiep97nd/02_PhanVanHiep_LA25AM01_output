@@ -55,4 +55,17 @@ public interface TblUserDao extends BaseDao {
 	ArrayList<UserInfoEntity> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
 			throws ClassNotFoundException, SQLException;
+	
+
+	/**
+	 * Đếm tổng số bảng ghi kết quả tìm được
+	 * 
+	 * @param groupId  là nhóm được chọn trong selectbox
+	 * @param fullName là tên tìm kiếm được nhập từ textbox
+	 * @return trả về số bản ghi tìm được theo điều kiện tìm kiếm
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	int getTotalUsers(int groupId, String fullName) throws ClassNotFoundException, SQLException;
+
 }
