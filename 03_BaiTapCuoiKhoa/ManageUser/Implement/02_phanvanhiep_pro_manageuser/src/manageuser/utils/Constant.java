@@ -37,17 +37,32 @@ public class Constant {
 
 	// constant session
 	public static final String SESSION_LOGINNAME = "loginName";
+	public static final String SESSION_SEARCH = "search";
 
 	// constant các hạng mục ở MH listUser
 	public static final int RULE_ADMIN = 0;
 	public static final int RULE_USER = 1;
+	public static final int GROUPID_DEFAULT = 0;
+	public static final String FULLNAME_DEFAULT = "";
+	public static final String SORTTYPE_DEFAULT = "";
+	public static final int CURRENTPAGE_DEFAULT = 1;
 	public static final String ASC = "ASC";
 	public static final String DESC = "DESC";
+	public static final String TYPE_DEFAULT = "default";
+	public static final String TYPE_SEARCH = "search";
+	public static final String TYPE_BACK = "back";
+	public static final String TYPE_SORT = "sort";
+	public static final String TYPE_PAGING = "paging";
+	public static final int LIMIT_DEFAULT = 5;
+	public static final int OFFSET_DEFAULT = 0;
+	public static final int LIMITPAGE_DEFAULT = 3;
 
 	// constant URL type
-	public static final String TYPE_DEFAULT = "?type=default";
+	public static final String URL_TYPE_DEFAULT = "?type=default";
 
 	// constant config
 	public static final String LIMIT = "LIMIT";
+	public static final String LIMIT_PAGE = "LIMIT_PAGE";
+	
 
 }

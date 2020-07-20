@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
 			// Nếu danh sách lỗi rỗng(Tồn tại loginName và pass trong DB)
 			if (listErr.size() == 0) {
 				// chuyển hướng đến URL listuser.do
-				resp.sendRedirect(Constant.URL_LISTUSER + Constant.TYPE_DEFAULT);
+				resp.sendRedirect(Constant.URL_LISTUSER + Constant.URL_TYPE_DEFAULT);
 				// gán loginName lên session
 				session.setAttribute("loginName", loginName);
 				// Nếu có lỗi xảy ra

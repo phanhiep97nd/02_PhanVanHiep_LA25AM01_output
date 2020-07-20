@@ -90,4 +90,31 @@ public class TblUserLogicImpl implements TblUserLogic {
 		}
 		return listUserInfo;
 	}
+	
+	/**
+	 * Đếm tổng số User tìm được
+	 * @param groupId là nhóm được chọn trong selectbox
+	 * @param fullName là tên tìm kiếm được nhập từ textbox
+	 * @return trả về số bản ghi có trong bảng thỏa mãn điều kiện tìm kiếm
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@Override
+	public int getTotalUsers(int groupId, String fullName) throws ClassNotFoundException, SQLException {
+		// khai báo số bản khi
+		int countUser = 0;
+		// khởi tạo đối tượng TblUserDaoImpl
+		TblUserDao tblUserImpl = new TblUserDaoImpl();
+		try {
+			// Gọi đến hàm getTotalUsers ở lớp TblUserDaoImpl
+			countUser = tblUserImpl.getTotalUsers(groupId, fullName);
+		} catch (ClassNotFoundException | SQLException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error : TblUserLogicImpl.getTotalUsers " + e.getMessage());
+			// Throw lỗi
+			throw e;
+		}
+
+		return countUser;
+	}
 }

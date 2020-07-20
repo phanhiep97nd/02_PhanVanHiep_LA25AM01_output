@@ -51,6 +51,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				}
 			}
 		} catch (SQLException | NullPointerException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error: TblUserDaoImpl.getTblUserByLoginName " + e.getMessage());
 			throw e;
 		} finally {
 			// đóng kết nối
@@ -61,25 +63,17 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	}
 
 	/**
-	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group,
-	 * mst_japan, tbl_detail_user_japan
+	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
+	 * tbl_detail_user_japan
 	 * 
-	 * @param offset
-	 *            vị trí bắt đầu lấy
-	 * @param limit
-	 *            số bản ghi tối đa trên 1 page
-	 * @param groupId
-	 *            là id của nhóm được chọn trong pulldown
-	 * @param fullName
-	 *            là fullname tìm kiếm nhập vào từ textbox
-	 * @param sortType
-	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
-	 * @param sortByFullName
-	 *            giá trị sắp xếp (ASC/DESC) cột fullName
-	 * @param sortByCodeLevel
-	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
-	 * @param sortByEndDate
-	 *            giá trị sắp xếp (ASC/DESC) cột endDate
+	 * @param offset          vị trí bắt đầu lấy
+	 * @param limit           số bản ghi tối đa trên 1 page
+	 * @param groupId         là id của nhóm được chọn trong pulldown
+	 * @param fullName        là fullname tìm kiếm nhập vào từ textbox
+	 * @param sortType        là loại sắp xếp theo fullName, codeLevel hay endDate
+	 * @param sortByFullName  giá trị sắp xếp (ASC/DESC) cột fullName
+	 * @param sortByCodeLevel giá trị sắp xếp (ASC/DESC) cột codelevel
+	 * @param sortByEndDate   giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -93,7 +87,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		// Khai đối tượng SimpleDateFormat chuyển định dạng ngày tháng năm về
 		// YYYY/MM/DD
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
 		try {
 			// mở kết nối đến cơ sở dữ liệu
 			openConnection();
@@ -101,8 +94,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			if (conn != null) {
 				// Xử lí kí tự widecard
 				fullName = Common.replaceWildCard(fullName);
-				// encode html
-				// fullName = Common.encodeHTML(fullName);
 
 				// khởi tạo chuỗi câu truy vẫn sql
 				StringBuilder sql = new StringBuilder();
@@ -219,6 +210,9 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		try {
 			openConnection();
 			if (conn != null) {
+				// Xử lí kí tự widecard
+				fullName = Common.replaceWildCard(fullName);
+
 				// Khởi tạo chuỗi sql chứa câu lệnh truy vấn
 				StringBuilder sql = new StringBuilder();
 				sql.append("SELECT COUNT(*)");

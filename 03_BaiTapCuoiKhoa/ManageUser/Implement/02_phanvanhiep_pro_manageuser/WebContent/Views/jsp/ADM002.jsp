@@ -100,8 +100,25 @@
 	<!-- Begin vung paging -->
 	<table>
 		<tr>
-			<td class="lbl_paging"><a href="#">1</a> &nbsp;<a href="#">2</a>
-				&nbsp;<a href="#">3</a>&nbsp;<a href="#">>></a></td>
+			<td class="lbl_paging">
+			<!-- Nếu số page lớn hơn 1 hoặc page đầu tiên lớn hơn 1 -->
+			<c:if test="${fn:length(listPaging) > 1 || listPaging[0] > 1}">
+				<!-- Nếu page đầu tiên lớn hơn 1 -->
+				<c:if test="${listPaging[0] > 1}">
+					<a href="listUser.do?type=paging&currentPage=${fn:escapeXml(listPaging[0]- limitPage)}">${"<<"}</a>
+				</c:if>
+				<c:forEach items="${listPaging}" var="paging">
+					<!-- Nếu là currentPage thì không hiển thị dưới dạng link -->
+					<c:if test="${paging == currentPage}">${paging}</c:if>
+					<c:if test="${paging != currentPage}">
+						<a href="listUser.do?type=paging&currentPage=${paging}">${paging}</a>
+					</c:if>
+				</c:forEach>
+				<c:if test="${fn:length(listPaging) == limitPage && listPaging[limitPage - 1] < totalPage}">
+					<a href="listUser.do?type=paging&currentPage=${fn:escapeXml(listPaging[limitPage - 1] + 1)}">${">>"}</a>
+				</c:if>
+			</c:if>
+			</td>
 		</tr>
 	</table>
 	<!-- End vung paging -->
