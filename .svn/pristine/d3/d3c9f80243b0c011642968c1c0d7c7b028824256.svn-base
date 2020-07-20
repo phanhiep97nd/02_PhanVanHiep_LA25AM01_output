@@ -102,7 +102,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				// Xử lí kí tự widecard
 				fullName = Common.replaceWildCard(fullName);
 				// encode html
-				//fullName = Common.encodeHTML(fullName);
+				fullName = Common.encodeHTML(fullName);
 				
 				// khởi tạo chuỗi câu truy vẫn sql
 				StringBuilder sql = new StringBuilder();
