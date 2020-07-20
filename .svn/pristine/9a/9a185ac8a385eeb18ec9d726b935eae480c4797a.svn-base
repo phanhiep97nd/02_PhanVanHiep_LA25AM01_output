@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import manageuser.dao.TblUserDao;
 import manageuser.entities.TblUserEntity;
 import manageuser.entities.UserInfoEntity;
-import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
@@ -61,25 +60,17 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	}
 
 	/**
-	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group,
-	 * mst_japan, tbl_detail_user_japan
+	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
+	 * tbl_detail_user_japan
 	 * 
-	 * @param offset
-	 *            vị trí bắt đầu lấy
-	 * @param limit
-	 *            số bản ghi tối đa trên 1 page
-	 * @param groupId
-	 *            là id của nhóm được chọn trong pulldown
-	 * @param fullName
-	 *            là fullname tìm kiếm nhập vào từ textbox
-	 * @param sortType
-	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
-	 * @param sortByFullName
-	 *            giá trị sắp xếp (ASC/DESC) cột fullName
-	 * @param sortByCodeLevel
-	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
-	 * @param sortByEndDate
-	 *            giá trị sắp xếp (ASC/DESC) cột endDate
+	 * @param offset          vị trí bắt đầu lấy
+	 * @param limit           số bản ghi tối đa trên 1 page
+	 * @param groupId         là id của nhóm được chọn trong pulldown
+	 * @param fullName        là fullname tìm kiếm nhập vào từ textbox
+	 * @param sortType        là loại sắp xếp theo fullName, codeLevel hay endDate
+	 * @param sortByFullName  giá trị sắp xếp (ASC/DESC) cột fullName
+	 * @param sortByCodeLevel giá trị sắp xếp (ASC/DESC) cột codelevel
+	 * @param sortByEndDate   giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -90,8 +81,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			throws ClassNotFoundException, SQLException {
 		// khai báo listUserInfo danh sách các userinfo
 		ArrayList<UserInfoEntity> listUserInfo = new ArrayList<>();
-		// Khai đối tượng SimpleDateFormat chuyển định dạng ngày tháng năm về
-		// YYYY/MM/DD
+		// Khai đối tượng SimpleDateFormat chuyển định dạng ngày tháng năm về YYYY/MM/DD
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
 		try {
@@ -99,11 +89,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			openConnection();
 			// kiểm tra xem đã kết nối thành công?
 			if (conn != null) {
-				// Xử lí kí tự widecard
-				fullName = Common.replaceWildCard(fullName);
-				// encode html
-				fullName = Common.encodeHTML(fullName);
-				
 				// khởi tạo chuỗi câu truy vẫn sql
 				StringBuilder sql = new StringBuilder();
 				sql.append(
@@ -116,14 +101,12 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				sql.append(" ON d.code_level = j.code_level)");
 				sql.append(" ON u.user_id = d.user_id");
 				sql.append(" WHERE u.Rule = ?");
-				// textbox fullName có giá trị thì thêm điều kiện tìm kiếm với
-				// full_name
+				// textbox fullName có giá trị thì thêm điều kiện tìm kiếm với full_name
 				if (!"".equals(fullName)) {
 					// thêm câu lệnh vào sql
 					sql.append(" AND u.full_name LIKE ? ");
 				}
-				// pulldown group khác giá trị mặc định thì thêm điều kiện tìm
-				// kiếm theo group
+				// pulldown group khác giá trị mặc định thì thêm điều kiện tìm kiếm theo group
 				if (groupId != 0) {
 					// thêm câu lệnh vào sql
 					sql.append(" AND u.group_id = ? ");
@@ -142,8 +125,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					sql.append(sortByEndDate);
 				}
 
-				// Điều kiện lấy các bản ghi từ vị trí offset và lấy tiếp limit
-				// bản ghi
+				// Điều kiện lấy các bản ghi từ vị trí offset và lấy tiếp limit bản ghi
 				sql.append(" LIMIT " + offset + ", " + limit);
 
 				// gọi đến prepareStatement và truyền vào câu truy vấn sql
@@ -163,13 +145,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					pstm.setInt(index++, groupId);
 				}
 
-				// Khai báo đối tượng ResulSet để lưu các giá trị lấy về được từ
-				// DB
+				// Khai báo đối tượng ResulSet để lưu các giá trị lấy về được từ DB
 				ResultSet rs = pstm.executeQuery();
 				// Chạy từng bản ghi từ rs
 				while (rs.next()) {
-					// Khởi tạo đối tượng userInfoEntity để lấy các giá trị từ
-					// câu truy vấn
+					// Khởi tạo đối tượng userInfoEntity để lấy các giá trị từ câu truy vấn
 					UserInfoEntity userInfo = new UserInfoEntity();
 					// set giá trị cho các thuộc tính của đối tượng userInfo
 					userInfo.setUserId(rs.getInt("user_id"));

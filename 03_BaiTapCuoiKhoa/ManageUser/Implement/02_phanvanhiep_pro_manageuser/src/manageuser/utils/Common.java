@@ -6,9 +6,13 @@ package manageuser.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Base64;
 
 import javax.servlet.http.HttpSession;
+
+import manageuser.dao.TblUserDao;
+import manageuser.dao.impl.TblUserDaoImpl;
 
 /**
  * Chứa các hàm common của dự án
@@ -60,15 +64,64 @@ public class Common {
 	 * @param session truyền vào session để kiểm tra
 	 * @return boolean (Nếu đăng nhập rồi thì trả về true, chưa đăng nhập thì trả về
 	 *         false)
+	 * @throws Exception
 	 */
-	public static boolean checkLogin(HttpSession session) {
-		// Nếu giá trị session loginName = null nghĩa là chưa đăng nhập thành công =>
-		// trả về false
-		if (session.getAttribute(Constant.SESSION_LOGINNAME) == null) {
-			return false;
-			// Ngược lại session khác null nghĩa là đã đăng nhập thành công => trả về true
-		} else {
-			return true;
+	public static boolean checkLogin(HttpSession session) throws Exception {
+		try {
+			// Nếu giá trị session loginName != null nghĩa là đã có session
+			if (session.getAttribute(Constant.SESSION_LOGINNAME) != null) {
+				// Khởi tạp một đối tượng TblUserDaoImpl
+				TblUserDao userDaoImpl = new TblUserDaoImpl();
+				// Lấy giá trị từ session
+				String loginName = (String) session.getAttribute(Constant.SESSION_LOGINNAME);
+				// Nếu lấy được đối tượng UserDaoImpl từ hàm getTblUserByLoginName nghĩa là
+				// loginName này có tồn tại trong DB
+				if (userDaoImpl.getTblUserByLoginName(loginName) != null) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Error : Common.checkLogin " + e.getMessage());
+			throw e;
 		}
+		return false;
+
 	}
+
+	/**
+	 * replaceWildCard thay đổi giá trị wideCard nhập vào tránh lỗi sqlInjection
+	 * 
+	 * @param str giá trị nhập vào
+	 * @return str đã được được thay thế
+	 */
+	public static String replaceWildCard(String str) {
+		if (!"".equals(str)) {
+			str = str.replace("%", "\\%");
+			str = str.replace("_", "\\_");
+		}
+		// trả về giá trị đã được thay đổi các kí tự đặc biệt
+		return str;
+	}
+
+	/**
+	 * mã hóa các kí tự đặc biệt trong html
+	 * 
+	 * @param value là giá trị cần mã hóa
+	 * @return trả về chuỗi đã được mã hóa
+	 */
+	public static String encodeHTML(String str) {
+		// nếu giá trị truyền vào khác rỗng
+		if (!"".equals(str)) {
+			str = str.replace("&", "&amp;");
+			str = str.replace("'", "&#x27;");
+			str = str.replace("/", "&#x2F;");
+			str = str.replace("<", "&lt;");
+			str = str.replace(">", "&gt;;");
+		}
+		// trả về giá trị đã được mã hóa
+		return str;
+	}
+
 }
