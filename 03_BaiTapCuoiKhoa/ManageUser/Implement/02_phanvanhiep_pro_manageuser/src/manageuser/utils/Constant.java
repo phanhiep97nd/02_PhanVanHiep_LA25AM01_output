@@ -40,6 +40,7 @@ public class Constant {
 	public static final String SESSION_SEARCH = "search";
 	public static final String SESSION_SORT_TYPE = "sortType";
 	public static final String SESSION_SORT_LIKE = "sortLike";
+	public static final String SESSION_CURRENTPAGE = "currentPage";
 
 	// constant các hạng mục ở MH listUser
 	public static final int RULE_ADMIN = 0;

@@ -35,10 +35,8 @@ public class ListUserController extends HttpServlet {
 	/**
 	 * Xử lí khi đăng nhập thành công
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -76,7 +74,10 @@ public class ListUserController extends HttpServlet {
 				// Nếu type là default, hoặc search, hoặc sort, hoặc paging,
 				// hoặc back
 				if (Common.compareString(Constant.TYPE_DEFAULT, type)) {
-
+					session.removeAttribute(Constant.SESSION_SEARCH);
+					session.removeAttribute(Constant.SESSION_CURRENTPAGE);
+					session.removeAttribute(Constant.SESSION_SORT_TYPE);
+					session.removeAttribute(Constant.SESSION_SORT_LIKE);
 				} else if (Common.compareString(Constant.TYPE_SEARCH, type)) {
 					// Lấy fullNam và groupId người dùng nhập ở request
 					fullName = req.getParameter("name");
@@ -88,6 +89,10 @@ public class ListUserController extends HttpServlet {
 					userSearch.setFullName(fullName);
 					// truyền userSearch vào sessin SESSION_SEARCH
 					session.setAttribute(Constant.SESSION_SEARCH, userSearch);
+					// xóa session sort (Để khi người dùng tìm kiếm kahi và click vào paging các giá
+					// trị sort đã về mặc định)
+					session.removeAttribute(Constant.SESSION_SORT_TYPE);
+					session.removeAttribute(Constant.SESSION_SORT_LIKE);
 				} else if (Common.compareString(Constant.TYPE_SORT, type)) {
 					// Lấy về sortType từ request
 					sortType = req.getParameter("sortType");
@@ -95,7 +100,10 @@ public class ListUserController extends HttpServlet {
 					session.setAttribute(Constant.SESSION_SORT_TYPE, sortType);
 					// Lấy về kiểu sort ASC hay DESC
 					String sortLike = req.getParameter("sortLike");
+					// Nếu là sort theo fullName, hoặc sort theo codeLevel, hoặc là sort theo
+					// endDate
 					if (Common.compareString(Constant.SORT_TYPE_FULLNAME, sortType)) {
+						// Nếu kiểu sort là ASC hoặc ngược lại kiểu sort là DESC
 						if (Common.compareString(Constant.ASC, sortLike)) {
 							sortByFullName = Constant.DESC;
 							sortByCodeLevel = Constant.ASC;
@@ -108,6 +116,7 @@ public class ListUserController extends HttpServlet {
 						// Gán sortLike lên session
 						session.setAttribute(Constant.SESSION_SORT_LIKE, sortByFullName);
 					} else if (Common.compareString(Constant.SORT_TYPE_CODELEVEL, sortType)) {
+						// Nếu kiểu sort là ASC hoặc ngược lại kiểu sort là DESC
 						if (Common.compareString(Constant.ASC, sortLike)) {
 							sortByCodeLevel = Constant.DESC;
 							sortByFullName = Constant.ASC;
@@ -120,6 +129,7 @@ public class ListUserController extends HttpServlet {
 						// Gán sortLike lên session
 						session.setAttribute(Constant.SESSION_SORT_LIKE, sortByCodeLevel);
 					} else if (Common.compareString(Constant.SORT_TYPE_ENDDATE, sortType)) {
+						// Nếu kiểu sort là ASC hoặc ngược lại kiểu sort là DESC
 						if (Common.compareString(Constant.ASC, sortLike)) {
 							sortByEndDate = Constant.DESC;
 							sortByFullName = Constant.ASC;
@@ -132,11 +142,8 @@ public class ListUserController extends HttpServlet {
 						// Gán sortLike lên session
 						session.setAttribute(Constant.SESSION_SORT_LIKE, sortByEndDate);
 					}
-
-				} else if (Common.compareString(Constant.TYPE_PAGING, type)) {
-					currentPage = Common.convertStringToInt(req.getParameter("currentPage"),
-							Constant.CURRENTPAGE_DEFAULT);
-					// Nếu tồn tại session search
+					// Nếu tồn tại session search (Lấy xuống để khi click vẫn giữ được giá trị cùng
+					// điều kiện tìm kiếm)
 					if (session.getAttribute(Constant.SESSION_SEARCH) != null) {
 						// lấy đối tượng userSearch từ SESSION_SEARCH
 						TblUserEntity userSearch = (TblUserEntity) session.getAttribute(Constant.SESSION_SEARCH);
@@ -144,7 +151,25 @@ public class ListUserController extends HttpServlet {
 						groupId = userSearch.getGroupId();
 						fullName = userSearch.getFullName();
 					}
-					// Nếu tồn tại session sortType
+					// Nếu có tồn tại session currentPage (Lấy xuống để vẫn giữ được paging)
+					if (session.getAttribute(Constant.SESSION_CURRENTPAGE) != null) {
+						// lấy trang từ session
+						currentPage = (int) session.getAttribute(Constant.SESSION_CURRENTPAGE);
+					}
+
+				} else if (Common.compareString(Constant.TYPE_PAGING, type)) {
+					currentPage = Common.convertStringToInt(req.getParameter("currentPage"),
+							Constant.CURRENTPAGE_DEFAULT);
+					// Nếu tồn tại session search (Lấy xuống để khi click vẫn giữ được giá trị cùng
+					// điều kiện tìm kiếm)
+					if (session.getAttribute(Constant.SESSION_SEARCH) != null) {
+						// lấy đối tượng userSearch từ SESSION_SEARCH
+						TblUserEntity userSearch = (TblUserEntity) session.getAttribute(Constant.SESSION_SEARCH);
+						// Lấy ra thuộc tính
+						groupId = userSearch.getGroupId();
+						fullName = userSearch.getFullName();
+					}
+					// Nếu tồn tại session sortType (Lấy xuống để vẫn giữ được các giá trị sort)
 					if (session.getAttribute(Constant.SESSION_SORT_TYPE) != null) {
 						// lấy giá trị từ SESSION_SORT_TYPE
 						sortType = (String) session.getAttribute(Constant.SESSION_SORT_TYPE);
@@ -163,7 +188,38 @@ public class ListUserController extends HttpServlet {
 						}
 					}
 				} else if (Common.compareString(Constant.TYPE_BACK, type)) {
-
+					// Nếu tồn tại session search (Lấy xuống để khi click vẫn giữ được giá trị cùng
+					// điều kiện tìm kiếm)
+					if (session.getAttribute(Constant.SESSION_SEARCH) != null) {
+						// lấy đối tượng userSearch từ SESSION_SEARCH
+						TblUserEntity userSearch = (TblUserEntity) session.getAttribute(Constant.SESSION_SEARCH);
+						// Lấy ra thuộc tính
+						groupId = userSearch.getGroupId();
+						fullName = userSearch.getFullName();
+					}
+					// Nếu có tồn tại session currentPage (Lấy xuống để vẫn giữ được paging)
+					if (session.getAttribute(Constant.SESSION_CURRENTPAGE) != null) {
+						// lấy trang từ session
+						currentPage = (int) session.getAttribute(Constant.SESSION_CURRENTPAGE);
+					}
+					// Nếu tồn tại session sortType (Lấy xuống để vẫn giữ được các giá trị sort)
+					if (session.getAttribute(Constant.SESSION_SORT_TYPE) != null) {
+						// lấy giá trị từ SESSION_SORT_TYPE
+						sortType = (String) session.getAttribute(Constant.SESSION_SORT_TYPE);
+						// nếu là loại sắp xếp theo full_name
+						if (Common.compareString(Constant.SORT_TYPE_FULLNAME, sortType)) {
+							// lấy giá trị sắp xếp theo fullname từ session
+							sortByFullName = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
+							// nếu là loại sắp xếp theo code level
+						} else if (Common.compareString(Constant.SORT_TYPE_CODELEVEL, sortType)) {
+							// lấy giá trị sắp xếp theo code level từ session
+							sortByCodeLevel = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
+							// nếu là sắp xếp theo end_date
+						} else if (Common.compareString(Constant.SORT_TYPE_ENDDATE, sortType)) {
+							// lấy giá trị sắp xếp theo code level từ session
+							sortByEndDate = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
+						}
+					}
 				}
 				// Lấy về totalUser
 				int totalUser = userLogicImpl.getTotalUsers(groupId, fullName);
@@ -213,6 +269,17 @@ public class ListUserController extends HttpServlet {
 				req.setAttribute("limitPage", limitPage);
 				// Gán currentPage lên request
 				req.setAttribute("currentPage", currentPage);
+				// gán curentPage lên session
+				// truyền crrentPage vào SESSION_CURRENTPAGE
+				session.setAttribute("currentPage", currentPage);
+				// gán lên sortType lên request
+				req.setAttribute("sortTypeFullName", Constant.SORT_TYPE_FULLNAME);
+				req.setAttribute("sortTypeCodeLevel", Constant.SORT_TYPE_CODELEVEL);
+				req.setAttribute("sortTypeEndDate", Constant.SORT_TYPE_ENDDATE);
+				// gán sortLike của các trường lên request
+				req.setAttribute("sortByFullName", sortByFullName);
+				req.setAttribute("sortByCodeLevel", sortByCodeLevel);
+				req.setAttribute("sortByEndDate", sortByEndDate);
 
 				// Chuyển hướng sang trang ADM002
 				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM002).forward(req, resp);

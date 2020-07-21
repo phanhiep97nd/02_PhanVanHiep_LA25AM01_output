@@ -145,20 +145,20 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					sql.append(sortByEndDate);
 				} else if(Constant.SORT_TYPE_CODELEVEL.equals(sortType)){
 					// sort name_level
-					sql.append(", j.name_level ");
+					sql.append(" ORDER BY j.name_level ");
 					sql.append(sortByCodeLevel);
 					// sort theo full_name
-					sql.append(" ORDER BY u.full_name ");
+					sql.append(", u.full_name ");
 					sql.append(sortByFullName);
 					// sort end_date
 					sql.append(", d.end_date ");
 					sql.append(sortByEndDate);
 				} else if(Constant.SORT_TYPE_ENDDATE.equals(sortType)){
 					// sort end_date
-					sql.append(", d.end_date ");
+					sql.append(" ORDER BY d.end_date ");
 					sql.append(sortByEndDate);
 					// sort theo full_name
-					sql.append(" ORDER BY u.full_name ");
+					sql.append(", u.full_name ");
 					sql.append(sortByFullName);
 					// sort name_level
 					sql.append(", j.name_level ");
