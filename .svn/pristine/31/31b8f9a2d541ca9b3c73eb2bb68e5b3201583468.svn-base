@@ -202,7 +202,7 @@ public class Common {
 		// Page bắt đầu chuỗi paging
 		int startPage = ((currentPage - 1) / limitPage) * limitPage + 1;
 		// Page kết thúc chuỗi paging
-		int endPage = startPage + limitPage - 1;
+		int endPage = startPage + limitPage;
 		// Nếu page kết thúc chuỗi lớn hơn tổng số page thì page kết thúc bằng page cuối
 		// cùng
 		if (endPage > totalPage) {

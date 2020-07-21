@@ -93,7 +93,7 @@
 
 	</table>
 	<c:if test="${fn:length(listUserInfo) == 0}">
-	<p class="errMsg" colspan="2"style="color: black; border: 0; box-shadow: 0">&nbsp;${notiMSG005}</p>
+	<p class="errMsg" colspan="2"style="color: red; border: 0; box-shadow: 0">&nbsp;${notiMSG005}</p>
 	</c:if>
 	<!-- End vung hien thi danh sach user -->
 

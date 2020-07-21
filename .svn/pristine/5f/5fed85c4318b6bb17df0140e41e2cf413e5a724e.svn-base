@@ -132,38 +132,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					sql.append(", d.end_date ");
 					sql.append(sortByEndDate);
 				}
-				
-				if(Constant.SORT_TYPE_FULLNAME.equals(sortType)){
-					// sort theo full_name
-					sql.append(" ORDER BY u.full_name ");
-					sql.append(sortByFullName);
-					// sort name_level
-					sql.append(", j.name_level ");
-					sql.append(sortByCodeLevel);
-					// sort end_date
-					sql.append(", d.end_date ");
-					sql.append(sortByEndDate);
-				} else if(Constant.SORT_TYPE_CODELEVEL.equals(sortType)){
-					// sort name_level
-					sql.append(", j.name_level ");
-					sql.append(sortByCodeLevel);
-					// sort theo full_name
-					sql.append(" ORDER BY u.full_name ");
-					sql.append(sortByFullName);
-					// sort end_date
-					sql.append(", d.end_date ");
-					sql.append(sortByEndDate);
-				} else if(Constant.SORT_TYPE_ENDDATE.equals(sortType)){
-					// sort end_date
-					sql.append(", d.end_date ");
-					sql.append(sortByEndDate);
-					// sort theo full_name
-					sql.append(" ORDER BY u.full_name ");
-					sql.append(sortByFullName);
-					// sort name_level
-					sql.append(", j.name_level ");
-					sql.append(sortByCodeLevel);
-				}
 
 				// Điều kiện lấy các bản ghi từ vị trí offset và lấy tiếp limit
 				// bản ghi

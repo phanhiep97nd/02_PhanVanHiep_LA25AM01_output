@@ -35,10 +35,8 @@ public class ListUserController extends HttpServlet {
 	/**
 	 * Xử lí khi đăng nhập thành công
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -73,8 +71,7 @@ public class ListUserController extends HttpServlet {
 			if (Common.checkLogin(session)) {
 				// Lấy giá trị của type trên request
 				String type = req.getParameter("type");
-				// Nếu type là default, hoặc search, hoặc sort, hoặc paging,
-				// hoặc back
+				// Nếu type là default, hoặc search, hoặc sort, hoặc paging, hoặc back
 				if (Common.compareString(Constant.TYPE_DEFAULT, type)) {
 
 				} else if (Common.compareString(Constant.TYPE_SEARCH, type)) {
@@ -89,49 +86,6 @@ public class ListUserController extends HttpServlet {
 					// truyền userSearch vào sessin SESSION_SEARCH
 					session.setAttribute(Constant.SESSION_SEARCH, userSearch);
 				} else if (Common.compareString(Constant.TYPE_SORT, type)) {
-					// Lấy về sortType từ request
-					sortType = req.getParameter("sortType");
-					// Gán sortType lên session
-					session.setAttribute(Constant.SESSION_SORT_TYPE, sortType);
-					// Lấy về kiểu sort ASC hay DESC
-					String sortLike = req.getParameter("sortLike");
-					if (Common.compareString(Constant.SORT_TYPE_FULLNAME, sortType)) {
-						if (Common.compareString(Constant.ASC, sortLike)) {
-							sortByFullName = Constant.DESC;
-							sortByCodeLevel = Constant.ASC;
-							sortByEndDate = Constant.DESC;
-						} else if (Common.compareString(Constant.DESC, sortLike)) {
-							sortByFullName = Constant.ASC;
-							sortByCodeLevel = Constant.ASC;
-							sortByEndDate = Constant.DESC;
-						}
-						// Gán sortLike lên session
-						session.setAttribute(Constant.SESSION_SORT_LIKE, sortByFullName);
-					} else if (Common.compareString(Constant.SORT_TYPE_CODELEVEL, sortType)) {
-						if (Common.compareString(Constant.ASC, sortLike)) {
-							sortByCodeLevel = Constant.DESC;
-							sortByFullName = Constant.ASC;
-							sortByEndDate = Constant.DESC;
-						} else if (Common.compareString(Constant.DESC, sortLike)) {
-							sortByCodeLevel = Constant.ASC;
-							sortByFullName = Constant.ASC;
-							sortByEndDate = Constant.DESC;
-						}
-						// Gán sortLike lên session
-						session.setAttribute(Constant.SESSION_SORT_LIKE, sortByCodeLevel);
-					} else if (Common.compareString(Constant.SORT_TYPE_ENDDATE, sortType)) {
-						if (Common.compareString(Constant.ASC, sortLike)) {
-							sortByEndDate = Constant.DESC;
-							sortByFullName = Constant.ASC;
-							sortByCodeLevel = Constant.ASC;
-						} else if (Common.compareString(Constant.DESC, sortLike)) {
-							sortByEndDate = Constant.ASC;
-							sortByFullName = Constant.ASC;
-							sortByCodeLevel = Constant.ASC;
-						}
-						// Gán sortLike lên session
-						session.setAttribute(Constant.SESSION_SORT_LIKE, sortByEndDate);
-					}
 
 				} else if (Common.compareString(Constant.TYPE_PAGING, type)) {
 					currentPage = Common.convertStringToInt(req.getParameter("currentPage"),
@@ -144,24 +98,6 @@ public class ListUserController extends HttpServlet {
 						groupId = userSearch.getGroupId();
 						fullName = userSearch.getFullName();
 					}
-					// Nếu tồn tại session sortType
-					if (session.getAttribute(Constant.SESSION_SORT_TYPE) != null) {
-						// lấy giá trị từ SESSION_SORT_TYPE
-						sortType = (String) session.getAttribute(Constant.SESSION_SORT_TYPE);
-						// nếu là loại sắp xếp theo full_name
-						if (Common.compareString(Constant.SORT_TYPE_FULLNAME, sortType)) {
-							// lấy giá trị sắp xếp theo fullname từ session
-							sortByFullName = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
-							// nếu là loại sắp xếp theo code level
-						} else if (Common.compareString(Constant.SORT_TYPE_CODELEVEL, sortType)) {
-							// lấy giá trị sắp xếp theo code level từ session
-							sortByCodeLevel = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
-							// nếu là sắp xếp theo end_date
-						} else if (Common.compareString(Constant.SORT_TYPE_ENDDATE, sortType)) {
-							// lấy giá trị sắp xếp theo code level từ session
-							sortByEndDate = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
-						}
-					}
 				} else if (Common.compareString(Constant.TYPE_BACK, type)) {
 
 				}
@@ -172,8 +108,7 @@ public class ListUserController extends HttpServlet {
 				// Lấy về limitPage
 				int limitPage = Common.convertStringToInt(ConfigProperties.getValueByKey(Constant.LIMIT_PAGE),
 						Constant.LIMITPAGE_DEFAULT);
-				// Trường hợp người dùng sửa URL currentPage ngoài phạm vi số
-				// page
+				// Trường hợp người dùng sửa URL currentPage ngoài phạm vi số page
 				if (totalPage >= 1 && currentPage > totalPage) {
 					currentPage = totalPage;
 				} else if (currentPage <= 0) {
@@ -191,8 +126,7 @@ public class ListUserController extends HttpServlet {
 
 				// gán danh sách group lên request
 				req.setAttribute("listGroup", listGroup);
-				// Nếu không tìm thấy user nào thì in ra câu thông báo, ngược
-				// lại nếu có kết quả
+				// Nếu không tìm thấy user nào thì in ra câu thông báo, ngược lại nếu có kết quả
 				// thì gửi lên trang jsp
 				if (listUserInfo.size() == 0) {
 					String notiMSG005 = MessageProperties.getValueByKey(Constant.MSG005);
