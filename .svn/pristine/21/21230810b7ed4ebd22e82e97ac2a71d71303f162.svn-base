@@ -35,10 +35,8 @@ public class ListUserController extends HttpServlet {
 	/**
 	 * Xử lí khi đăng nhập thành công
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -80,7 +78,7 @@ public class ListUserController extends HttpServlet {
 					session.removeAttribute(Constant.SESSION_CURRENTPAGE);
 					session.removeAttribute(Constant.SESSION_SORT_TYPE);
 					session.removeAttribute(Constant.SESSION_SORT_LIKE);
-				} else if (type == null || Common.compareString(Constant.TYPE_SEARCH, type)) {
+				} else if (Common.compareString(Constant.TYPE_SEARCH, type)) {
 					// Lấy fullNam và groupId người dùng nhập ở request
 					fullName = req.getParameter("name");
 					groupId = Common.convertStringToInt(req.getParameter("group_id"), Constant.GROUPID_DEFAULT);
@@ -91,8 +89,7 @@ public class ListUserController extends HttpServlet {
 					userSearch.setFullName(fullName);
 					// truyền userSearch vào sessin SESSION_SEARCH
 					session.setAttribute(Constant.SESSION_SEARCH, userSearch);
-					// xóa session sort (Để khi người dùng tìm kiếm kahi và
-					// click vào paging các giá
+					// xóa session sort (Để khi người dùng tìm kiếm kahi và click vào paging các giá
 					// trị sort đã về mặc định)
 					session.removeAttribute(Constant.SESSION_SORT_TYPE);
 					session.removeAttribute(Constant.SESSION_SORT_LIKE);
@@ -103,8 +100,7 @@ public class ListUserController extends HttpServlet {
 					session.setAttribute(Constant.SESSION_SORT_TYPE, sortType);
 					// Lấy về kiểu sort ASC hay DESC
 					String sortLike = req.getParameter("sortLike");
-					// Nếu là sort theo fullName, hoặc sort theo codeLevel, hoặc
-					// là sort theo
+					// Nếu là sort theo fullName, hoặc sort theo codeLevel, hoặc là sort theo
 					// endDate
 					if (Common.compareString(Constant.SORT_TYPE_FULLNAME, sortType)) {
 						// Nếu kiểu sort là ASC hoặc ngược lại kiểu sort là DESC
@@ -146,8 +142,7 @@ public class ListUserController extends HttpServlet {
 						// Gán sortLike lên session
 						session.setAttribute(Constant.SESSION_SORT_LIKE, sortByEndDate);
 					}
-					// Nếu tồn tại session search (Lấy xuống để khi click vẫn
-					// giữ được giá trị cùng
+					// Nếu tồn tại session search (Lấy xuống để khi click vẫn giữ được giá trị cùng
 					// điều kiện tìm kiếm)
 					if (session.getAttribute(Constant.SESSION_SEARCH) != null) {
 						// lấy đối tượng userSearch từ SESSION_SEARCH
@@ -156,8 +151,7 @@ public class ListUserController extends HttpServlet {
 						groupId = userSearch.getGroupId();
 						fullName = userSearch.getFullName();
 					}
-					// Nếu có tồn tại session currentPage (Lấy xuống để vẫn giữ
-					// được paging)
+					// Nếu có tồn tại session currentPage (Lấy xuống để vẫn giữ được paging)
 					if (session.getAttribute(Constant.SESSION_CURRENTPAGE) != null) {
 						// lấy trang từ session
 						currentPage = (int) session.getAttribute(Constant.SESSION_CURRENTPAGE);
@@ -166,8 +160,7 @@ public class ListUserController extends HttpServlet {
 				} else if (Common.compareString(Constant.TYPE_PAGING, type)) {
 					currentPage = Common.convertStringToInt(req.getParameter("currentPage"),
 							Constant.CURRENTPAGE_DEFAULT);
-					// Nếu tồn tại session search (Lấy xuống để khi click vẫn
-					// giữ được giá trị cùng
+					// Nếu tồn tại session search (Lấy xuống để khi click vẫn giữ được giá trị cùng
 					// điều kiện tìm kiếm)
 					if (session.getAttribute(Constant.SESSION_SEARCH) != null) {
 						// lấy đối tượng userSearch từ SESSION_SEARCH
@@ -176,8 +169,7 @@ public class ListUserController extends HttpServlet {
 						groupId = userSearch.getGroupId();
 						fullName = userSearch.getFullName();
 					}
-					// Nếu tồn tại session sortType (Lấy xuống để vẫn giữ được
-					// các giá trị sort)
+					// Nếu tồn tại session sortType (Lấy xuống để vẫn giữ được các giá trị sort)
 					if (session.getAttribute(Constant.SESSION_SORT_TYPE) != null) {
 						// lấy giá trị từ SESSION_SORT_TYPE
 						sortType = (String) session.getAttribute(Constant.SESSION_SORT_TYPE);
@@ -196,8 +188,7 @@ public class ListUserController extends HttpServlet {
 						}
 					}
 				} else if (Common.compareString(Constant.TYPE_BACK, type)) {
-					// Nếu tồn tại session search (Lấy xuống để khi click vẫn
-					// giữ được giá trị cùng
+					// Nếu tồn tại session search (Lấy xuống để khi click vẫn giữ được giá trị cùng
 					// điều kiện tìm kiếm)
 					if (session.getAttribute(Constant.SESSION_SEARCH) != null) {
 						// lấy đối tượng userSearch từ SESSION_SEARCH
@@ -206,14 +197,12 @@ public class ListUserController extends HttpServlet {
 						groupId = userSearch.getGroupId();
 						fullName = userSearch.getFullName();
 					}
-					// Nếu có tồn tại session currentPage (Lấy xuống để vẫn giữ
-					// được paging)
+					// Nếu có tồn tại session currentPage (Lấy xuống để vẫn giữ được paging)
 					if (session.getAttribute(Constant.SESSION_CURRENTPAGE) != null) {
 						// lấy trang từ session
 						currentPage = (int) session.getAttribute(Constant.SESSION_CURRENTPAGE);
 					}
-					// Nếu tồn tại session sortType (Lấy xuống để vẫn giữ được
-					// các giá trị sort)
+					// Nếu tồn tại session sortType (Lấy xuống để vẫn giữ được các giá trị sort)
 					if (session.getAttribute(Constant.SESSION_SORT_TYPE) != null) {
 						// lấy giá trị từ SESSION_SORT_TYPE
 						sortType = (String) session.getAttribute(Constant.SESSION_SORT_TYPE);

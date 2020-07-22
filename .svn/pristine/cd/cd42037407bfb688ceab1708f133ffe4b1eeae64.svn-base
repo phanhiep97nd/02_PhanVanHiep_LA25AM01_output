@@ -22,15 +22,7 @@ import manageuser.utils.Constant;
  * @author Phan Van Hiep
  */
 public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
-	/**
-	 * Lấy ra user trong bảng tbl_user bằng loginName
-	 * 
-	 * @param loginName
-	 *            loginName người dùng nhập vào
-	 * @return trả về một user tìm được trong DB
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
+
 	@Override
 	public TblUserEntity getTblUserByLoginName(String loginName) throws SQLException, ClassNotFoundException {
 		// Khởi taho một đối tượng TblUserEntity
