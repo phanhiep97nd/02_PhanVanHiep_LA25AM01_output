@@ -50,7 +50,7 @@
 										</c:forEach>
 								</select></td>
 								<td align="left"><input class="btn" type="submit"
-									value="検索" /> <input class="btn" type="button" value="新規追加" /></td>
+									value="検索" /> <a href="addUser.do"><input class="btn" type="button" value="新規追加" /></a></td>
 							</tr>
 						</table>
 					</td>
@@ -128,7 +128,10 @@
 				<td>${fn:escapeXml(userInfor.getTel())}</td>
 				<td>${fn:escapeXml(userInfor.getNameLevel())}</td>
 				<td align="center">${fn:escapeXml(userInfor.getEndDate())}</td>
-				<td align="right">${fn:escapeXml(userInfor.getTotal())}</td>
+				<td align="right"><c:choose>
+						<c:when test="${fn:escapeXml(userInfor.getTotal()) == 0}">${"" }</c:when>
+						<c:otherwise>${fn:escapeXml(userInfor.getTotal())}</c:otherwise>
+					</c:choose></td>
 			</tr>
 		</c:forEach>
 

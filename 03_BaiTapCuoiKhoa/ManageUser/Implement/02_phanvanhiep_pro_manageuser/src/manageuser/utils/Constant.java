@@ -29,6 +29,7 @@ public class Constant {
 	// constant path màn hình
 	public static final String PATH_ADM001 = "/Views/jsp/ADM001.jsp";
 	public static final String PATH_ADM002 = "/Views/jsp/ADM002.jsp";
+	public static final String PATH_ADM003 = "/Views/jsp/ADM003.jsp";
 	public static final String PATH_ADM005 = "/Views/jsp/ADM005.jsp";
 	public static final String PATH_SYSTEM_ERROR = "/Views/jsp/System_Error.jsp";
 
