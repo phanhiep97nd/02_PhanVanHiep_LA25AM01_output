@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import manageuser.dao.TblUserDao;
 import manageuser.entities.TblUserEntity;
@@ -25,8 +26,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Lấy ra user trong bảng tbl_user bằng loginName
 	 * 
-	 * @param loginName
-	 *            loginName người dùng nhập vào
+	 * @param loginName loginName người dùng nhập vào
 	 * @return trả về một user tìm được trong DB
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -140,8 +140,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					sql.append(", d.end_date ");
 					sql.append(sortByEndDate);
 				}
-				
-				if(Constant.SORT_TYPE_FULLNAME.equals(sortType)){
+
+				if (Constant.SORT_TYPE_FULLNAME.equals(sortType)) {
 					// sort theo full_name
 					sql.append(" ORDER BY u.full_name ");
 					sql.append(sortByFullName);
@@ -151,7 +151,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					// sort end_date
 					sql.append(", d.end_date ");
 					sql.append(sortByEndDate);
-				} else if(Constant.SORT_TYPE_CODELEVEL.equals(sortType)){
+				} else if (Constant.SORT_TYPE_CODELEVEL.equals(sortType)) {
 					// sort name_level
 					sql.append(" ORDER BY j.name_level ");
 					sql.append(sortByCodeLevel);
@@ -161,7 +161,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					// sort end_date
 					sql.append(", d.end_date ");
 					sql.append(sortByEndDate);
-				} else if(Constant.SORT_TYPE_ENDDATE.equals(sortType)){
+				} else if (Constant.SORT_TYPE_ENDDATE.equals(sortType)) {
 					// sort end_date
 					sql.append(" ORDER BY d.end_date ");
 					sql.append(sortByEndDate);

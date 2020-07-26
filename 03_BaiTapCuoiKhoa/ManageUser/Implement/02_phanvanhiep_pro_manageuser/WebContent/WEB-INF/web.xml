@@ -25,6 +25,22 @@
     <servlet-name>listUser</servlet-name>
     <url-pattern>/listUser.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>showUser</servlet-name>
+    <servlet-class>manageuser.controllers.ShowUserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>showUser</servlet-name>
+    <url-pattern>/showUser.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>systemError</servlet-name>
+    <servlet-class>manageuser.controllers.SystemErrorController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>systemError</servlet-name>
+    <url-pattern>/systemError.do</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login.do</welcome-file>
   </welcome-file-list>

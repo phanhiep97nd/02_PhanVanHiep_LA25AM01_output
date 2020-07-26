@@ -19,6 +19,7 @@ public class Constant {
 	public static final String ER001_PASS = "ER001_PASS";
 	public static final String ER016 = "ER016";
 	public static final String MSG005 = "MSG005";
+	public static final String ER015 = "ER015";
 
 	// constant path properties
 	public static final String PROPERTIES_MESSAGE_PATH = "//message.properties";
@@ -28,6 +29,7 @@ public class Constant {
 	// constant path màn hình
 	public static final String PATH_ADM001 = "/Views/jsp/ADM001.jsp";
 	public static final String PATH_ADM002 = "/Views/jsp/ADM002.jsp";
+	public static final String PATH_ADM005 = "/Views/jsp/ADM005.jsp";
 	public static final String PATH_SYSTEM_ERROR = "/Views/jsp/System_Error.jsp";
 
 	// constant URL
@@ -48,6 +50,7 @@ public class Constant {
 	public static final int GROUPID_DEFAULT = 0;
 	public static final String FULLNAME_DEFAULT = "";
 	public static final String SORTTYPE_DEFAULT = "";
+	public static final String SORTLIKE_DEFAULT = "";
 	public static final int CURRENTPAGE_DEFAULT = 1;
 	public static final String ASC = "ASC";
 	public static final String DESC = "DESC";
@@ -69,6 +72,7 @@ public class Constant {
 	// constant config
 	public static final String LIMIT = "LIMIT";
 	public static final String LIMIT_PAGE = "LIMIT_PAGE";
+	
 	
 
 }

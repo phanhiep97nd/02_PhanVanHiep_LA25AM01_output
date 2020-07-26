@@ -64,12 +64,19 @@
 		<tr class="tr2">
 			<th align="center" width="20px">ID</th>
 			<th align="left">氏名 <a
-				href="listUser.do?type=sort&sortType=${fn:escapeXml(sortTypeFullName)}&sortLike=${fn:escapeXml(sortByFullName)}">
-					<c:choose>
+				<c:url value="listUser.do" var="sortFullName">
+								<c:param name="type" value="sort"></c:param>
+								<c:param name="currentPage" value="${currentPage}"></c:param>
+								<c:param name="name" value="${fn:escapeXml(fullName )}"></c:param>
+								<c:param name="group_id" value="${groupId }"></c:param>
+								<c:param name="sortType" value="${fn:escapeXml(sortTypeFullName)}"></c:param>
+								<c:param name="sortLike" value="${fn:escapeXml(sortByFullName)}"></c:param>
+							</c:url>
+				href="${sortFullName }"> <c:choose>
 						<c:when
 							test="${sortByFullName eq 'ASC' || sortByFullName eq null}">▲▽</c:when>
 						<c:otherwise>△▼</c:otherwise>
-					</c:choose> 
+					</c:choose>
 			</a>
 			</th>
 			<th align="left">生年月日</th>
@@ -77,8 +84,15 @@
 			<th align="left">メールアドレス</th>
 			<th align="left" width="70px">電話番号</th>
 			<th align="left">日本語能力 <a
-				href="listUser.do?type=sort&sortType=${fn:escapeXml(sortTypeCodeLevel)}&sortLike=${fn:escapeXml(sortByCodeLevel)}">
-					<c:choose>
+				<c:url value="listUser.do" var="sortCodeLevel">
+								<c:param name="type" value="sort"></c:param>
+								<c:param name="currentPage" value="${currentPage}"></c:param>
+								<c:param name="name" value="${fn:escapeXml(fullName )}"></c:param>
+								<c:param name="group_id" value="${groupId }"></c:param>
+								<c:param name="sortType" value="${fn:escapeXml(sortTypeCodeLevel)}"></c:param>
+								<c:param name="sortLike" value="${fn:escapeXml(sortByCodeLevel)}"></c:param>
+							</c:url>
+				href="${sortCodeLevel }"> <c:choose>
 						<c:when
 							test="${sortByCodeLevel eq 'ASC' || sortByCodeLevel eq null}">▲▽</c:when>
 						<c:otherwise>△▼</c:otherwise>
@@ -86,8 +100,15 @@
 			</a>
 			</th>
 			<th align="left">失効日 <a
-				href="listUser.do?type=sort&sortType=${fn:escapeXml(sortTypeEndDate)}&sortLike=${fn:escapeXml(sortByEndDate)}">
-					<c:choose>
+				<c:url value="listUser.do" var="sortEndDate">
+								<c:param name="type" value="sort"></c:param>
+								<c:param name="currentPage" value="${currentPage}"></c:param>
+								<c:param name="name" value="${fn:escapeXml(fullName )}"></c:param>
+								<c:param name="group_id" value="${groupId }"></c:param>
+								<c:param name="sortType" value="${fn:escapeXml(sortTypeEndDate)}"></c:param>
+								<c:param name="sortLike" value="${fn:escapeXml(sortByEndDate)}"></c:param>
+							</c:url>
+				href="${sortEndDate }"> <c:choose>
 						<c:when test="${sortByEndDate eq 'ASC' || sortByEndDate eq null}">▲▽</c:when>
 						<c:otherwise>△▼</c:otherwise>
 					</c:choose>
@@ -98,7 +119,7 @@
 
 		<c:forEach items="${listUserInfo}" var="userInfor">
 			<tr>
-				<td align="right"><a href="./Views/jsp/ADM005.html">${fn:escapeXml(userInfor.getUserId())}</a>
+				<td align="right"><a href="showUser.do">${fn:escapeXml(userInfor.getUserId())}</a>
 				</td>
 				<td>${fn:escapeXml(userInfor.getFullName())}</td>
 				<td align="center">${fn:escapeXml(userInfor.getBirthday())}</td>
@@ -126,19 +147,43 @@
 					test="${fn:length(listPaging) > 1 || listPaging[0] > 1}">
 					<!-- Nếu page đầu tiên lớn hơn 1 -->
 					<c:if test="${listPaging[0] > 1}">
-						<a
-							href="listUser.do?type=paging&currentPage=${fn:escapeXml(listPaging[0]- limitPage)}">${"<<"}</a>
+						<c:url value="listUser.do" var="prevPageUrl">
+							<c:param name="type" value="paging"></c:param>
+							<c:param name="currentPage"
+								value="${fn:escapeXml(listPaging[0]- limitPage)}"></c:param>
+							<c:param name="name" value="${fn:escapeXml(fullName )}"></c:param>
+							<c:param name="group_id" value="${groupId }"></c:param>
+							<c:param name="sortType" value="${sortType }"></c:param>
+							<c:param name="sortLike" value="${sortLike }"></c:param>
+						</c:url>
+						<a href="${ prevPageUrl}">${"<<"}</a>
 					</c:if>
 					<c:forEach items="${listPaging}" var="paging">
 						<!-- Nếu là currentPage thì không hiển thị dưới dạng link -->
 						<c:if test="${paging == currentPage}">${paging}</c:if>
 						<c:if test="${paging != currentPage}">
-							<a href="listUser.do?type=paging&currentPage=${paging}">${paging}</a>
+							<c:url value="listUser.do" var="pageUrl">
+								<c:param name="type" value="paging"></c:param>
+								<c:param name="currentPage" value="${paging}"></c:param>
+								<c:param name="name" value="${fn:escapeXml(fullName )}"></c:param>
+								<c:param name="group_id" value="${groupId }"></c:param>
+								<c:param name="sortType" value="${sortType }"></c:param>
+								<c:param name="sortLike" value="${sortLike }"></c:param>
+							</c:url>
+							<a href="${pageUrl }">${paging}</a>
 						</c:if>
 					</c:forEach>
 					<c:if test="${listPaging[limitPage - 1] < totalPage}">
-						<a
-							href="listUser.do?type=paging&currentPage=${fn:escapeXml(listPaging[limitPage - 1] + 1)}">${">>"}</a>
+						<c:url value="listUser.do" var="backPageUrl">
+							<c:param name="type" value="paging"></c:param>
+							<c:param name="currentPage"
+								value="${fn:escapeXml(listPaging[limitPage - 1] + 1)}"></c:param>
+							<c:param name="name" value="${fn:escapeXml(fullName )}"></c:param>
+							<c:param name="group_id" value="${groupId }"></c:param>
+							<c:param name="sortType" value="${sortType }"></c:param>
+							<c:param name="sortLike" value="${sortLike }"></c:param>
+						</c:url>
+						<a href="${backPageUrl }">${">>"}</a>
 					</c:if>
 				</c:if>
 			</td>

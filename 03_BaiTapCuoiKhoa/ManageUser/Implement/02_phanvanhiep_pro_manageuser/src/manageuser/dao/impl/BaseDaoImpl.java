@@ -45,10 +45,9 @@ public class BaseDaoImpl implements BaseDao {
 			System.out.println("Error : BaseDaoImpl.openConnection " + e.getMessage());
 			// Throw lỗi đi
 			throw e;
-		} finally {
-			// trả về một đối tượng connection
-			return conn;
 		}
+		// trả về một đối tượng connection
+		return conn;
 	}
 
 	/**

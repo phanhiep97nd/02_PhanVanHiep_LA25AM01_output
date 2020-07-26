@@ -63,7 +63,7 @@ public class LoginController extends HttpServlet {
 			// Hiển thị ở console lỗi
 			System.out.println("Error : LoginServletController.doPost " + e.getMessage());
 			// Chuyển đến màn hình System_Error
-			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
+			resp.sendRedirect("systemError.do");
 		}
 	}
 

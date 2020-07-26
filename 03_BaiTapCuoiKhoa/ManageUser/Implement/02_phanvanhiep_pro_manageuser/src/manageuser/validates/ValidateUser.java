@@ -15,29 +15,39 @@ import manageuser.utils.MessageProperties;
 
 /**
  * Xử lý validate thông tin nhập vào từ màn hình
+ * 
  * @author Phan Van Hiep
  */
 public class ValidateUser {
-	
+
 	/**
 	 * hàm calidate các thông tin nhập từ màn hình
+	 * 
 	 * @param loginName login_name nhập từ màn hình
-	 * @param pass pass nhập từ màn hình
+	 * @param pass      pass nhập từ màn hình
 	 * @return list lỗi
 	 */
-	public static List<String> validateLogin(String loginName, String pass) throws ClassNotFoundException, NoSuchAlgorithmException, SQLException{
+	public static List<String> validateLogin(String loginName, String pass)
+			throws ClassNotFoundException, NoSuchAlgorithmException, SQLException {
 		List<String> lstError = new ArrayList<String>();
 		TblUserLogicImpl userLogic = new TblUserLogicImpl();
-		if("".equals(loginName)) {
-			lstError.add(MessageProperties.getValueByKey((Constant.ER001_USERNAME)));
-		}
-		if("".equals(pass)) {
-			lstError.add(MessageProperties.getValueByKey((Constant.ER001_PASS)));
-		}
-		if(!"".equals(loginName) && !"".equals(pass)) {
-			if(!userLogic.checkExistLogin(loginName, pass)) {
-				lstError.add(MessageProperties.getValueByKey((Constant.ER016)));
+		try {
+			if ("".equals(loginName)) {
+				lstError.add(MessageProperties.getValueByKey((Constant.ER001_USERNAME)));
 			}
+			if ("".equals(pass)) {
+				lstError.add(MessageProperties.getValueByKey((Constant.ER001_PASS)));
+			}
+			if (!"".equals(loginName) && !"".equals(pass)) {
+				if (!userLogic.checkExistLogin(loginName, pass)) {
+					lstError.add(MessageProperties.getValueByKey((Constant.ER016)));
+				}
+			}
+
+		} catch (ClassNotFoundException | NoSuchAlgorithmException | SQLException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : ValidateUser.validateLogin " + e.getMessage());
+			throw e;
 		}
 		return lstError;
 	}
