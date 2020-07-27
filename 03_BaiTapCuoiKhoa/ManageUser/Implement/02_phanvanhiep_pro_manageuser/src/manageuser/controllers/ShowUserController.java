@@ -18,6 +18,12 @@ import manageuser.utils.Constant;
  * @author Phan Van Hiep
  */
 public class ShowUserController extends HttpServlet{
+	/**
+	 * Xử lí phương thức doGet
+	 * 
+	 * @param req  request
+	 * @param resp response
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Chuyển hướng sang trang ADM002

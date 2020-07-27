@@ -33,7 +33,7 @@ import manageuser.utils.MessageProperties;
 public class ListUserController extends HttpServlet {
 
 	/**
-	 * Xử lí khi đăng nhập thành công
+	 * Xử lí phương thức doGet
 	 * 
 	 * @param req  request
 	 * @param resp response
