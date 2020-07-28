@@ -16,3 +16,41 @@ function showJapan() {
 		isHideJapan = true;
 	}
 }
+
+function changeMonth(obj, idYear, idDay) {
+    var year = document.getElementById(idYear).value;
+    var choose = obj.value;
+	document.getElementById(idDay + 1).selected = 'selected';
+    switch (choose) {
+        case '4':
+        case '6':
+        case '9':
+        case '11':
+            document.getElementById(idDay + 29).style.display = 'block';
+            document.getElementById(idDay + 30).style.display = 'block';
+            document.getElementById(idDay + 31).style.display = 'none';
+            break;
+        case '2':
+            if (year % 4 == 0) {
+                // getDay(29);
+                document.getElementById(idDay + 29).style.display = 'block';
+                document.getElementById(idDay + 30).style.display = 'none';
+                document.getElementById(idDay + 31).style.display = 'none';
+            } else {
+                //getDay(28);
+                document.getElementById(idDay + 29).style.display = 'none';
+                document.getElementById(idDay + 30).style.display = 'none';
+                document.getElementById(idDay + 31).style.display = 'none';
+            }
+            break;
+        default:
+            document.getElementById(idDay + 29).style.display = 'block';
+            document.getElementById(idDay + 30).style.display = 'block';
+            document.getElementById(idDay + 31).style.display = 'block';
+            break;
+    }
+}
+
+function changeYear(idYear, idMonth, idDay) {
+    changeMonth(document.getElementById(idMonth), idYear, idDay);
+}

@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import manageuser.entities.MstGroupEntity;
 import manageuser.entities.MstJapanEntity;
@@ -34,18 +35,25 @@ public class AddUserInputController extends HttpServlet {
 	/**
 	 * Xử lý khi click vào button Add của ADM002
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			setDataLogic(req);
-			req.setAttribute("getDefaultValue", getDefaultValue());
-			req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
-		} catch (ClassNotFoundException | SQLException e) {
+			// Khởi tạo session từ request
+			HttpSession session = req.getSession();
+
+			// Nếu checkLogin trả về true (Đã đăng nhập)
+			if (Common.checkLogin(session)) {
+				setDataLogic(req);
+				req.setAttribute("getDefaultValue", getDefaultValue());
+				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
+			} else {
+				// gọi đến URL login.do để về màn hình login
+				resp.sendRedirect(Constant.URL_LOGIN);
+			}
+		} catch (Exception e) {
 			// Hiển thị ở console lỗi
 			System.out.println("Error : AddUserInputController.doGet " + e.getMessage());
 			// Chuyển đến màn hình System_Error
@@ -102,41 +110,52 @@ public class AddUserInputController extends HttpServlet {
 	}
 
 	/**
-	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương
-	 * ứng với các thuộc tính của đối tượng UserInfoEntity
+	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương ứng
+	 * với các thuộc tính của đối tượng UserInfoEntity
 	 * 
 	 * @return đối tượng tblUserInfoEntity
 	 */
 	private UserInfoEntity getDefaultValue() {
 		// Khởi tạo đối tượng UserInfoEntity
 		UserInfoEntity userInforEntity = new UserInfoEntity();
-		// Khai báo và khoeir tạo giá trị default các thuộc tính của đối tượng
+		// Khởi tạo biến lấy về ngày, tháng, năm hiện tại
+		int yearNow = Common.getDate().get(Calendar.YEAR);
+		int monthNow = Common.getDate().get(Calendar.MONTH) + 1;
+		int dayNow = Common.getDate().get(Calendar.DATE);
+		// Khai báo và khởi tạo giá trị default các thuộc tính của đối tượng
 		// UserInfoEntity
-		int userId = 0;
-		String loginName = "";
-		String groupName = "";
-		int groupId = 0;
-		String fullName = "";
-		String fullNameKatana = "";
-		String birthday = "" + Common.getDate().get(Calendar.YEAR) + "/" + (Common.getDate().get(Calendar.MONTH) + 1)
-				+ "/" + Common.getDate().get(Calendar.DATE);
-		String email = "";
-		String tel = "";
-		int rule = 0;
-		String password = "";
-		String passwordConfirm = "";
-		String nameLevel = "";
-		String codeLevel = "";
-		String endDate = "" + (Common.getDate().get(Calendar.YEAR) + 1) + "/"
-				+ (Common.getDate().get(Calendar.MONTH) + 1) + "/" + Common.getDate().get(Calendar.DATE);
-		String startDate = "" + Common.getDate().get(Calendar.YEAR) + "/" + (Common.getDate().get(Calendar.MONTH) + 1)
-				+ "/" + Common.getDate().get(Calendar.DATE);
-		int total = 0;
-		boolean isJapan = false;
+		String loginName = Constant.DEFAULT_EMPTY;
+		String groupName = Constant.DEFAULT_EMPTY;
+		int groupId = Constant.DEFAULT_ZERO;
+		String fullName = Constant.DEFAULT_EMPTY;
+		String fullNameKatana = Constant.DEFAULT_EMPTY;
+		String birthday = yearNow + "/" + monthNow + "/" + dayNow;
+		String email = Constant.DEFAULT_EMPTY;
+		String tel = Constant.DEFAULT_EMPTY;
+		String password = Constant.DEFAULT_EMPTY;
+		String passwordConfirm = Constant.DEFAULT_EMPTY;
+		String nameLevel = Constant.DEFAULT_EMPTY;
+		String codeLevel = Constant.DEFAULT_EMPTY;
+		String endDate = (yearNow + 1) + "/" + monthNow + "/" + dayNow;
+		String startDate = yearNow + "/" + monthNow + "/" + dayNow;
+		int total = Constant.DEFAULT_ZERO;
 
+		// gán giá trị các thuộc tính đối tượng userInforEntity
+		userInforEntity.setLoginName(loginName);
+		userInforEntity.setGroupId(groupId);
+		userInforEntity.setGroupName(groupName);
+		userInforEntity.setFullName(fullName);
+		userInforEntity.setFullNameKatana(fullNameKatana);
 		userInforEntity.setBirthday(birthday);
+		userInforEntity.setEmail(email);
+		userInforEntity.setTel(tel);
+		userInforEntity.setPassword(password);
+		userInforEntity.setPasswordConfirm(passwordConfirm);
+		userInforEntity.setNameLevel(nameLevel);
+		userInforEntity.setCodeLevel(codeLevel);
 		userInforEntity.setEndDate(endDate);
 		userInforEntity.setStartDate(startDate);
+		userInforEntity.setTotal(total);
 
 		return userInforEntity;
 

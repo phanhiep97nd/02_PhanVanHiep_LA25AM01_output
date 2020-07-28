@@ -102,6 +102,8 @@ public class Constant {
 	public static final String LIMIT_PAGE = "LIMIT_PAGE";
 	
 	//constant các hạng mục ở màn hình ADM003
+	public static final String DEFAULT_EMPTY = "";
+	public static final int DEFAULT_ZERO = 0;
 	public static final String REQUEST_LISTMSTGROUP = "listMstGroup";
 	public static final String REQUEST_LISTMSTJAPAN = "listMstJapan";
 	public static final String REQUEST_LISTYEAR = "listYear";

@@ -66,18 +66,24 @@
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
-								<c:set var="birthday" value="${fn:split(getDefaultValue.birthday, '/')}"></c:set>
-								<td align="left"><select>
+								<c:set var="birthday"
+									value="${fn:split(getDefaultValue.birthday, '/')}"></c:set>
+								<td align="left"><select id="yearofbirth"
+									onchange="changeYear('yearofbirth', 'monthofbirth', 'dayofbirth')">
 										<c:forEach items="${listYear}" var="year">
-											<option value="${year }" <c:if test="${year ==  birthday[0]}">selected</c:if>>${year }</option>
+											<option value="${year }"
+												<c:if test="${year ==  birthday[0]}">selected</c:if>>${year }</option>
 										</c:forEach>
-								</select>年 <select>
+								</select>年 <select id="monthofbirth"
+									onchange="changeMonth(this, 'yearofbirth', 'dayofbirth');">
 										<c:forEach items="${listMonth}" var="month">
-											<option value="${month }" <c:if test="${month ==  birthday[1]}">selected</c:if>>${month }</option>
+											<option value="${month }"
+												<c:if test="${month ==  birthday[1]}">selected</c:if>>${month }</option>
 										</c:forEach>
-								</select>月 <select>
+								</select>月 <select id="dayofbirth">
 										<c:forEach items="${listDay}" var="day">
-											<option value="${day }" <c:if test="${day ==  birthday[2]}">selected</c:if>>${day }</option>
+											<option value="${day }" id="dayofbirth${day }"
+												<c:if test="${day ==  birthday[2]}">selected</c:if>>${day }</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -110,7 +116,8 @@
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
-								<th align="left" colspan="2"><a href="#" onclick="showJapan()">日本語能力</a></th>
+								<th align="left" colspan="2"><a href="#"
+									onclick="showJapan()">日本語能力</a></th>
 							</tr>
 							<tr class="japan" id="japan1">
 								<td class="lbl_left">資格:</td>
@@ -123,35 +130,47 @@
 							</tr>
 							<tr class="japan" id="japan2">
 								<td class="lbl_left">資格交付日:</td>
-								<c:set var="startDate" value="${fn:split(getDefaultValue.startDate, '/')}"></c:set>
-								<td align="left"><select>
+								<c:set var="startDate"
+									value="${fn:split(getDefaultValue.startDate, '/')}"></c:set>
+								<td align="left"><select id="startyear"
+									onchange="changeYear('startyear', 'startmonth', 'startday')">
 										<c:forEach items="${listYear}" var="year">
-											<option value="${year }" <c:if test="${year ==  startDate[0]}">selected</c:if>>${year }</option>
+											<option value="${year }"
+												<c:if test="${year ==  startDate[0]}">selected</c:if>>${year }</option>
 										</c:forEach>
-								</select>年 <select>
+								</select>年 <select id="startmonth"
+									onchange="changeMonth(this, 'startyear', 'startday');">
 										<c:forEach items="${listMonth}" var="month">
-											<option value="${month }" <c:if test="${month ==  startDate[1]}">selected</c:if>>${month }</option>
+											<option value="${month }"
+												<c:if test="${month ==  startDate[1]}">selected</c:if>>${month }</option>
 										</c:forEach>
-								</select>月 <select>
+								</select>月 <select id="startday">
 										<c:forEach items="${listDay}" var="day">
-											<option value="${day }" <c:if test="${day ==  startDate[2]}">selected</c:if>>${day }</option>
+											<option value="${day }" id="startday${day }"
+												<c:if test="${day ==  startDate[2]}">selected</c:if>>${day }</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
 							<tr class="japan" id="japan3">
 								<td class="lbl_left">失効日:</td>
-								<c:set var="endDate" value="${fn:split(getDefaultValue.endDate, '/')}"></c:set>
-								<td align="left"><select>
+								<c:set var="endDate"
+									value="${fn:split(getDefaultValue.endDate, '/')}"></c:set>
+								<td align="left"><select id="endyear"
+									onchange="changeYear('endyear', 'endmonth', 'endday')">
 										<c:forEach items="${listYear}" var="year">
-											<option value="${year +1}" <c:if test="${(year+1) ==  endDate[0]}">selected</c:if>>${year +1}</option>
+											<option value="${year +1}"
+												<c:if test="${(year+1) ==  endDate[0]}">selected</c:if>>${year +1}</option>
 										</c:forEach>
-								</select>年 <select>
+								</select>年 <select id="endmonth"
+									onchange="changeMonth(this, 'endyear', 'endday');">
 										<c:forEach items="${listMonth}" var="month">
-											<option value="${month }" <c:if test="${month ==  endDate[1]}">selected</c:if>>${month }</option>
+											<option value="${month }"
+												<c:if test="${month ==  endDate[1]}">selected</c:if>>${month }</option>
 										</c:forEach>
-								</select>月 <select>
+								</select>月 <select id="endday">
 										<c:forEach items="${listDay}" var="day">
-											<option value="${day }" <c:if test="${day ==  endDate[2]}">selected</c:if>>${day }</option>
+											<option value="${day }" id="endday${day }"
+												<c:if test="${day ==  endDate[2]}">selected</c:if>>${day }</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
