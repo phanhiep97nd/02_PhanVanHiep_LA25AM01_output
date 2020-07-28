@@ -287,7 +287,7 @@ public class ListUserController extends HttpServlet {
 			}
 		} catch (Exception e) {
 			// Hiển thị ở console lỗi
-			System.out.println("Error : ListUserServletController.doPost " + e.getMessage());
+			System.out.println("Error : ListUserController.doPost " + e.getMessage());
 			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.URL_SYSTEMERROR);
 		}

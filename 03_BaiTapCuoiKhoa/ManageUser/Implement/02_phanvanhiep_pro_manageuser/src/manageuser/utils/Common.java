@@ -9,9 +9,12 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+
+import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 
 import manageuser.dao.TblUserDao;
 import manageuser.dao.impl.TblUserDaoImpl;
@@ -265,5 +268,15 @@ public class Common {
 		}
 		// trả về danh sách các ngày
 		return listDay;
+	}
+	
+	/**
+	 * Sử dụng để có thể lấy về ngày tháng năm hiện tại
+	 * 
+	 * @return trả về một đối tượng calender
+	 */
+	public static Calendar getDate(){
+		Calendar calender = Calendar.getInstance();
+		return calender;
 	}
 }

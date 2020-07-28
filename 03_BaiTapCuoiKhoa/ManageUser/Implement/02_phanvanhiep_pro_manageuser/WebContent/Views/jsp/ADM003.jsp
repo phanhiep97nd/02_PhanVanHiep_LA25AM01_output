@@ -6,8 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../js/user.js"></script>
+<link href="<c:url value = "Views/css/style.css"/>" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript" src="<c:url value = "Views/js/user.js"/>"></script>
 <title>ユーザ管理</title>
 </head>
 <body>
@@ -15,342 +16,173 @@
 	<%@include file="header.jsp"%>
 	<!-- End vung header -->
 
-<!-- Begin vung input-->	
-	<form action="ADM004.html" method="post" name="inputform">	
-	<table  class="tbl_input"   border="0" width="75%"  cellpadding="0" cellspacing="0" >			
-		<tr>
-			<th align="left">
-				<div style="padding-left:100px;">
-					会員情報編集
-				</div>
-			</th>			
-		</tr>		
-		<tr>
-			<td class="errMsg">
-				<div style="padding-left:120px">
-					&nbsp;
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td align="left" >
-				<div style="padding-left:100px;">
-					<table border="0" width="100%" class="tbl_input" cellpadding="4" cellspacing="0" >					
-					<tr>
-						<td class="lbl_left"><font color = "red">*</font> アカウント名:</td>
-						<td align="left">
-							<input class="txBox" type="text" name="id" value=""
-							size="15" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left"><font color = "red">*</font> グループ:</td>
-						<td align="left">						
-							<select name="group_id">
-								<option value="0">選択してください</option>								
-								<option value="0">Nhóm 1</option>
-								<option value="0">Nhóm 2</option>
-							</select>							
-							<span>&nbsp;&nbsp;&nbsp;</span>
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left"><font color = "red">*</font> 氏名:</td>
-						<td align="left">
-						<input class="txBox" type="text" name="name" value=""
-							size="30" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />							
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left">カタカナ氏名:</td>
-						<td align="left">
-						<input class="txBox" type="text" name="name" value=""
-							size="30" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />							
-						</td>
-					</tr>	
-					<tr>
-						<td class="lbl_left"><font color = "red">*</font> 生年月日:</td>
-						<td align="left">
-						<select>
-									<option value="2000">2000</option>
-									<option value="2001">2001</option>
-									<option value="2002">2002</option>
-									<option value="2003">2003</option>
-									<option value="2004">2004</option>
-									<option value="2005">2005</option>
-									<option value="2006">2006</option>
-									<option value="2007">2007</option>
-									<option value="2008">2008</option>
-									<option value="2009">2009</option>
-									<option value="2010" selected="selected">2010</option>
-									<option value="2011">2011</option>
-								</select>年
-								<select>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12" selected="selected">12</option>
-								</select>月
-								<select>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-									<option value="16">16</option>
-									<option value="17">17</option>
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
-									<option value="22">22</option>
-									<option value="23">23</option>
-									<option value="24">24</option>
-									<option value="25">25</option>
-									<option value="26">26</option>
-									<option value="27">27</option>
-									<option value="28">28</option>
-									<option value="29">29</option>
-									<option value="30">30</option>
-									<option value="31" selected="selected">31</option>
-								</select>日							
-						</td>
-					</tr>				
-					<tr>
-						<td class="lbl_left"><font color = "red">*</font> メールアドレス:</td>
-						<td align="left">
-							<input class="txBox" type="text" name="email" value=""
-							size="30" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />							
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left"><font color = "red">*</font>電話番号:</td>
-						<td align="left">
-						<input class="txBox" type="text" name="tel" value=""
-							size="30" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />						
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left"><font color = "red">*</font> パスワード:</td>
-						<td align="left">
-							<input class="txBox" type="password" name="email" value=""
-							size="30" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />							
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left">パスワード（確認）:</td>
-						<td align="left">
-							<input class="txBox" type="password" name="email" value=""
-							size="30" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />							
-						</td>
-					</tr>
-					<tr>
-						<th align="left" colspan = "2" >							
-								<a href = "#">日本語能力</a>
-						</th>			
-					</tr>
-					<tr>
-						<td class="lbl_left">資格:</td>
-						<td align="left">
-							<select name="kyu_id">
-								<option value="0">選択してください</option>								
-								<option value="0">N1</option>
-								<option value="0">N2</option>
-								<option value="0">N3</option>
-								<option value="0">N4</option>
-								<option value="0">N5</option>
-							</select>							
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left">資格交付日: </td>
-						<td align="left">
-							<select>
-									<option value="2000">2000</option>
-									<option value="2001">2001</option>
-									<option value="2002">2002</option>
-									<option value="2003">2003</option>
-									<option value="2004">2004</option>
-									<option value="2005">2005</option>
-									<option value="2006">2006</option>
-									<option value="2007">2007</option>
-									<option value="2008">2008</option>
-									<option value="2009">2009</option>
-									<option value="2010" selected="selected">2010</option>
-									<option value="2011">2011</option>
-								</select>年
-								<select>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12" selected="selected">12</option>
-								</select>月
-								<select>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-									<option value="16">16</option>
-									<option value="17">17</option>
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
-									<option value="22">22</option>
-									<option value="23">23</option>
-									<option value="24">24</option>
-									<option value="25">25</option>
-									<option value="26">26</option>
-									<option value="27">27</option>
-									<option value="28">28</option>
-									<option value="29">29</option>
-									<option value="30">30</option>
-									<option value="31" selected="selected">31</option>
-								</select>日							
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left">失効日: </td>
-						<td align="left">
-							<select>
-									<option value="2000">2000</option>
-									<option value="2001">2001</option>
-									<option value="2002">2002</option>
-									<option value="2003">2003</option>
-									<option value="2004">2004</option>
-									<option value="2005">2005</option>
-									<option value="2006">2006</option>
-									<option value="2007">2007</option>
-									<option value="2008">2008</option>
-									<option value="2009">2009</option>
-									<option value="2010" selected="selected">2010</option>
-									<option value="2011">2011</option>
-								</select>年
-								<select>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12" selected="selected">12</option>
-								</select>月
-								<select>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-									<option value="16">16</option>
-									<option value="17">17</option>
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
-									<option value="22">22</option>
-									<option value="23">23</option>
-									<option value="24">24</option>
-									<option value="25">25</option>
-									<option value="26">26</option>
-									<option value="27">27</option>
-									<option value="28">28</option>
-									<option value="29">29</option>
-									<option value="30">30</option>
-									<option value="31" selected="selected">31</option>
-								</select>日							
-						</td>
-					</tr>
-					<tr>
-						<td class="lbl_left">点数: </td>
-						<td align="left">
-							<input class="txBox" type="text" name="total" value=""
-							size="5" onfocus="this.style.borderColor='#0066ff';"
-							onblur="this.style.borderColor='#aaaaaa';" />							
-						</td>
-					</tr>									
-				</table>
-				</div>				
-			</td>		
-		</tr>
-	</table>
-	<div style="padding-left:100px;">&nbsp;</div>
-		<!-- Begin vung button -->
-	<div style="padding-left:45px;">
-	<table border="0" cellpadding="4" cellspacing="0" width="300px">	
-		<tr>
-			<th width="200px" align="center">&nbsp;</th>
-				<td>
-					<input class="btn" type="submit" value="確認" />					
-				</td>	
-				<td>
-					<a href="listUser.do?type=back"><input class="btn" type="button" value="戻る" /></a>					
+	<!-- Begin vung input-->
+	<form action="ADM004.html" method="post" name="inputform">
+		<table class="tbl_input" border="0" width="75%" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<th align="left">
+					<div style="padding-left: 100px;">会員情報編集</div>
+				</th>
+			</tr>
+			<tr>
+				<td class="errMsg">
+					<div style="padding-left: 120px">&nbsp;</div>
 				</td>
-		</tr>		
-	</table>
-	<!-- End vung button -->	
-</form>
-<!-- End vung input -->
+			</tr>
+			<tr>
+				<td align="left">
+					<div style="padding-left: 100px;">
+						<table border="0" width="100%" class="tbl_input" cellpadding="4"
+							cellspacing="0">
+							<tr>
+								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
+								<td align="left"><input class="txBox" type="text" name="id"
+									value="" size="15" onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+							<tr>
+								<td class="lbl_left"><font color="red">*</font> グループ:</td>
+								<td align="left"><select name="group_id">
+										<option value="0">選択してください</option>
+										<c:forEach items="${listMstGroup}" var="group">
+											<option value="${group.getGroupId() }">${group.getGroupName() }</option>
+										</c:forEach>
+								</select> <span>&nbsp;&nbsp;&nbsp;</span></td>
+							</tr>
+							<tr>
+								<td class="lbl_left"><font color="red">*</font> 氏名:</td>
+								<td align="left"><input class="txBox" type="text"
+									name="name" value="" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+							<tr>
+								<td class="lbl_left">カタカナ氏名:</td>
+								<td align="left"><input class="txBox" type="text"
+									name="name" value="" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+							<tr>
+								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
+								<c:set var="birthday" value="${fn:split(getDefaultValue.birthday, '/')}"></c:set>
+								<td align="left"><select>
+										<c:forEach items="${listYear}" var="year">
+											<option value="${year }" <c:if test="${year ==  birthday[0]}">selected</c:if>>${year }</option>
+										</c:forEach>
+								</select>年 <select>
+										<c:forEach items="${listMonth}" var="month">
+											<option value="${month }" <c:if test="${month ==  birthday[1]}">selected</c:if>>${month }</option>
+										</c:forEach>
+								</select>月 <select>
+										<c:forEach items="${listDay}" var="day">
+											<option value="${day }" <c:if test="${day ==  birthday[2]}">selected</c:if>>${day }</option>
+										</c:forEach>
+								</select>日</td>
+							</tr>
+							<tr>
+								<td class="lbl_left"><font color="red">*</font> メールアドレス:</td>
+								<td align="left"><input class="txBox" type="text"
+									name="email" value="" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+							<tr>
+								<td class="lbl_left"><font color="red">*</font>電話番号:</td>
+								<td align="left"><input class="txBox" type="text"
+									name="tel" value="" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+							<tr>
+								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
+								<td align="left"><input class="txBox" type="password"
+									name="email" value="" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+							<tr>
+								<td class="lbl_left">パスワード（確認）:</td>
+								<td align="left"><input class="txBox" type="password"
+									name="email" value="" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+							<tr>
+								<th align="left" colspan="2"><a href="#" onclick="showJapan()">日本語能力</a></th>
+							</tr>
+							<tr class="japan" id="japan1">
+								<td class="lbl_left">資格:</td>
+								<td align="left"><select name="kyu_id">
+										<option value="0">選択してください</option>
+										<c:forEach items="${listMstJapan}" var="mstJapan">
+											<option value="${mstJapan.getNameLevel() }">${mstJapan.getCodeLevel() }</option>
+										</c:forEach>
+								</select></td>
+							</tr>
+							<tr class="japan" id="japan2">
+								<td class="lbl_left">資格交付日:</td>
+								<c:set var="startDate" value="${fn:split(getDefaultValue.startDate, '/')}"></c:set>
+								<td align="left"><select>
+										<c:forEach items="${listYear}" var="year">
+											<option value="${year }" <c:if test="${year ==  startDate[0]}">selected</c:if>>${year }</option>
+										</c:forEach>
+								</select>年 <select>
+										<c:forEach items="${listMonth}" var="month">
+											<option value="${month }" <c:if test="${month ==  startDate[1]}">selected</c:if>>${month }</option>
+										</c:forEach>
+								</select>月 <select>
+										<c:forEach items="${listDay}" var="day">
+											<option value="${day }" <c:if test="${day ==  startDate[2]}">selected</c:if>>${day }</option>
+										</c:forEach>
+								</select>日</td>
+							</tr>
+							<tr class="japan" id="japan3">
+								<td class="lbl_left">失効日:</td>
+								<c:set var="endDate" value="${fn:split(getDefaultValue.endDate, '/')}"></c:set>
+								<td align="left"><select>
+										<c:forEach items="${listYear}" var="year">
+											<option value="${year +1}" <c:if test="${(year+1) ==  endDate[0]}">selected</c:if>>${year +1}</option>
+										</c:forEach>
+								</select>年 <select>
+										<c:forEach items="${listMonth}" var="month">
+											<option value="${month }" <c:if test="${month ==  endDate[1]}">selected</c:if>>${month }</option>
+										</c:forEach>
+								</select>月 <select>
+										<c:forEach items="${listDay}" var="day">
+											<option value="${day }" <c:if test="${day ==  endDate[2]}">selected</c:if>>${day }</option>
+										</c:forEach>
+								</select>日</td>
+							</tr>
+							<tr class="japan" id="japan4">
+								<td class="lbl_left">点数:</td>
+								<td align="left"><input class="txBox" type="text"
+									name="total" value="" size="5"
+									onfocus="this.style.borderColor='#0066ff';"
+									onblur="this.style.borderColor='#aaaaaa';" /></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div style="padding-left: 100px;">&nbsp;</div>
+		<!-- Begin vung button -->
+		<div style="padding-left: 45px;">
+			<table border="0" cellpadding="4" cellspacing="0" width="300px">
+				<tr>
+					<th width="200px" align="center">&nbsp;</th>
+					<td><input class="btn" type="submit" value="確認" /></td>
+					<td><a href="listUser.do?type=back"><input class="btn"
+							type="button" value="戻る" /></a></td>
+				</tr>
+			</table>
+			<!-- End vung button -->
+	</form>
+	<!-- End vung input -->
 
-<!-- Begin vung footer -->
+	<!-- Begin vung footer -->
 	<div class="lbl_footer">
 		<%@include file="footer.jsp"%>
 	</div>
