@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import manageuser.entities.UserInfoEntity;
 
 /**
- * Interface Xử lý logic cho các chức năng login + list/search user
+ *  Interface Xử lý logic cho các chức năng liên quan đến tbl_user
  * 
  * @author Phan Van Hiep
  */

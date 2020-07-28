@@ -50,7 +50,7 @@
 										</c:forEach>
 								</select></td>
 								<td align="left"><input class="btn" type="submit"
-									value="検索" /> <a href="addUser.do"><input class="btn" type="button" value="新規追加" /></a></td>
+									value="検索" /> <a href="addUserInput.do"><input class="btn" type="button" value="新規追加" /></a></td>
 							</tr>
 						</table>
 					</td>

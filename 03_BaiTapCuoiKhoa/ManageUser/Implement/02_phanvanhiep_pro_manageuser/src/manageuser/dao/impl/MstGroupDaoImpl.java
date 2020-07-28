@@ -12,7 +12,7 @@ import manageuser.dao.MstGroupDao;
 import manageuser.entities.MstGroupEntity;
 
 /**
- * Description của class là làm gì
+ * Implement MstGroupDao để Xử lý Thao tác với DB bảng mst_group
  * 
  * @author Phan Van Hiep
  */

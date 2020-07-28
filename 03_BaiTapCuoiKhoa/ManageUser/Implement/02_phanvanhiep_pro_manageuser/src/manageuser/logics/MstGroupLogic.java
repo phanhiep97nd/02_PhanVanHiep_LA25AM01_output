@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import manageuser.entities.MstGroupEntity;
 
 /**
- * Description của class là làm gì 
+ * Interface Xử lý logic cho các chức năng liên quan đến mst_group
  * @author Phan Van Hiep
  */
 public interface MstGroupLogic{

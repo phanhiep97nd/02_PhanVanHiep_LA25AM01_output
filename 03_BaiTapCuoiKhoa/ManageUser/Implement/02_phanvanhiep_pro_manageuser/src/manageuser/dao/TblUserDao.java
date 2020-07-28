@@ -12,7 +12,7 @@ import manageuser.entities.TblUserEntity;
 import manageuser.entities.UserInfoEntity;
 
 /**
- * Interface Thao tác với DB của các chức năng login + list/search user
+ * Interface Xử lý thao tác với DB Thao tác với DB bảng tbl_user
  * 
  * @author Phan Van Hiep
  */

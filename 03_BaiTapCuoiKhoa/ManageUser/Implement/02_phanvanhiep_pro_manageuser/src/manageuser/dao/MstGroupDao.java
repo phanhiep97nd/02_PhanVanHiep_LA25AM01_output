@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import manageuser.entities.MstGroupEntity;
 
 /**
- * Interface Thao tác với DB bảng mst_group
+ * Interface Xử lý Thao tác với DB bảng mst_group
  * 
  * @author Phan Van Hiep
  */

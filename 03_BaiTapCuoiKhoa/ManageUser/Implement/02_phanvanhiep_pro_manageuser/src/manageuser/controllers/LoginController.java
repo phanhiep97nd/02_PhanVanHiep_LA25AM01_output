@@ -5,12 +5,8 @@ Abc.java, Jul 13, 2020 Phan Van Hiep
 package manageuser.controllers;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +32,8 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Lấy giá trị từ request mà người dùng nhập
-		String loginName = req.getParameter("loginId");
-		String pass = req.getParameter("password");
+		String loginName = req.getParameter(Constant.NAME_TEXTBOX_LOGINNAME);
+		String pass = req.getParameter(Constant.NAME_TEXTBOX_PASSWORD);
 		try {
 			// Khai báo 1 list để lấy kết quả trả về từ hàm validateLogin
 			List<String> listErr = ValidateUser.validateLogin(loginName, pass);
@@ -48,13 +44,13 @@ public class LoginController extends HttpServlet {
 				// chuyển hướng đến URL listuser.do
 				resp.sendRedirect(Constant.URL_LISTUSER + Constant.URL_TYPE_DEFAULT);
 				// gán loginName lên session
-				session.setAttribute("loginName", loginName);
+				session.setAttribute(Constant.SESSION_LOGINNAME, loginName);
 				// Nếu có lỗi xảy ra
 			} else {
 				// gán danh sách lỗi lên Request
-				req.setAttribute("listErr", listErr);
+				req.setAttribute(Constant.REQUEST_LISTERROR, listErr);
 				// gán loginName lên request để giữ lại giá trị loginName trên textbox
-				req.setAttribute("loginName", loginName);
+				req.setAttribute(Constant.REQUEST_LOGINNAME, loginName);
 				// forward đến trang ADM001.jsp
 				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM001).forward(req, resp);
 			}
@@ -63,7 +59,7 @@ public class LoginController extends HttpServlet {
 			// Hiển thị ở console lỗi
 			System.out.println("Error : LoginServletController.doPost " + e.getMessage());
 			// Chuyển đến màn hình System_Error
-			resp.sendRedirect("systemError.do");
+			resp.sendRedirect(Constant.URL_SYSTEMERROR);
 		}
 	}
 
@@ -83,7 +79,7 @@ public class LoginController extends HttpServlet {
 			// Hiển thị lỗi
 			System.out.println("Error : LoginServletController.doGet " + e.getMessage());
 			// Chuyển đến màn hình System_Error
-			resp.sendRedirect(Constant.PATH_SYSTEM_ERROR);
+			resp.sendRedirect(Constant.URL_SYSTEMERROR);
 		}
 
 	}

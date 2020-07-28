@@ -342,7 +342,7 @@
 					<input class="btn" type="submit" value="確認" />					
 				</td>	
 				<td>
-					<input class="btn" type="button" value="戻る" />						
+					<a href="listUser.do?type=back"><input class="btn" type="button" value="戻る" /></a>					
 				</td>
 		</tr>		
 	</table>

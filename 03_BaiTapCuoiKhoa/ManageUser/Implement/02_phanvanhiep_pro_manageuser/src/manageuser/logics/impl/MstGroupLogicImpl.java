@@ -13,7 +13,7 @@ import manageuser.entities.MstGroupEntity;
 import manageuser.logics.MstGroupLogic;
 
 /**
- * Description của class là làm gì
+ * Implement MstGroupLogic để Xử lý logic cho các chức năng liên quan đến mst_group
  * 
  * @author Phan Van Hiep
  */

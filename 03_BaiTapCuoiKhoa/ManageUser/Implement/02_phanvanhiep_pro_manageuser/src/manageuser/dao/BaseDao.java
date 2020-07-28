@@ -5,6 +5,7 @@
 package manageuser.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import com.mysql.jdbc.Connection;
 
@@ -26,4 +27,12 @@ public interface BaseDao {
 	 * closeDatabase đóng kết nối đến database
 	 */
 	void closeConnection() throws SQLException;
+	
+	/**
+	 * getColumn Lấy ra danh list tất cả cột trong cơ sở dữ liệu
+	 * @return trả về list các cột trong cơ sở dữ liệu
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	HashMap<String, String> getListColumn() throws ClassNotFoundException, SQLException;
 }

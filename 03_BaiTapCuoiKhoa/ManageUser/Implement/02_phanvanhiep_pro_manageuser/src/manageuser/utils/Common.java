@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -214,5 +215,55 @@ public class Common {
 		}
 		// trả về list trang hiển thị
 		return listPaging;
+	}
+
+	/**
+	 * Lấy ra danh sách năm để gắn cho selectbox năm
+	 * 
+	 * @param startYear năm bắt đầu
+	 * @param endYear   năm kết thúc
+	 * @return trả về danh sách năm
+	 */
+	public static List<Integer> getListYear(int startYear, int endYear) {
+		// khởi tạo listYear
+		List<Integer> listYear = new ArrayList<>();
+		// thếm các giá trị vào listYear
+		for (int i = startYear; i <= endYear; i++) {
+			listYear.add(i);
+		}
+		// trả về danh sách các năm từ startYear đến endYear
+		return listYear;
+	}
+
+	/**
+	 * Lấy ra danh sách các tháng để gán cho selectbox tháng
+	 * 
+	 * @return trả về danh sách các tháng trong năm
+	 */
+	public static List<Integer> getListMonth() {
+		// khởi tạo listMonth
+		List<Integer> listMonth = new ArrayList<>();
+		// thếm các giá trị vào listMonth
+		for (int i = 1; i <= 12; i++) {
+			listMonth.add(i);
+		}
+		// trả về danh sách các tháng
+		return listMonth;
+	}
+
+	/**
+	 * Lấy ra danh sách các ngày để gán cho selectbox ngày
+	 * 
+	 * @return trả về danh sách các ngày trong tháng
+	 */
+	public static ArrayList<Integer> getListDay() {
+		// khởi tạo listMonth
+		ArrayList<Integer> listDay = new ArrayList<>();
+		// thếm các giá trị vào listDay
+		for (int i = 1; i <= 31; i++) {
+			listDay.add(i);
+		}
+		// trả về danh sách các ngày
+		return listDay;
 	}
 }

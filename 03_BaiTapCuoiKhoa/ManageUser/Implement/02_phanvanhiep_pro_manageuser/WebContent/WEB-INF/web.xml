@@ -34,12 +34,12 @@
     <url-pattern>/showUser.do</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>addUser</servlet-name>
-    <servlet-class>manageuser.controllers.AddUserController</servlet-class>
+    <servlet-name>addUserInput</servlet-name>
+    <servlet-class>manageuser.controllers.AddUserInputController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>addUser</servlet-name>
-    <url-pattern>/addUser.do</url-pattern>
+    <servlet-name>addUserInput</servlet-name>
+    <url-pattern>/addUserInput.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>systemError</servlet-name>

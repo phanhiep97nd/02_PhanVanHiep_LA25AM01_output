@@ -37,6 +37,7 @@ public class Constant {
 	public static final String URL_LOGIN = "login.do";
 	public static final String URL_OUT = "logout.do";
 	public static final String URL_LISTUSER = "listUser.do";
+	public static final String URL_SYSTEMERROR = "systemError.do";
 
 	// constant session
 	public static final String SESSION_LOGINNAME = "loginName";
@@ -44,7 +45,13 @@ public class Constant {
 	public static final String SESSION_SORT_TYPE = "sortType";
 	public static final String SESSION_SORT_LIKE = "sortLike";
 	public static final String SESSION_CURRENTPAGE = "currentPage";
-
+	
+	// constant các hạng mục ở màn hình login
+	public static final String NAME_TEXTBOX_LOGINNAME = "loginId";
+	public static final String NAME_TEXTBOX_PASSWORD = "password";
+	public static final String REQUEST_LISTERROR = "listErr";
+	public static final String REQUEST_LOGINNAME = "loginName";
+	
 	// constant các hạng mục ở MH listUser
 	public static final int RULE_ADMIN = 0;
 	public static final int RULE_USER = 1;
@@ -66,6 +73,26 @@ public class Constant {
 	public static final String SORT_TYPE_FULLNAME = "sortFullName";
 	public static final String SORT_TYPE_CODELEVEL = "sortCodeLevel";
 	public static final String SORT_TYPE_ENDDATE = "sortEndDate";
+	public static final String NAME_TEXTBOX_FULLNAME = "name";
+	public static final String NAME_PULLDOWN_GROUP = "group_id";
+	public static final String REQUEST_SORTTYPE = "sortType";
+	public static final String REQUEST_SORTLIKE = "sortLike";
+	public static final String REQUEST_CURRENTPAGE = "currentPage";
+	public static final String REQUEST_NOTIMSG005 = "notiMSG005";
+	public static final String REQUEST_LISTGROUP = "listGroup";
+	public static final String REQUEST_LISTUSERINFO = "listUserInfo";
+	public static final String REQUEST_LISTPAGING = "listPaging";
+	public static final String REQUEST_FULLNAME = "fullName";
+	public static final String REQUEST_GROUPID = "groupId";
+	public static final String REQUEST_TOTALPAGE = "totalPage";
+	public static final String REQUEST_LIMITPAGE = "limitPage";
+	public static final String REQUEST_SORTTYPE_FULLNAME = "sortTypeFullName";
+	public static final String REQUEST_SORTTYPE_CODELEVEL = "sortTypeCodeLevel";
+	public static final String REQUEST_SORTTYPE_ENDDATE = "sortTypeEndDate";
+	public static final String REQUEST_SORTBY_FULLNAME = "sortByFullName";
+	public static final String REQUEST_SORTBY_CODELEVEL = "sortByCodeLevel";
+	public static final String REQUEST_SORTBY_ENDDATE = "sortByEndDate";
+	
 
 	// constant URL type
 	public static final String URL_TYPE_DEFAULT = "?type=default";

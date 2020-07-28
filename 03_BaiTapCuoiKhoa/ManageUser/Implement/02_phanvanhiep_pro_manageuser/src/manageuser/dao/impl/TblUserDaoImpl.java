@@ -18,7 +18,7 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Description của class là làm gì
+ * Implement UserDao  để Xử lý Thao tác với DB bảng tbl_user
  * 
  * @author Phan Van Hiep
  */
@@ -96,6 +96,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		// YYYY/MM/DD
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		try {
+				// lấy danh sách tên các cột
+				listColumn = getListColumn();
 			// mở kết nối đến cơ sở dữ liệu
 			openConnection();
 			// kiểm tra xem đã kết nối thành công?
@@ -127,50 +129,54 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					// thêm câu lệnh vào sql
 					sql.append(" AND u.group_id = ? ");
 				}
-
-				// default chưa có điều kiện sort thì sort theo mặc định
-				if ("".equals(sortType)) {
-					// sort theo full_name
-					sql.append(" ORDER BY u.full_name ");
-					sql.append(sortByFullName);
-					// sort name_level
-					sql.append(", j.name_level ");
-					sql.append(sortByCodeLevel);
-					// sort end_date
-					sql.append(", d.end_date ");
-					sql.append(sortByEndDate);
-				}
-
-				if (Constant.SORT_TYPE_FULLNAME.equals(sortType)) {
-					// sort theo full_name
-					sql.append(" ORDER BY u.full_name ");
-					sql.append(sortByFullName);
-					// sort name_level
-					sql.append(", j.name_level ");
-					sql.append(sortByCodeLevel);
-					// sort end_date
-					sql.append(", d.end_date ");
-					sql.append(sortByEndDate);
-				} else if (Constant.SORT_TYPE_CODELEVEL.equals(sortType)) {
-					// sort name_level
-					sql.append(" ORDER BY j.name_level ");
-					sql.append(sortByCodeLevel);
-					// sort theo full_name
-					sql.append(", u.full_name ");
-					sql.append(sortByFullName);
-					// sort end_date
-					sql.append(", d.end_date ");
-					sql.append(sortByEndDate);
-				} else if (Constant.SORT_TYPE_ENDDATE.equals(sortType)) {
-					// sort end_date
-					sql.append(" ORDER BY d.end_date ");
-					sql.append(sortByEndDate);
-					// sort theo full_name
-					sql.append(", u.full_name ");
-					sql.append(sortByFullName);
-					// sort name_level
-					sql.append(", j.name_level ");
-					sql.append(sortByCodeLevel);
+				
+				// Kiểm tra các table có tồn tại trong DB
+				if (listColumn.containsKey("tbl_user_full_name") && listColumn.containsKey("mst_japan_name_level")
+						&& listColumn.containsKey("tbl_detail_user_japan_end_date")) {
+					// default chưa có điều kiện sort thì sort theo mặc định
+					if ("".equals(sortType)) {
+						// sort theo full_name
+						sql.append(" ORDER BY u.full_name ");
+						sql.append(sortByFullName);
+						// sort name_level
+						sql.append(", j.name_level ");
+						sql.append(sortByCodeLevel);
+						// sort end_date
+						sql.append(", d.end_date ");
+						sql.append(sortByEndDate);
+					} else {
+						if (Constant.SORT_TYPE_FULLNAME.equals(sortType)) {
+							// sort theo full_name
+							sql.append(" ORDER BY u.full_name ");
+							sql.append(sortByFullName);
+							// sort name_level
+							sql.append(", j.name_level ");
+							sql.append(sortByCodeLevel);
+							// sort end_date
+							sql.append(", d.end_date ");
+							sql.append(sortByEndDate);
+						} else if (Constant.SORT_TYPE_CODELEVEL.equals(sortType)) {
+							// sort name_level
+							sql.append(" ORDER BY j.name_level ");
+							sql.append(sortByCodeLevel);
+							// sort theo full_name
+							sql.append(", u.full_name ");
+							sql.append(sortByFullName);
+							// sort end_date
+							sql.append(", d.end_date ");
+							sql.append(sortByEndDate);
+						} else if (Constant.SORT_TYPE_ENDDATE.equals(sortType)) {
+							// sort end_date
+							sql.append(" ORDER BY d.end_date ");
+							sql.append(sortByEndDate);
+							// sort theo full_name
+							sql.append(", u.full_name ");
+							sql.append(sortByFullName);
+							// sort name_level
+							sql.append(", j.name_level ");
+							sql.append(sortByCodeLevel);
+						}
+					}
 				}
 
 				// Điều kiện lấy các bản ghi từ vị trí offset và lấy tiếp limit

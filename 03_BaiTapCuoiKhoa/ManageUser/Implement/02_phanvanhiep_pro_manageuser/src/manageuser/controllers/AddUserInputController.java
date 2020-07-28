@@ -14,12 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import manageuser.utils.Constant;
 
 /**
- * Xử lí chức năng thêm mới User
+ * Controller để xử lý cho màn hình ADM003 truong hợp Add
  * @author Phan Van Hiep
  */
-public class AddUserController extends HttpServlet{
+public class AddUserInputController extends HttpServlet{
+	/**
+	 * Xử lý khi click vào button Add của ADM002
+	 * 
+	 * @param req  request
+	 * @param resp response
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getServletContext().getRequestDispatcher(Constant.PATH_ADM005).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
 	}
 }

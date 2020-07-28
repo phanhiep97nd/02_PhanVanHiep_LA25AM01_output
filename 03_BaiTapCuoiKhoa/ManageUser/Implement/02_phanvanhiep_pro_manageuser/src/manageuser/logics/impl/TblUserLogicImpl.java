@@ -17,7 +17,7 @@ import manageuser.utils.Common;
 import manageuser.utils.MessageProperties;
 
 /**
- * Thực thi các hàm của TblUserLogic
+ * Implement UserLogic  để Xử lý logic cho các chức năng liên quan đến tbl_user
  * 
  * @author Phan Van Hiep
  */
