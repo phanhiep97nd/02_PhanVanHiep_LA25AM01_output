@@ -42,6 +42,22 @@
     <url-pattern>/addUserInput.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>addUserValidate</servlet-name>
+    <servlet-class>manageuser.controllers.AddUserInputController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addUserValidate</servlet-name>
+    <url-pattern>/addUserValidate.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>addUserConfirm</servlet-name>
+    <servlet-class>manageuser.controllers.AddUserConfirmController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addUserConfirm</servlet-name>
+    <url-pattern>/addUserConfirm.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>systemError</servlet-name>
     <servlet-class>manageuser.controllers.SystemErrorController</servlet-class>
   </servlet>

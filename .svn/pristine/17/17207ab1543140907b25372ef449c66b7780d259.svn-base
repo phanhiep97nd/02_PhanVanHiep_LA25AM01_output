@@ -17,7 +17,7 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="addUserValidate.do?type=validate" method="post" name="inputform">
+	<form action="ADM004.html" method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -37,14 +37,13 @@
 							cellspacing="0">
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
-								<td align="left"><input class="txBox" type="text"
-									name="loginName" value="" size="15"
-									onfocus="this.style.borderColor='#0066ff';"
+								<td align="left"><input class="txBox" type="text" name="id"
+									value="" size="15" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> グループ:</td>
-								<td align="left"><select name="groupId">
+								<td align="left"><select name="group_id">
 										<option value="0">選択してください</option>
 										<c:forEach items="${listMstGroup}" var="group">
 											<option value="${group.getGroupId() }">${group.getGroupName() }</option>
@@ -54,14 +53,14 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="fullName" value="" size="30"
+									name="name" value="" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">カタカナ氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="fullNameKatana" value="" size="30"
+									name="name" value="" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -69,20 +68,19 @@
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
 								<c:set var="birthday"
 									value="${fn:split(getDefaultValue.birthday, '/')}"></c:set>
-								<td align="left"><select name="yearofbirth"
-									id="yearofbirth"
+								<td align="left"><select id="yearofbirth"
 									onchange="changeYear('yearofbirth', 'monthofbirth', 'dayofbirth')">
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year }"
 												<c:if test="${year ==  birthday[0]}">selected</c:if>>${year }</option>
 										</c:forEach>
-								</select>年 <select name="monthofbirth" id="monthofbirth"
+								</select>年 <select id="monthofbirth"
 									onchange="changeMonth(this, 'yearofbirth', 'dayofbirth');">
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month }"
 												<c:if test="${month ==  birthday[1]}">selected</c:if>>${month }</option>
 										</c:forEach>
-								</select>月 <select name="dayofbirth" id="dayofbirth">
+								</select>月 <select id="dayofbirth">
 										<c:forEach items="${listDay}" var="day">
 											<option value="${day }" id="dayofbirth${day }"
 												<c:if test="${day ==  birthday[2]}">selected</c:if>>${day }</option>
@@ -106,14 +104,14 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="password" value="" size="30"
+									name="email" value="" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">パスワード（確認）:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="passwordConfirm" value="" size="30"
+									name="email" value="" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -123,7 +121,7 @@
 							</tr>
 							<tr class="japan" id="japan1">
 								<td class="lbl_left">資格:</td>
-								<td align="left"><select name="codeLevel">
+								<td align="left"><select name="kyu_id">
 										<option value="0">選択してください</option>
 										<c:forEach items="${listMstJapan}" var="mstJapan">
 											<option value="${mstJapan.getNameLevel() }">${mstJapan.getCodeLevel() }</option>
@@ -134,19 +132,19 @@
 								<td class="lbl_left">資格交付日:</td>
 								<c:set var="startDate"
 									value="${fn:split(getDefaultValue.startDate, '/')}"></c:set>
-								<td align="left"><select name="startyear" id="startyear"
+								<td align="left"><select id="startyear"
 									onchange="changeYear('startyear', 'startmonth', 'startday')">
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year }"
 												<c:if test="${year ==  startDate[0]}">selected</c:if>>${year }</option>
 										</c:forEach>
-								</select>年 <select name="startmonth" id="startmonth"
+								</select>年 <select id="startmonth"
 									onchange="changeMonth(this, 'startyear', 'startday');">
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month }"
 												<c:if test="${month ==  startDate[1]}">selected</c:if>>${month }</option>
 										</c:forEach>
-								</select>月 <select name="startday" id="startday">
+								</select>月 <select id="startday">
 										<c:forEach items="${listDay}" var="day">
 											<option value="${day }" id="startday${day }"
 												<c:if test="${day ==  startDate[2]}">selected</c:if>>${day }</option>
@@ -157,19 +155,19 @@
 								<td class="lbl_left">失効日:</td>
 								<c:set var="endDate"
 									value="${fn:split(getDefaultValue.endDate, '/')}"></c:set>
-								<td align="left"><select name="endyear" id="endyear"
+								<td align="left"><select id="endyear"
 									onchange="changeYear('endyear', 'endmonth', 'endday')">
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year +1}"
 												<c:if test="${(year+1) ==  endDate[0]}">selected</c:if>>${year +1}</option>
 										</c:forEach>
-								</select>年 <select name="endmonth" id="endmonth"
+								</select>年 <select id="endmonth"
 									onchange="changeMonth(this, 'endyear', 'endday');">
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month }"
 												<c:if test="${month ==  endDate[1]}">selected</c:if>>${month }</option>
 										</c:forEach>
-								</select>月 <select name="endday" id="endday">
+								</select>月 <select id="endday">
 										<c:forEach items="${listDay}" var="day">
 											<option value="${day }" id="endday${day }"
 												<c:if test="${day ==  endDate[2]}">selected</c:if>>${day }</option>

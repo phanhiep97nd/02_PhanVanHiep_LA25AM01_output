@@ -30,7 +30,6 @@ public class Constant {
 	public static final String PATH_ADM001 = "/Views/jsp/ADM001.jsp";
 	public static final String PATH_ADM002 = "/Views/jsp/ADM002.jsp";
 	public static final String PATH_ADM003 = "/Views/jsp/ADM003.jsp";
-	public static final String PATH_ADM004 = "/Views/jsp/ADM004.jsp";
 	public static final String PATH_ADM005 = "/Views/jsp/ADM005.jsp";
 	public static final String PATH_SYSTEM_ERROR = "/Views/jsp/System_Error.jsp";
 
@@ -39,7 +38,6 @@ public class Constant {
 	public static final String URL_OUT = "logout.do";
 	public static final String URL_LISTUSER = "listUser.do";
 	public static final String URL_SYSTEMERROR = "systemError.do";
-	public static final String URL_ADDUSERCONFIRM = "addUserConfirm.do";
 
 	// constant session
 	public static final String SESSION_LOGINNAME = "loginName";
@@ -111,9 +109,6 @@ public class Constant {
 	public static final String REQUEST_LISTYEAR = "listYear";
 	public static final String REQUEST_LISTMONTH = "listMonth";
 	public static final String REQUEST_LISTDAY = "listDay";
-	public static final String REQUEST_GETDEFAULTVALUE = "getDefaultValue";
-	public static final String REQUEST_TYPE = "type";
-	public static final String TYPE_VALIDATE = "validate";
 	
 
 }

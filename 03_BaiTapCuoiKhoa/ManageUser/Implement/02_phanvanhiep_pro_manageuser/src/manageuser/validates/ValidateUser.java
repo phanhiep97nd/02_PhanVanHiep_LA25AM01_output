@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import manageuser.entities.UserInfoEntity;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.utils.Constant;
 import manageuser.utils.MessageProperties;
@@ -21,10 +22,12 @@ import manageuser.utils.MessageProperties;
 public class ValidateUser {
 
 	/**
-	 * hàm calidate các thông tin nhập từ màn hình
+	 * hàm validate các thông tin nhập từ màn hình login
 	 * 
-	 * @param loginName login_name nhập từ màn hình
-	 * @param pass      pass nhập từ màn hình
+	 * @param loginName
+	 *            login_name nhập từ màn hình
+	 * @param pass
+	 *            pass nhập từ màn hình
 	 * @return list lỗi
 	 */
 	public static List<String> validateLogin(String loginName, String pass)
@@ -50,6 +53,18 @@ public class ValidateUser {
 			throw e;
 		}
 		return lstError;
+	}
+
+	/**
+	 * hàm validate các thông tin nhập từ màn hình ADM003
+	 * 
+	 * @param userInfor
+	 *            đối tượng userInfor để validate các thuộc tính
+	 * @return list lỗi
+	 */
+	public static List<String> validateUserInfor(UserInfoEntity userInfor) {
+		List<String> listError = new ArrayList<>();
+		return listError;
 	}
 
 }

@@ -1,26 +1,20 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="<c:url value = "Views/css/style.css"/>" rel="stylesheet"
+	type="text/css" />
 <script type="text/javascript" src="../js/user.js"></script>
 <title>ユーザ管理</title>
 </head>
 <body>
-	<!-- Begin vung header -->	
-		<div>			
-			<div>
-			<table>
-			<tr>
-			<td width = "80%"><img src="../images/logo-manager-user.gif" alt="Luvina" /><td>
-			<td align="left"><a href = "ADM001.html">ログアウト</a> &nbsp; <a href = "ADM002.html">トップ</a><td>
-			</tr>
-			</table>
-			</div>
-		</div>
-
-<!-- End vung header -->	
+<!-- Begin vung header -->
+	<%@include file="header.jsp"%>
+	<!-- End vung header -->	
 
 <!-- Begin vung input-->	
 	<form action="ADM006.html" method="post" name="inputform">	
@@ -109,11 +103,10 @@
 <!-- End vung input -->
 
 <!-- Begin vung footer -->
-<div class = "lbl_footer">
-	<br><br><br><br>
-			Copyright ©　2010　ルビナソフトウエア株式会社. All rights reserved.
-</div>
-<!-- End vung footer -->
+	<div class="lbl_footer">
+		<%@include file="footer.jsp"%>
+	</div>
+	<!-- End vung footer -->
 </body>
 
 </html>
