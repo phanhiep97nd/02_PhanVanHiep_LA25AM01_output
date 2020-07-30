@@ -36,10 +36,8 @@ public class AddUserInputController extends HttpServlet {
 	/**
 	 * Xử lý khi click vào button Add của ADM002
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,8 +47,7 @@ public class AddUserInputController extends HttpServlet {
 
 			// Nếu checkLogin trả về true (Đã đăng nhập)
 			if (Common.checkLogin(session)) {
-				// gọi đến hàm setDataLogic để truyền các giá trị của pulldown
-				// lên req
+				// gọi đến hàm setDataLogic để truyền các giá trị của pulldown lên req
 				setDataLogic(req);
 				// lấy userInfoEntity
 				UserInfoEntity userInfoEntity = getDefaultValue(req);
@@ -75,10 +72,8 @@ public class AddUserInputController extends HttpServlet {
 	/**
 	 * Xử lý khi click vào button Xác nhận của ADM002
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -97,18 +92,15 @@ public class AddUserInputController extends HttpServlet {
 				// userInfoEntity
 				userInfoEntity = getDefaultValue(req);
 
+				// gán userInfoEntity lên sesion
+				session.setAttribute(Constant.SESSION_ADDUSER_CONFIRM, userInfoEntity);
 				// gán giá trị trả về từ hàm validateuserInfor vào listError
 				listError = ValidateUser.validateUserInfor(userInfoEntity);
 				// Kiểm tra xem có lỗi hay không
 				if (listError.size() == 0) {
-					// gán userInfoEntity lên sesion
-					session.setAttribute(Constant.SESSION_ADDUSER_CONFIRM, userInfoEntity);
-					// sendRedirect đến URL addUserConfirm
 					resp.sendRedirect(Constant.URL_ADDUSERCONFIRM);
 				} else {
-					setDataLogic(req);
-					req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
-					req.setAttribute("listError", listError);
+
 					req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
 				}
 
@@ -174,12 +166,11 @@ public class AddUserInputController extends HttpServlet {
 	}
 
 	/**
-	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương
-	 * ứng với các thuộc tính của đối tượng UserInfoEntity
+	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương ứng
+	 * với các thuộc tính của đối tượng UserInfoEntity
 	 * 
 	 * @return đối tượng tblUserInfoEntity
-	 * @throws ClassNotFoundException,
-	 *             SQLException
+	 * @throws ClassNotFoundException, SQLException
 	 */
 	private UserInfoEntity getDefaultValue(HttpServletRequest req) throws ClassNotFoundException, SQLException {
 		try {

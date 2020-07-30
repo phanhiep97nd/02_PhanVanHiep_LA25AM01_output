@@ -166,11 +166,6 @@ public class Constant {
 	public static final String END_DAY_ADM003 = "endday";
 	public static final String TOTAL_ADM003 = "total";
 	
-	// constant validate màn hình ADM003
-	public static final int MIN_LENGTH_LOGINNAME = 4;
-	public static final int MAX_LENGTH_LOGINNAME = 15;
-	public static final String FORMAT_LOGINNAME = "^[a-zA-Z_][0-9a-zA-Z_]+";
-	
 	
 
 }

@@ -26,13 +26,11 @@
 					<div style="padding-left: 100px;">会員情報編集</div>
 				</th>
 			</tr>
-			<c:forEach items="${listError}" var="error">
-				<tr>
-					<td class="errMsg">
-						<div style="padding-left: 120px">${error}&nbsp;</div>
-					</td>
-				</tr>
-			</c:forEach>
+			<tr>
+				<td class="errMsg">
+					<div style="padding-left: 120px">&nbsp;</div>
+				</td>
+			</tr>
 			<tr>
 				<td align="left">
 					<div style="padding-left: 100px;">
@@ -51,8 +49,7 @@
 								<td align="left"><select name="groupId">
 										<option value="0">選択してください</option>
 										<c:forEach items="${listMstGroup}" var="group">
-											<option value="${group.getGroupId() }"
-												<c:if test="${userInfoEntity.groupId == group.groupId}">selected</c:if>>
+											<option value="${group.getGroupId() }" <c:if test="${userInfoEntity.groupId == group.groupId}">selected</c:if>>
 												${group.getGroupName() }</option>
 										</c:forEach>
 								</select> <span>&nbsp;&nbsp;&nbsp;</span></td>
@@ -134,8 +131,7 @@
 								<td align="left"><select name="codeLevel">
 										<option value="0">選択してください</option>
 										<c:forEach items="${listMstJapan}" var="mstJapan">
-											<option value="${mstJapan.getCodeLevel() }"
-												<c:if test="${userInfoEntity.codeLevel == mstJapan.getCodeLevel()}">selected</c:if>>
+											<option value="${mstJapan.getCodeLevel() }" <c:if test="${userInfoEntity.codeLevel == mstJapan.getCodeLevel()}">selected</c:if>>
 												${mstJapan.getCodeLevel() }</option>
 										</c:forEach>
 								</select></td>
@@ -189,8 +185,7 @@
 							<tr class="japan" id="japan4">
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="total"
-									value="<c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if>"
+									name="total" value="<c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if>"
 									size="5" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>

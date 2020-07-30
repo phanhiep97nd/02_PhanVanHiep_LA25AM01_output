@@ -18,7 +18,7 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Implement UserDao  để Xử lý Thao tác với DB bảng tbl_user
+ * Implement UserDao để Xử lý Thao tác với DB bảng tbl_user
  * 
  * @author Phan Van Hiep
  */
@@ -26,13 +26,14 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Lấy ra user trong bảng tbl_user bằng loginName
 	 * 
-	 * @param loginName loginName người dùng nhập vào
+	 * @param loginName
+	 *            loginName người dùng nhập vào
 	 * @return trả về một user tìm được trong DB
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	@Override
-	public TblUserEntity getTblUserByLoginName(String loginName) throws SQLException, ClassNotFoundException {
+	public TblUserEntity getTblUserByLoginId(String loginName) throws SQLException, ClassNotFoundException {
 		// Khởi taho một đối tượng TblUserEntity
 		TblUserEntity user = new TblUserEntity();
 		try {
@@ -60,7 +61,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 		} catch (SQLException | NullPointerException e) {
 			// Thông báo lỗi ở màn hình console
-			System.out.println("Error: TblUserDaoImpl.getTblUserByLoginName " + e.getMessage());
+			System.out.println("Error: TblUserDaoImpl.getTblUserByLoginId " + e.getMessage());
 			throw e;
 		} finally {
 			// đóng kết nối
@@ -71,17 +72,25 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	}
 
 	/**
-	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
-	 * tbl_detail_user_japan
+	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group,
+	 * mst_japan, tbl_detail_user_japan
 	 * 
-	 * @param offset          vị trí bắt đầu lấy
-	 * @param limit           số bản ghi tối đa trên 1 page
-	 * @param groupId         là id của nhóm được chọn trong pulldown
-	 * @param fullName        là fullname tìm kiếm nhập vào từ textbox
-	 * @param sortType        là loại sắp xếp theo fullName, codeLevel hay endDate
-	 * @param sortByFullName  giá trị sắp xếp (ASC/DESC) cột fullName
-	 * @param sortByCodeLevel giá trị sắp xếp (ASC/DESC) cột codelevel
-	 * @param sortByEndDate   giá trị sắp xếp (ASC/DESC) cột endDate
+	 * @param offset
+	 *            vị trí bắt đầu lấy
+	 * @param limit
+	 *            số bản ghi tối đa trên 1 page
+	 * @param groupId
+	 *            là id của nhóm được chọn trong pulldown
+	 * @param fullName
+	 *            là fullname tìm kiếm nhập vào từ textbox
+	 * @param sortType
+	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
+	 * @param sortByFullName
+	 *            giá trị sắp xếp (ASC/DESC) cột fullName
+	 * @param sortByCodeLevel
+	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
+	 * @param sortByEndDate
+	 *            giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -96,8 +105,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		// YYYY/MM/DD
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		try {
-				// lấy danh sách tên các cột
-				listColumn = getListColumn();
+			// lấy danh sách tên các cột
+			listColumn = getListColumn();
 			// mở kết nối đến cơ sở dữ liệu
 			openConnection();
 			// kiểm tra xem đã kết nối thành công?
@@ -129,7 +138,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					// thêm câu lệnh vào sql
 					sql.append(" AND u.group_id = ? ");
 				}
-				
+
 				// Kiểm tra các table có tồn tại trong DB
 				if (listColumn.containsKey("tbl_user_full_name") && listColumn.containsKey("mst_japan_name_level")
 						&& listColumn.containsKey("tbl_detail_user_japan_end_date")) {
@@ -318,5 +327,46 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			// đóng kết nối
 			closeConnection();
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#getTblUserByLoginName(java.lang.String)
+	 */
+	@Override
+	public TblUserEntity getTblUserByLoginName(String loginName) throws SQLException, ClassNotFoundException {
+		// Khởi taho một đối tượng TblUserEntity
+		TblUserEntity user = new TblUserEntity();
+		try {
+			// Mở kết nối
+			openConnection();
+			// Check nếu mở kết nối thành công
+			if (conn != null) {
+				// Câu lệnh SQL
+				String sql = "SELECT * FROM tbl_user WHERE login_name = ?";
+				// Gọi đến prepareStatement truyền vào câu lệnh SQL
+				pstm = conn.prepareStatement(sql);
+				// Gán giá trị tương ứng vào câu truy vấn
+				int index = 1;
+				pstm.setString(index++, loginName);
+				// Khởi tạo một đối tượng ResultSet để nhận kết quả trả về từ
+				// câu Query
+				ResultSet rs = pstm.executeQuery();
+				// Chạy từng kết quả của ResultSet
+				while (rs.next()) {
+					user.setLoginName(rs.getString("login_name"));
+				}
+			}
+		} catch (SQLException | NullPointerException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error: TblUserDaoImpl.getTblUserByLoginName " + e.getMessage());
+			throw e;
+		} finally {
+			// đóng kết nối
+			closeConnection();
+		}
+		// Trả về đối tượng user
+		return user;
 	}
 }

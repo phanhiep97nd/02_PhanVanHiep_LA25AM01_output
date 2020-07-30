@@ -20,37 +20,6 @@ public class Constant {
 	public static final String ER016 = "ER016";
 	public static final String MSG005 = "MSG005";
 	public static final String ER015 = "ER015";
-	
-	// Các thông báo validate ở màn hình ADM003
-	public static final String ER001_LOGINNAME = MessageProperties.getValueByKey("ER001_LOGINNAME");
-	public static final String ER003_LOGINNAME = MessageProperties.getValueByKey("ER003_LOGINNAME");
-	public static final String ER007_LOGINNAME = MessageProperties.getValueByKey("ER007_LOGINNAME");
-	public static final String ER0019_LOGINNAME = MessageProperties.getValueByKey("ER0019_LOGINNAME");
-	public static final String ER002_GROUPID = MessageProperties.getValueByKey("ER002_GROUPID");
-	public static final String ER004_GROUPID = MessageProperties.getValueByKey("ER004_GROUPID");
-	public static final String ER001_FULLNAME = MessageProperties.getValueByKey("ER001_FULLNAME");
-	public static final String ER006_FULLNAME = MessageProperties.getValueByKey("ER006_FULLNAME");
-	public static final String ER006_FULLNAMEKANA = MessageProperties.getValueByKey("ER006_FULLNAMEKANA");
-	public static final String ER009_FULLNAMEKANA = MessageProperties.getValueByKey("ER009_FULLNAMEKANA");
-	public static final String ER001_MAIL = MessageProperties.getValueByKey("ER001_MAIL");
-	public static final String ER003_MAIL = MessageProperties.getValueByKey("ER003_MAIL");
-	public static final String ER005_MAIL = MessageProperties.getValueByKey("ER005_MAIL");
-	public static final String ER006_MAIL = MessageProperties.getValueByKey("ER006_MAIL");
-	public static final String ER001_TEL = MessageProperties.getValueByKey("ER001_TEL");
-	public static final String ER005_TEL = MessageProperties.getValueByKey("ER005_TEL");
-	public static final String ER006_TEL = MessageProperties.getValueByKey("ER006_TEL");
-	public static final String ER008_TEL = MessageProperties.getValueByKey("ER008_TEL");
-	public static final String ER001_PASSWORD = MessageProperties.getValueByKey("ER001_PASSWORD");
-	public static final String ER007_PASSWORD = MessageProperties.getValueByKey("ER007_PASSWORD");
-	public static final String ER008_PASSWORD = MessageProperties.getValueByKey("ER008_PASSWORD");
-	public static final String ER017_PASSWORD_CONFIRM = MessageProperties.getValueByKey("ER017_PASSWORD_CONFIRM");
-	public static final String ER004_CODELEVEL = MessageProperties.getValueByKey("ER004_CODELEVEL");
-	public static final String ER012_ENDDATE = MessageProperties.getValueByKey("ER012_ENDDATE");
-	public static final String ER001_TOTAL = MessageProperties.getValueByKey("ER001_TOTAL");
-	public static final String ER018_TOTAL = MessageProperties.getValueByKey("ER018_TOTAL");
-	public static final String ER006_TOTAL = MessageProperties.getValueByKey("ER006_TOTAL");
-	
-	
 
 	// constant path properties
 	public static final String PROPERTIES_MESSAGE_PATH = "//message.properties";
@@ -78,7 +47,6 @@ public class Constant {
 	public static final String SESSION_SORT_TYPE = "sortType";
 	public static final String SESSION_SORT_LIKE = "sortLike";
 	public static final String SESSION_CURRENTPAGE = "currentPage";
-	public static final String SESSION_ADDUSER_CONFIRM = "addUserConfirm";
 	
 	// constant các hạng mục ở màn hình login
 	public static final String NAME_TEXTBOX_LOGINNAME = "loginId";
@@ -143,34 +111,9 @@ public class Constant {
 	public static final String REQUEST_LISTYEAR = "listYear";
 	public static final String REQUEST_LISTMONTH = "listMonth";
 	public static final String REQUEST_LISTDAY = "listDay";
-	public static final String REQUEST_USERINFORENTITY = "userInfoEntity";
+	public static final String REQUEST_GETDEFAULTVALUE = "getDefaultValue";
 	public static final String REQUEST_TYPE = "type";
 	public static final String TYPE_VALIDATE = "validate";
-	public static final String LOGIN_NAME_ADM003 = "loginName";
-	public static final String GROUPID_ADM003 = "groupId";
-	public static final String FULL_NAME_ADM003 = "fullName";
-	public static final String FULL_NAME_KATANA_ADM003 = "fullNameKatana";
-	public static final String YEAR_OF_BIRTH_ADM003 = "yearofbirth";
-	public static final String MONTH_OF_BIRTH_ADM003 = "monthofbirth";
-	public static final String DAY_OF_BIRTH_ADM003 = "dayofbirth";
-	public static final String EMAIL_ADM003 = "email";
-	public static final String TEL_ADM003 = "tel";
-	public static final String PASSWORD_ADM003 = "password";
-	public static final String PASSWORD_CONFIRM_ADM003 = "passwordConfirm";
-	public static final String CODE_LEVEL_ADM003 = "codeLevel";
-	public static final String START_YEAR_ADM003 = "startyear";
-	public static final String START_MONTH_ADM003 = "startmonth";
-	public static final String START_DAY_ADM003 = "startday";
-	public static final String END_YEAR_ADM003 = "endyear";
-	public static final String END_MONTH_ADM003 = "endmonth";
-	public static final String END_DAY_ADM003 = "endday";
-	public static final String TOTAL_ADM003 = "total";
-	
-	// constant validate màn hình ADM003
-	public static final int MIN_LENGTH_LOGINNAME = 4;
-	public static final int MAX_LENGTH_LOGINNAME = 15;
-	public static final String FORMAT_LOGINNAME = "^[a-zA-Z_][0-9a-zA-Z_]+";
-	
 	
 
 }

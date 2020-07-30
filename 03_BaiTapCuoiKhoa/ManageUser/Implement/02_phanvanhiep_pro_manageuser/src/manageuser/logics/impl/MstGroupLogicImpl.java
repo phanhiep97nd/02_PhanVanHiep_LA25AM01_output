@@ -13,14 +13,15 @@ import manageuser.entities.MstGroupEntity;
 import manageuser.logics.MstGroupLogic;
 
 /**
- * Implement MstGroupLogic để Xử lý logic cho các chức năng liên quan đến mst_group
+ * Implement MstGroupLogic để Xử lý logic cho các chức năng liên quan đến
+ * mst_group
  * 
  * @author Phan Van Hiep
  */
 public class MstGroupLogicImpl implements MstGroupLogic {
 
 	/**
-	 * getAllMstGroup lấy tất cả các group 
+	 * getAllMstGroup lấy tất cả các group
 	 * 
 	 * @param
 	 * @return list group trong bảng mst_group
@@ -34,7 +35,8 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 		// Khởi tạo đối tượng mstGroupImpl
 		MstGroupDao mstGroupImpl = new MstGroupDaoImpl();
 		try {
-			// gán giá trị listGroup bằng kết quả trả về từ hàm getAllMstGroup() ở lớp MstGroupDaoImpl
+			// gán giá trị listGroup bằng kết quả trả về từ hàm getAllMstGroup()
+			// ở lớp MstGroupDaoImpl
 			listGroup = mstGroupImpl.getAllMstGroup();
 		} catch (ClassNotFoundException | SQLException e) {
 			// Thông báo lỗi ở màn hình console
@@ -43,5 +45,25 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 			throw e;
 		}
 		return listGroup;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.MstGroupLogic#checkExistGroup(int)
+	 */
+	@Override
+	public Boolean checkExistGroup(int groupId) throws ClassNotFoundException, SQLException {
+		// Khởi tạo listGroup để lưu tất cả các group lấy được
+		ArrayList<MstGroupEntity> listGroup = getAllMstGroup();
+		// Khởi tạo một biến check
+		boolean check = false;
+		// Nếu có tồn tại groupId thì gán check bằng true
+		for (int i = 0; i < listGroup.size(); i++) {
+			if (listGroup.get(i).getGroupId() == groupId) {
+				check = true;
+			}
+		}
+		return check;
 	}
 }

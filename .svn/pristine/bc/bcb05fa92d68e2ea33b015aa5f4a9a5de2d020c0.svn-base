@@ -39,13 +39,12 @@ public class AddUserConfirmController extends HttpServlet {
 
 			// truyền userInfoEntity vào request
 			req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
-			// forward
-			req.getServletContext().getRequestDispatcher(Constant.PATH_ADM004).forward(req, resp);
 		} catch (Exception e) {
 			// Hiển thị ở console lỗi
 			System.out.println("Error : AddUserConfirmController.doGet " + e.getMessage());
 			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.URL_SYSTEMERROR);
 		}
+		req.getServletContext().getRequestDispatcher(Constant.PATH_ADM004).forward(req, resp);
 	}
 }

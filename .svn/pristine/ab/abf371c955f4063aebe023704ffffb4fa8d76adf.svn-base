@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import manageuser.entities.UserInfoEntity;
-import manageuser.logics.MstGroupLogic;
 import manageuser.logics.TblUserLogic;
-import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
@@ -73,16 +71,12 @@ public class ValidateUser {
 		List<String> listError = new ArrayList<>();
 		// validate loginName
 		String errorLoginName = validateLoginName(userInforEntity.getLoginName());
-		String errorGroup = validateGroup(userInforEntity.getGroupId());
 		String errorFullName = validateFullName(userInforEntity.getFullName());
 		String errorFullNameKatana = validateFullNameKatana(userInforEntity.getFullNameKatana());
 		// nếu có lỗi
 		if (!"".equals(errorLoginName)) {
 			// thêm lỗi vào trong danh sách lỗi
 			listError.add(errorLoginName);
-		}
-		if (!"".equals(errorGroup)) {
-			listError.add(errorGroup);
 		}
 		if (!"".equals(errorFullName)) {
 			listError.add(errorFullName);
@@ -94,43 +88,16 @@ public class ValidateUser {
 	}
 
 	/**
-	 * validate selectbox group
-	 * 
-	 * @param groupId
-	 *            groupId cần kiểm tra
-	 * @return lỗi nếu có
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
-	private static String validateGroup(int groupId) throws ClassNotFoundException, SQLException {
-		// Khởi tạo biến chứa lỗi
-		String errGroup = "";
-		// Khởi tạo đối tượng mstGroupLogicImpl
-		MstGroupLogic mstGroupLogicImpl = new MstGroupLogicImpl();
-		// Kiểm tra chưa chọn
-		if (Constant.GROUPID_DEFAULT == groupId) {
-			errGroup = Constant.ER002_GROUPID;
-			// Kiểm tra tồn tại groupId
-		} else if (!mstGroupLogicImpl.checkExistGroup(groupId)) {
-			errGroup = Constant.ER004_GROUPID;
-		}
-		return errGroup;
-	}
-
-	/**
-	 * Validate trường Fullname Kana
-	 * 
 	 * @param fullNameKatana
-	 *            tên kana cần validate
-	 * @return lỗi nếu có
+	 * @return Description
+	 * @param [name]
+	 *            [giải thích].
+	 * @return [giải thích]
 	 */
 	private static String validateFullNameKatana(String fullNameKatana) {
-		// Khởi tạo biến chứa lỗi
 		String errFullNameKatana = "";
-		// Kiểm tra kí tư Kana
 		if (!Common.isKatakana(fullNameKatana)) {
 			errFullNameKatana = Constant.ER009_FULLNAMEKANA;
-			// Kiểm tra max kí tự
 		} else if (!Common.checkLength(fullNameKatana, 0, 255)) {
 			errFullNameKatana = Constant.ER006_FULLNAMEKANA;
 		}
@@ -145,12 +112,9 @@ public class ValidateUser {
 	 * @return lỗi
 	 */
 	private static String validateFullName(String fullName) {
-		// Khởi tạo biến chữa lỗi
 		String errFullName = "";
-		// Kiểm tra rỗng
-		if (Common.checkEmpty(fullName)) {
+		if (Common.checkEmpty(errFullName)) {
 			errFullName = Constant.ER001_FULLNAME;
-			// Kiểm tra max kí tự
 		} else if (!Common.checkLength(fullName, 0, 255)) {
 			errFullName = Constant.ER006_FULLNAME;
 		}
@@ -171,16 +135,13 @@ public class ValidateUser {
 		String errLoginName = "";
 		// Khởi tạo đối tượng tblUserLogic
 		TblUserLogic tblUserLogic = new TblUserLogicImpl();
-		// Nếu rỗng thì gán mã lỗi ER001
+		// Nếu rỗng thì gán mã lỗi Ẻ001
 		if (Common.checkEmpty(loginName)) {
 			errLoginName = Constant.ER001_LOGINNAME;
-			// Kiểm tra format
 		} else if (!Common.checkFormat(loginName, Constant.FORMAT_LOGINNAME)) {
 			errLoginName = Constant.ER0019_LOGINNAME;
-			// Kiểm tra độ dài khoảng
 		} else if (!Common.checkLength(loginName, Constant.MIN_LENGTH_LOGINNAME, Constant.MAX_LENGTH_LOGINNAME)) {
 			errLoginName = Constant.ER007_LOGINNAME;
-			// Check tồn tại trong DB
 		} else if (tblUserLogic.checkExistedLoginName(loginName)) {
 			errLoginName = Constant.ER003_LOGINNAME;
 		}

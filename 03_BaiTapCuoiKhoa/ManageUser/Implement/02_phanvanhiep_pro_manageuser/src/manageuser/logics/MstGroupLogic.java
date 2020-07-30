@@ -11,10 +11,11 @@ import manageuser.entities.MstGroupEntity;
 
 /**
  * Interface Xử lý logic cho các chức năng liên quan đến mst_group
+ * 
  * @author Phan Van Hiep
  */
-public interface MstGroupLogic{
-	
+public interface MstGroupLogic {
+
 	/**
 	 * getAllMstGroup lấy tất cả các group trong bảng mst_group
 	 * 
@@ -24,4 +25,15 @@ public interface MstGroupLogic{
 	 * @throws ClassNotFoundException
 	 */
 	ArrayList<MstGroupEntity> getAllMstGroup() throws ClassNotFoundException, SQLException;
+
+	/**
+	 * checkExistGroup kiểm tra group có tồn tại hay không
+	 * 
+	 * @param groupId
+	 *            Id group cần kiểm tra
+	 * @return true nếu tồn tại, false nếu ngược lại
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	Boolean checkExistGroup(int groupId) throws ClassNotFoundException, SQLException;
 }

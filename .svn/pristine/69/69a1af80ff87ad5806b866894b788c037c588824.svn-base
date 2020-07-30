@@ -16,9 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import manageuser.dao.TblUserDao;
 import manageuser.dao.impl.TblUserDaoImpl;
-import manageuser.entities.MstGroupEntity;
-import manageuser.logics.MstGroupLogic;
-import manageuser.logics.impl.MstGroupLogicImpl;
 
 /**
  * Chứa các hàm common của dự án
@@ -82,7 +79,7 @@ public class Common {
 				String loginName = (String) session.getAttribute(Constant.SESSION_LOGINNAME);
 				// Nếu lấy được đối tượng UserDaoImpl từ hàm getTblUserByLoginName nghĩa là
 				// loginName này có tồn tại trong DB
-				if (userDaoImpl.getTblUserByLoginId(loginName) != null) {
+				if (userDaoImpl.getTblUserByLoginName(loginName) != null) {
 					return true;
 				}
 			} else {
@@ -333,38 +330,6 @@ public class Common {
 		}
 		return false;
 	}
-	
-    /**
-     * check kí tự Kana
-     * 
-     * @param text chuỗi cần check
-     * @return true nếu là kí tự kana, false nếu ngược lại
-     */    
-    public static boolean isKatakana(String text) {
-        char[] c = text.toCharArray();
-    
-            for (int i = 0; i < c.length; i++) {
-                if ((Character.UnicodeBlock.of(c[i]) != Character.UnicodeBlock.KATAKANA) && (!isDigit(c[i]))
-                        && (!Character.isWhitespace(c[i]))) {
-            return false;
-            }
-        }
-        return true;
-    }
-    
-    /**
-     * Kiểm tra digit một kí tự
-     * 
-     * @param c kí tự cần kiểm tra
-     * @return true nếu là kí tự diGit
-     */
-    private static boolean isDigit(char c) {
-        int x = (int) c; 
-        if ((x >= 48) && (x <= 57)) {
-            return true;
-        }  
-        return false;
-    }
 
-    
+
 }

@@ -25,7 +25,7 @@ public interface TblUserDao extends BaseDao {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	TblUserEntity getTblUserByLoginName(String loginName) throws SQLException, ClassNotFoundException;
+	TblUserEntity getTblUserByLoginId(String loginName) throws SQLException, ClassNotFoundException;
 
 	/**
 	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
@@ -57,5 +57,12 @@ public interface TblUserDao extends BaseDao {
 	 * @throws ClassNotFoundException
 	 */
 	int getTotalUsers(int groupId, String fullName) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * Lấy ra đối tượng user từ loginName
+	 * @param loginName loginName dùng để tìm kiếm
+	 * @return đối tượng tblUserEntity
+	 */
+	TblUserEntity getTblUserByLoginName(String loginName) throws SQLException, ClassNotFoundException;
 
 }

@@ -68,6 +68,5 @@ public interface TblUserLogic {
 	 * @throws ClassNotFoundException 
 	 */
 	Boolean checkExistedLoginName(String loginName) throws ClassNotFoundException, SQLException;
-
 	
 }
