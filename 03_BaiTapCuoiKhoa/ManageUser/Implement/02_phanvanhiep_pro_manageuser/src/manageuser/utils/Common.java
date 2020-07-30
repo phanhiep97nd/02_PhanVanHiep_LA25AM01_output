@@ -269,14 +269,42 @@ public class Common {
 		// trả về danh sách các ngày
 		return listDay;
 	}
-	
+
 	/**
 	 * Sử dụng để có thể lấy về ngày tháng năm hiện tại
 	 * 
 	 * @return trả về một đối tượng calender
 	 */
-	public static Calendar getDate(){
+	public static Calendar getDate() {
 		Calendar calender = Calendar.getInstance();
 		return calender;
 	}
+
+	/**
+	 * Sử dụng để chuyển các chuỗi về định dạng ngày YYYY/MM/DD
+	 * 
+	 * @param year  chuỗi năm
+	 * @param month chuỗi tháng
+	 * @param day   chuỗi ngày
+	 * @return chuỗi có đạnh dạng YYYY/MM/DD
+	 */
+	public static String setFormatDate(String year, String month, String day) {
+		String result = year + "/" + month + "/" + day;
+		return result;
+	}
+
+	/**
+	 * Kiểm tra xem một chuỗi có rỗng không
+	 * 
+	 * @param str chuỗi cần kiểm tra
+	 * @return true nếu rỗng và ngược lại
+	 */
+	public static boolean checkEmpty(String str) {
+		// Nếu rỗng thì trả về true
+		if ("".equals(str)) {
+			return true;
+		}
+		return false;
+	}
+
 }

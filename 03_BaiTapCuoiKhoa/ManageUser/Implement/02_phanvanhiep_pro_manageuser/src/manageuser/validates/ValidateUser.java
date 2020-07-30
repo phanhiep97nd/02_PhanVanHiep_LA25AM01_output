@@ -11,6 +11,7 @@ import java.util.List;
 
 import manageuser.entities.UserInfoEntity;
 import manageuser.logics.impl.TblUserLogicImpl;
+import manageuser.utils.Common;
 import manageuser.utils.Constant;
 import manageuser.utils.MessageProperties;
 
@@ -24,10 +25,8 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình login
 	 * 
-	 * @param loginName
-	 *            login_name nhập từ màn hình
-	 * @param pass
-	 *            pass nhập từ màn hình
+	 * @param loginName login_name nhập từ màn hình
+	 * @param pass      pass nhập từ màn hình
 	 * @return list lỗi
 	 */
 	public static List<String> validateLogin(String loginName, String pass)
@@ -58,13 +57,35 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình ADM003
 	 * 
-	 * @param userInfor
-	 *            đối tượng userInfor để validate các thuộc tính
+	 * @param userInfor đối tượng userInfor để validate các thuộc tính
 	 * @return list lỗi
 	 */
-	public static List<String> validateUserInfor(UserInfoEntity userInfor) {
+	public static List<String> validateUserInfor(UserInfoEntity userInforEntity) {
 		List<String> listError = new ArrayList<>();
+		// validate loginName
+		String errorLoginName = validateLoginName(userInforEntity.getLoginName());
+		// nếu có lỗi
+		if (!"".equals(errorLoginName)) {
+			// thêm lỗi vào trong danh sách lỗi
+			listError.add(errorLoginName);
+		}
 		return listError;
+	}
+
+	/**
+	 * validate giá trị của trường loginName
+	 * 
+	 * @param loginName giá trị cần validate
+	 * @return lỗi nếu có
+	 */
+	private static String validateLoginName(String loginName) {
+		// Khởi tạo biến chứa lỗi
+		String errLoginName = "";
+		// Nếu rỗng thì gán mã lỗi Ẻ001
+		if (Common.checkEmpty(loginName)) {
+			errLoginName = Constant.ER001_LOGINNAME;
+		}
+		return errLoginName;
 	}
 
 }

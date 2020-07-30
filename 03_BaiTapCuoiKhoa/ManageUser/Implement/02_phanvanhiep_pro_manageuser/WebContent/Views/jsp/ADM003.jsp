@@ -17,7 +17,8 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="addUserValidate.do?type=validate" method="post" name="inputform">
+	<form action="addUserValidate.do?type=validate" method="post"
+		name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -38,7 +39,8 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="loginName" value="" size="15"
+									name="loginName"
+									value="${fn:escapeXml(userInfoEntity.loginName)}" size="15"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -47,28 +49,31 @@
 								<td align="left"><select name="groupId">
 										<option value="0">選択してください</option>
 										<c:forEach items="${listMstGroup}" var="group">
-											<option value="${group.getGroupId() }">${group.getGroupName() }</option>
+											<option value="${group.getGroupId() }" <c:if test="${userInfoEntity.groupId == group.groupId}">selected</c:if>>
+												${group.getGroupName() }</option>
 										</c:forEach>
 								</select> <span>&nbsp;&nbsp;&nbsp;</span></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="fullName" value="" size="30"
+									name="fullName"
+									value="${fn:escapeXml(userInfoEntity.fullName)}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">カタカナ氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="fullNameKatana" value="" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="fullNameKatana"
+									value="${fn:escapeXml(userInfoEntity.fullNameKatana)}"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
 								<c:set var="birthday"
-									value="${fn:split(getDefaultValue.birthday, '/')}"></c:set>
+									value="${fn:split(userInfoEntity.birthday, '/')}"></c:set>
 								<td align="left"><select name="yearofbirth"
 									id="yearofbirth"
 									onchange="changeYear('yearofbirth', 'monthofbirth', 'dayofbirth')">
@@ -92,15 +97,15 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> メールアドレス:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="email" value="" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="email" value="${fn:escapeXml(userInfoEntity.email)}"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font>電話番号:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="tel" value="" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="tel" value="${fn:escapeXml(userInfoEntity.tel)}"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
@@ -126,14 +131,15 @@
 								<td align="left"><select name="codeLevel">
 										<option value="0">選択してください</option>
 										<c:forEach items="${listMstJapan}" var="mstJapan">
-											<option value="${mstJapan.getNameLevel() }">${mstJapan.getCodeLevel() }</option>
+											<option value="${mstJapan.getCodeLevel() }" <c:if test="${userInfoEntity.codeLevel == mstJapan.getCodeLevel()}">selected</c:if>>
+												${mstJapan.getCodeLevel() }</option>
 										</c:forEach>
 								</select></td>
 							</tr>
 							<tr class="japan" id="japan2">
 								<td class="lbl_left">資格交付日:</td>
 								<c:set var="startDate"
-									value="${fn:split(getDefaultValue.startDate, '/')}"></c:set>
+									value="${fn:split(userInfoEntity.startDate, '/')}"></c:set>
 								<td align="left"><select name="startyear" id="startyear"
 									onchange="changeYear('startyear', 'startmonth', 'startday')">
 										<c:forEach items="${listYear}" var="year">
@@ -156,7 +162,7 @@
 							<tr class="japan" id="japan3">
 								<td class="lbl_left">失効日:</td>
 								<c:set var="endDate"
-									value="${fn:split(getDefaultValue.endDate, '/')}"></c:set>
+									value="${fn:split(userInfoEntity.endDate, '/')}"></c:set>
 								<td align="left"><select name="endyear" id="endyear"
 									onchange="changeYear('endyear', 'endmonth', 'endday')">
 										<c:forEach items="${listYear}" var="year">
@@ -179,8 +185,8 @@
 							<tr class="japan" id="japan4">
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="total" value="" size="5"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="total" value="<c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if>"
+									size="5" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 						</table>

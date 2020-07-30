@@ -36,10 +36,8 @@ public class AddUserInputController extends HttpServlet {
 	/**
 	 * Xử lý khi click vào button Add của ADM002
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,8 +47,15 @@ public class AddUserInputController extends HttpServlet {
 
 			// Nếu checkLogin trả về true (Đã đăng nhập)
 			if (Common.checkLogin(session)) {
+				// gọi đến hàm setDataLogic để truyền các giá trị của pulldown lên req
 				setDataLogic(req);
-				req.setAttribute(Constant.REQUEST_GETDEFAULTVALUE, getDefaultValue(req));
+				// lấy userInfoEntity
+				UserInfoEntity userInfoEntity = getDefaultValue(req);
+
+				// gán userInfoEntity lên req
+				req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
+
+				// forward đến trang ADM003
 				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
 			} else {
 				// gọi đến URL login.do để về màn hình login
@@ -67,10 +72,8 @@ public class AddUserInputController extends HttpServlet {
 	/**
 	 * Xử lý khi click vào button Xác nhận của ADM002
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -88,6 +91,9 @@ public class AddUserInputController extends HttpServlet {
 				// gán giá trị trả về từ hàm UserInfoEntity vào đối tượng
 				// userInfoEntity
 				userInfoEntity = getDefaultValue(req);
+
+				// gán userInfoEntity lên sesion
+				session.setAttribute(Constant.SESSION_ADDUSER_CONFIRM, userInfoEntity);
 				// gán giá trị trả về từ hàm validateuserInfor vào listError
 				listError = ValidateUser.validateUserInfor(userInfoEntity);
 				// Kiểm tra xem có lỗi hay không
@@ -160,12 +166,11 @@ public class AddUserInputController extends HttpServlet {
 	}
 
 	/**
-	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương
-	 * ứng với các thuộc tính của đối tượng UserInfoEntity
+	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương ứng
+	 * với các thuộc tính của đối tượng UserInfoEntity
 	 * 
 	 * @return đối tượng tblUserInfoEntity
-	 * @throws ClassNotFoundException,
-	 *             SQLException
+	 * @throws ClassNotFoundException, SQLException
 	 */
 	private UserInfoEntity getDefaultValue(HttpServletRequest req) throws ClassNotFoundException, SQLException {
 		try {
@@ -194,15 +199,18 @@ public class AddUserInputController extends HttpServlet {
 			int groupId = Constant.DEFAULT_ZERO;
 			String fullName = Constant.DEFAULT_EMPTY;
 			String fullNameKatana = Constant.DEFAULT_EMPTY;
-			String birthday = yearNow + "/" + monthNow + "/" + dayNow;
+			String birthday = Common.setFormatDate(Integer.toString(yearNow), Integer.toString(monthNow),
+					Integer.toString(dayNow));
 			String email = Constant.DEFAULT_EMPTY;
 			String tel = Constant.DEFAULT_EMPTY;
 			String password = Constant.DEFAULT_EMPTY;
 			String passwordConfirm = Constant.DEFAULT_EMPTY;
 			String nameLevel = Constant.DEFAULT_EMPTY;
 			String codeLevel = Constant.DEFAULT_EMPTY;
-			String endDate = (yearNow + 1) + "/" + monthNow + "/" + dayNow;
-			String startDate = yearNow + "/" + monthNow + "/" + dayNow;
+			String endDate = Common.setFormatDate(Integer.toString(yearNow + 1), Integer.toString(monthNow),
+					Integer.toString(dayNow));
+			String startDate = Common.setFormatDate(Integer.toString(yearNow), Integer.toString(monthNow),
+					Integer.toString(dayNow));
 			int total = Constant.DEFAULT_ZERO;
 
 			// Lấy về type từ req
@@ -211,52 +219,78 @@ public class AddUserInputController extends HttpServlet {
 			listMstGroup = mstGroupLogicImpl.getAllMstGroup();
 			// Lấy về giá trị listMstJapan
 			listMstJapan = mstJapanLogicImpl.getAllMstJapan();
-
-			if (Constant.TYPE_VALIDATE.equals(type)) {
-				loginName = req.getParameter("loginName");
-				groupId = Common.convertStringToInt(req.getParameter("groupId"), Constant.GROUPID_DEFAULT);
-				if (groupId != 0) {
-					for (int i = 0; i < listMstGroup.size(); i++) {
-						if (groupId == listMstGroup.get(i).getGroupId()) {
-							groupName = listMstGroup.get(i).getGroupName();
+			// Nếu từ màn hình ADM002 hoặc click button submit ở màn hình ADM003
+			if (type == null || Common.compareString(Constant.TYPE_VALIDATE, type)) {
+				if (Common.compareString(Constant.TYPE_VALIDATE, type)) {
+					// Lấy các giá trị người dùng nhập từ request về
+					loginName = req.getParameter(Constant.LOGIN_NAME_ADM003);
+					groupId = Common.convertStringToInt(req.getParameter(Constant.GROUPID_ADM003),
+							Constant.GROUPID_DEFAULT);
+					if (groupId != 0) {
+						for (int i = 0; i < listMstGroup.size(); i++) {
+							if (groupId == listMstGroup.get(i).getGroupId()) {
+								groupName = listMstGroup.get(i).getGroupName();
+							}
 						}
 					}
-				}
-				fullName = req.getParameter("fullName");
-				fullNameKatana = req.getParameter("fullNameKatana");
-				birthday = req.getParameter("birthday");
-				email = req.getParameter("email");
-				tel = req.getParameter("tel");
-				password = req.getParameter("password");
-				passwordConfirm = req.getParameter("passwordConfirm");
-				codeLevel = req.getParameter("codeLevel");
-				if (codeLevel != null) {
-					for (int i = 0; i < listMstJapan.size(); i++) {
-						if (listMstJapan.get(i).getCodeLevel().equals(codeLevel)) {
-							nameLevel = listMstJapan.get(i).getNameLevel();
+					fullName = req.getParameter(Constant.FULL_NAME_ADM003);
+					fullNameKatana = req.getParameter(Constant.FULL_NAME_KATANA_ADM003);
+					String yearOfBirth = req.getParameter(Constant.YEAR_OF_BIRTH_ADM003);
+					String monthOfBirth = req.getParameter(Constant.MONTH_OF_BIRTH_ADM003);
+					String dayOfBirth = req.getParameter(Constant.DAY_OF_BIRTH_ADM003);
+					birthday = Common.setFormatDate(yearOfBirth, monthOfBirth, dayOfBirth);
+					email = req.getParameter(Constant.EMAIL_ADM003);
+					tel = req.getParameter(Constant.TEL_ADM003);
+					password = req.getParameter(Constant.PASSWORD_ADM003);
+					passwordConfirm = req.getParameter(Constant.PASSWORD_CONFIRM_ADM003);
+					codeLevel = req.getParameter(Constant.CODE_LEVEL_ADM003);
+					if (codeLevel != null) {
+						for (int i = 0; i < listMstJapan.size(); i++) {
+							if (listMstJapan.get(i).getCodeLevel().equals(codeLevel)) {
+								nameLevel = listMstJapan.get(i).getNameLevel();
+							}
 						}
 					}
+					String startYear = req.getParameter(Constant.START_YEAR_ADM003);
+					String startMonth = req.getParameter(Constant.START_MONTH_ADM003);
+					String startDay = req.getParameter(Constant.START_DAY_ADM003);
+					startDate = Common.setFormatDate(startYear, startMonth, startDay);
+					String endYear = req.getParameter(Constant.END_YEAR_ADM003);
+					String endMonth = req.getParameter(Constant.END_MONTH_ADM003);
+					String endDay = req.getParameter(Constant.END_DAY_ADM003);
+					endDate = Common.setFormatDate(endYear, endMonth, endDay);
+					total = Common.convertStringToInt(req.getParameter(Constant.TOTAL_ADM003).trim(),
+							Constant.DEFAULT_ZERO);
 				}
-				total = Common.convertStringToInt(req.getParameter("total"), Constant.DEFAULT_ZERO);
 
+				// gán giá trị các thuộc tính đối tượng userInforEntity
+				userInforEntity.setLoginName(loginName);
+				userInforEntity.setGroupId(groupId);
+				userInforEntity.setGroupName(groupName);
+				userInforEntity.setFullName(fullName);
+				userInforEntity.setFullNameKatana(fullNameKatana);
+				userInforEntity.setBirthday(birthday);
+				userInforEntity.setEmail(email);
+				userInforEntity.setTel(tel);
+				userInforEntity.setPassword(password);
+				userInforEntity.setPasswordConfirm(passwordConfirm);
+				userInforEntity.setNameLevel(nameLevel);
+				userInforEntity.setCodeLevel(codeLevel);
+				userInforEntity.setEndDate(endDate);
+				userInforEntity.setStartDate(startDate);
+				userInforEntity.setTotal(total);
+			} else if (Common.compareString(Constant.TYPE_BACK, type)) {
+				// khai báo session
+				HttpSession session = req.getSession();
+				// lấy userInforEntity từ session
+				userInforEntity = (UserInfoEntity) session.getAttribute(Constant.SESSION_ADDUSER_CONFIRM);
+				// nếu không nhập trình độ tiếng nhật
+				if ("".equals(userInforEntity.getCodeLevel())) {
+					userInforEntity.setEndDate(endDate);
+					userInforEntity.setStartDate(startDate);
+					userInforEntity.setTotal(total);
+				}
 			}
-
-			// gán giá trị các thuộc tính đối tượng userInforEntity
-			userInforEntity.setLoginName(loginName);
-			userInforEntity.setGroupId(groupId);
-			userInforEntity.setGroupName(groupName);
-			userInforEntity.setFullName(fullName);
-			userInforEntity.setFullNameKatana(fullNameKatana);
-			userInforEntity.setBirthday(birthday);
-			userInforEntity.setEmail(email);
-			userInforEntity.setTel(tel);
-			userInforEntity.setPassword(password);
-			userInforEntity.setPasswordConfirm(passwordConfirm);
-			userInforEntity.setNameLevel(nameLevel);
-			userInforEntity.setCodeLevel(codeLevel);
-			userInforEntity.setEndDate(endDate);
-			userInforEntity.setStartDate(startDate);
-			userInforEntity.setTotal(total);
 
 			// Trả về đối tượng userInforEntity
 			return userInforEntity;

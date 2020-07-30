@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="<c:url value = "Views/css/style.css"/>" rel="stylesheet"
 	type="text/css" />
-<script type="text/javascript" src="../js/user.js"></script>
+<script type="text/javascript" src="<c:url value = "Views/js/user.js"/>"></script>
 <title>ユーザ管理</title>
 </head>
 <body>
@@ -34,50 +34,50 @@
 					<table border="1" width="70%" class="tbl_input" cellpadding="4" cellspacing="0" >					
 					<tr>
 						<td class="lbl_left">アカウント名:</td>
-						<td align="left">ntmhuong</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.loginName)}</td>
 					</tr>
 					<tr>
 						<td class="lbl_left">グループ:</td>
-						<td align="left">Nhóm 1</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.groupName)}</td>
 					</tr>
 					<tr>
 						<td class="lbl_left">氏名:</td>
-						<td align="left">Nguyễn Thị Mai Hương</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.fullName)}</td>
 					</tr>	
 					<tr>
 						<td class="lbl_left">カタカナ氏名:</td>
-						<td align="left">名カナ</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.fullNameKatana)}</td>
 					</tr>
 					<tr>
 						<td class="lbl_left">生年月日:</td>
-						<td align="left">1983/07/08</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.birthday)}</td>
 					</tr>				
 					<tr>
 						<td class="lbl_left">メールアドレス:</td>
-						<td align="left">ntmhuong@luvina.net</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.email)}</td>
 					</tr>
 					<tr>
 						<td class="lbl_left">電話番号:</td>
-						<td align="left">0914326386</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.tel)}</td>
 					</tr>	
 					<tr>
-						<th colspan = "2"><a href = "#">日本語能力</a></th>
+						<th colspan = "2"><a href = "#" onclick="showJapan()">日本語能力</a></th>
 					</tr>
-					<tr>
+					<tr class="japan" id="japan1">
 						<td class="lbl_left">資格:</td>
-						<td align="left">Trình độ tiếng nhật cấp 1</td>
+						<td align="left">${fn:escapeXml(userInfoEntity.nameLevel)}</td>
 					</tr>
-					<tr>
+					<tr class="japan" id="japan2">
 						<td class="lbl_left">資格交付日:</td>
-						<td align="left">2010/07/08</td>
+						<td align="left"><c:if test="${userInfoEntity.nameLevel ne '' }">${fn:escapeXml(userInfoEntity.startDate)}</c:if></td>
 					</tr>
-					<tr>
+					<tr class="japan" id="japan3">
 						<td class="lbl_left">失効日:</td>
-						<td align="left">2011/07/08</td>
+						<td align="left"><c:if test="${userInfoEntity.nameLevel ne '' }">${fn:escapeXml(userInfoEntity.endDate)}</c:if></td>
 					</tr>	
-					<tr>
+					<tr class="japan" id="japan4">
 						<td class="lbl_left">点数:</td>
-						<td align="left">290</td>
+						<td align="left"><c:if test="${userInfoEntity.nameLevel ne '' }"><c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if></c:if></td>
 					</tr>												
 				</table>
 				</div>				
@@ -94,7 +94,7 @@
 					<input class="btn" type="submit" value="OK" />					
 				</td>	
 				<td>
-					<input class="btn" type="button" value="戻る" />						
+					<a href="addUserInput.do?type=back"><input class="btn" type="button" value="戻る" />	</a>					
 				</td>
 		</tr>		
 	</table>
