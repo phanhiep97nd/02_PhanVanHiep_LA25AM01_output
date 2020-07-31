@@ -26,8 +26,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Lấy ra user trong bảng tbl_user bằng loginName
 	 * 
-	 * @param loginName
-	 *            loginName người dùng nhập vào
+	 * @param loginName loginName người dùng nhập vào
 	 * @return trả về một user tìm được trong DB
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -72,25 +71,17 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	}
 
 	/**
-	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group,
-	 * mst_japan, tbl_detail_user_japan
+	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
+	 * tbl_detail_user_japan
 	 * 
-	 * @param offset
-	 *            vị trí bắt đầu lấy
-	 * @param limit
-	 *            số bản ghi tối đa trên 1 page
-	 * @param groupId
-	 *            là id của nhóm được chọn trong pulldown
-	 * @param fullName
-	 *            là fullname tìm kiếm nhập vào từ textbox
-	 * @param sortType
-	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
-	 * @param sortByFullName
-	 *            giá trị sắp xếp (ASC/DESC) cột fullName
-	 * @param sortByCodeLevel
-	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
-	 * @param sortByEndDate
-	 *            giá trị sắp xếp (ASC/DESC) cột endDate
+	 * @param offset          vị trí bắt đầu lấy
+	 * @param limit           số bản ghi tối đa trên 1 page
+	 * @param groupId         là id của nhóm được chọn trong pulldown
+	 * @param fullName        là fullname tìm kiếm nhập vào từ textbox
+	 * @param sortType        là loại sắp xếp theo fullName, codeLevel hay endDate
+	 * @param sortByFullName  giá trị sắp xếp (ASC/DESC) cột fullName
+	 * @param sortByCodeLevel giá trị sắp xếp (ASC/DESC) cột codelevel
+	 * @param sortByEndDate   giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -335,7 +326,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getTblUserByLoginName(java.lang.String)
 	 */
 	@Override
-	public TblUserEntity getTblUserByLoginName(String loginName) throws SQLException, ClassNotFoundException {
+	public TblUserEntity getUserByLoginName(String loginName) throws SQLException, ClassNotFoundException {
 		// Khởi taho một đối tượng TblUserEntity
 		TblUserEntity user = new TblUserEntity();
 		try {
@@ -368,5 +359,53 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		// Trả về đối tượng user
 		return user;
+	}
+
+	@Override
+	public TblUserEntity getUserByEmail(int userId, String email) throws SQLException, ClassNotFoundException {
+		try {
+			// Khởi taho một đối tượng TblUserEntity
+			TblUserEntity tblUserEntity = new TblUserEntity();
+			// Mở kết nối DB
+			openConnection();
+			// nếu kết nối với DB thành công
+			if (conn != null) {
+				// câu lệnh truy vấn
+				StringBuilder sql = new StringBuilder("SELECT * FROM tbl_user WHERE email = ?");
+				// nếu userid khác 0(Trường hợp edit)
+				if (userId != 0) {
+					sql.append(" AND user_id != ?");
+				}
+				// thực hiện truy vấn
+				pstm = conn.prepareStatement(sql.toString());
+				// Gán giá trị tương ứng vào câu truy vấn
+				int index = 1;
+				pstm.setString(index++, email);
+				// nếu userid khác 0(Trường hợp edit)
+				if (userId != 0) {
+					// set giá trị cho userId
+					pstm.setInt(index++, userId);
+				}
+				// Khởi tạo một đối tượng ResultSet để nhận kết quả trả về từ
+				// câu Query
+				ResultSet rs = pstm.executeQuery();
+				while (rs.next()) {
+					tblUserEntity = new TblUserEntity();
+					// gán giá trị cho thuộc tính email
+					tblUserEntity.setEmail(rs.getString("email"));
+				}
+			}
+			// trả về đối tượng tblUserEntity
+			return tblUserEntity;
+		} catch (SQLException | ClassNotFoundException e) {
+			// Thông báo lỗi ở màn hình consolei
+			System.out.println("Error : TblUserDaoImpl.getUserByEmail " + e.getMessage());
+			// throw lỗi
+			throw e;
+		} finally {
+			// đóng kết nối db
+			closeConnection();
+
+		}
 	}
 }

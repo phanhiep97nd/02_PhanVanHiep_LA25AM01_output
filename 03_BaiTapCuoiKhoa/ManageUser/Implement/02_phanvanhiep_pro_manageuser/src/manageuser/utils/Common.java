@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -307,11 +308,13 @@ public class Common {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Kiểm tra độ dài của chuỗi có nằm trong khoảng từ minLength đến maxLength không
-	 * @param maxLength độ dài lớn nhất 
-	 * @param minLength độ dài nhỏ nhất 
+	 * Kiểm tra độ dài của chuỗi có nằm trong khoảng từ minLength đến maxLength
+	 * không
+	 * 
+	 * @param maxLength độ dài lớn nhất
+	 * @param minLength độ dài nhỏ nhất
 	 * @return true nếu độ dài chuỗi trong khoảng cho phép, ngược lại là false
 	 */
 	public static boolean checkLength(String str, int minLength, int maxLength) {
@@ -323,8 +326,9 @@ public class Common {
 
 	/**
 	 * Kiểm tra chuỗi truyền vào đã đúng format chưa
-	 * @param str  chuỗi cần kiểm tra
-	 * @param format format dùng để kiểm tra 
+	 * 
+	 * @param str    chuỗi cần kiểm tra
+	 * @param format format dùng để kiểm tra
 	 * @return true nếu chuỗi đúng format, false nếu ngược lại
 	 */
 	public static boolean checkFormat(String str, String format) {
@@ -333,38 +337,105 @@ public class Common {
 		}
 		return false;
 	}
-	
-    /**
-     * check kí tự Kana
-     * 
-     * @param text chuỗi cần check
-     * @return true nếu là kí tự kana, false nếu ngược lại
-     */    
-    public static boolean isKatakana(String text) {
-        char[] c = text.toCharArray();
-    
-            for (int i = 0; i < c.length; i++) {
-                if ((Character.UnicodeBlock.of(c[i]) != Character.UnicodeBlock.KATAKANA) && (!isDigit(c[i]))
-                        && (!Character.isWhitespace(c[i]))) {
-            return false;
-            }
-        }
-        return true;
-    }
-    
-    /**
-     * Kiểm tra digit một kí tự
-     * 
-     * @param c kí tự cần kiểm tra
-     * @return true nếu là kí tự diGit
-     */
-    private static boolean isDigit(char c) {
-        int x = (int) c; 
-        if ((x >= 48) && (x <= 57)) {
-            return true;
-        }  
-        return false;
-    }
 
+	/**
+	 * check kí tự Kana
+	 * 
+	 * @param text chuỗi cần check
+	 * @return true nếu là kí tự kana, false nếu ngược lại
+	 */
+	public static boolean isKatakana(String text) {
+		char[] c = text.toCharArray();
+
+		for (int i = 0; i < c.length; i++) {
+			if ((Character.UnicodeBlock.of(c[i]) != Character.UnicodeBlock.KATAKANA) && (!isDigit(c[i]))
+					&& (!Character.isWhitespace(c[i]))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Kiểm tra digit một kí tự
+	 * 
+	 * @param c kí tự cần kiểm tra
+	 * @return true nếu là kí tự diGit
+	 */
+	private static boolean isDigit(char c) {
+		int x = (int) c;
+		if ((x >= 48) && (x <= 57)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Kiểm tra ngày tháng năm hợp lệ
+	 * 
+	 * @param birthday chuỗi cần kiểm tra
+	 * @return true nếu ngày tháng năm hợp lệ, false nếu
+	 */
+	public static boolean checkDate(String birthday) {
+		// Lấy ra ngày, tháng, năm từ chuỗi truyền vào
+		String[] lstDate = birthday.trim().split("/");
+		int year = Common.convertStringToInt(lstDate[0], 0);
+		int month = Common.convertStringToInt(lstDate[1], 0);
+		int day = Common.convertStringToInt(lstDate[2], 0);
+		int yearNow = Common.getDate().get(Calendar.YEAR);
+		// kiểm tra năm
+		if (year >= 1990 && year <= yearNow) {
+			return true;
+		}
+		// Kiểm tra ngày tháng
+		switch (month) {
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			if (day > 0 && day <= 30) {
+				return true;
+			}
+			break;
+		case 2:
+			if (year % 4 == 0) {
+				if (day > 0 && day <= 29) {
+					return true;
+				}
+			} else {
+				if (day > 0 && day <= 28) {
+					return true;
+				}
+			}
+
+			break;
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			if (day > 0 && day <= 31) {
+				return true;
+			}
+			break;
+
+		default:
+			break;
+		}
+		return false;
+	}
+	
+	/**
+     * Check kí tự hallfsize
+     * 
+     * @param text chuỗi cần kiểm tra
+     * @return true nếu là hallfsize, false nếu ngược lại
+     */    
+    public static boolean isHalfsize(String text) {
+    	return Pattern.matches("[0-9]+", text);
+    }
     
+
 }

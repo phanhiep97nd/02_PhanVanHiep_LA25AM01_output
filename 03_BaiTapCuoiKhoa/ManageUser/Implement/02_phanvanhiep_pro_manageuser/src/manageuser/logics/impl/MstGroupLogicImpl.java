@@ -54,16 +54,23 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public Boolean checkExistGroup(int groupId) throws ClassNotFoundException, SQLException {
-		// Khởi tạo listGroup để lưu tất cả các group lấy được
-		ArrayList<MstGroupEntity> listGroup = getAllMstGroup();
-		// Khởi tạo một biến check
-		boolean check = false;
-		// Nếu có tồn tại groupId thì gán check bằng true
-		for (int i = 0; i < listGroup.size(); i++) {
-			if (listGroup.get(i).getGroupId() == groupId) {
-				check = true;
+		try {
+			// Khởi tạo listGroup để lưu tất cả các group lấy được
+			ArrayList<MstGroupEntity> listGroup = getAllMstGroup();
+			// Khởi tạo một biến check
+			boolean check = false;
+			// Nếu có tồn tại groupId thì gán check bằng true
+			for (int i = 0; i < listGroup.size(); i++) {
+				if (listGroup.get(i).getGroupId() == groupId) {
+					check = true;
+				}
 			}
+			return check;
+		} catch (ClassNotFoundException | SQLException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error: MstGroupLogicImpl.checkExistGroup " + e.getMessage());
+			// Throw lỗi
+			throw e;
 		}
-		return check;
 	}
 }

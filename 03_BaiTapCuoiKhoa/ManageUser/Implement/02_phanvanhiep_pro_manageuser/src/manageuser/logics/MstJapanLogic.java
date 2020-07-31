@@ -23,4 +23,14 @@ public interface MstJapanLogic {
 	 * @throws ClassNotFoundException
 	 */
 	List<MstJapanEntity> getAllMstJapan() throws ClassNotFoundException, SQLException;
+	
+	/**
+	 * checkExistCodeLevel kiểm tra trình độ tiếng Nhật có tồn tại hay không
+	 * 
+	 * @param codeLevel trình độ tiếng Nhật cần kiếm tra
+	 * @return true nếu tồn tại, false nếu ngược lại
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	Boolean checkExistCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException;
 }

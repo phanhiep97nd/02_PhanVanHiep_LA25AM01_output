@@ -68,6 +68,16 @@ public interface TblUserLogic {
 	 * @throws ClassNotFoundException 
 	 */
 	Boolean checkExistedLoginName(String loginName) throws ClassNotFoundException, SQLException;
+	
+	/**
+	 * Kiểm tra xem đã tồn tại email chưa
+	 * @param email email cần kiểm tra
+	 * @param userId để thêm điều kiện kiểm tra trong trường hợp edit
+	 * @return trả về true nếu tồn tại, false nếu ngược lại
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	Boolean checkExistedEmail(int userId, String email) throws ClassNotFoundException, SQLException;
 
 	
 }

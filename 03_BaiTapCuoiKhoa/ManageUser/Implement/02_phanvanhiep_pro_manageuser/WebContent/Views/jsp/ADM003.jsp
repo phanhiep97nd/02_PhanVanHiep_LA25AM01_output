@@ -132,7 +132,7 @@
 							<tr class="japan" id="japan1">
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="codeLevel">
-										<option value="0">選択してください</option>
+										<option value="">選択してください</option>
 										<c:forEach items="${listMstJapan}" var="mstJapan">
 											<option value="${mstJapan.getCodeLevel() }"
 												<c:if test="${userInfoEntity.codeLevel == mstJapan.getCodeLevel()}">selected</c:if>>

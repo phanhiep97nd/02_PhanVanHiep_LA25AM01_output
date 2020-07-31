@@ -15,6 +15,7 @@ import manageuser.dao.impl.MstJapanDaoImpl;
 import manageuser.entities.MstGroupEntity;
 import manageuser.entities.MstJapanEntity;
 import manageuser.logics.MstJapanLogic;
+import manageuser.utils.Common;
 
 /**
  * Implement MstJapanLogic để Xử lý logic cho các chức năng liên quan đến
@@ -48,6 +49,36 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 			throw e;
 		}
 		return listMstJapan;
+	}
+
+	/**
+	 * checkExistCodeLevel kiểm tra trình độ tiếng Nhật có tồn tại hay không
+	 * 
+	 * @param codeLevel trình độ tiếng Nhật cần kiếm tra
+	 * @return true nếu tồn tại, false nếu ngược lại
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	@Override
+	public Boolean checkExistCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException {
+		try {
+			// Khởi tạo listMstJapan để lưu tất cả các codeLevel lấy được
+			List<MstJapanEntity> listMstJapan = getAllMstJapan();
+			// Khởi tạo một biến check
+			boolean check = false;
+			// Nếu có tồn tại groupId thì gán check bằng true
+			for (int i = 0; i < listMstJapan.size(); i++) {
+				if (Common.compareString(listMstJapan.get(i).getCodeLevel(), codeLevel)) {
+					check = true;
+				}
+			}
+			return check;
+		} catch (ClassNotFoundException | SQLException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error: MstJapanLogicImpl.checkExistCodeLevel " + e.getMessage());
+			// Throw lỗi
+			throw e;
+		}
 	}
 
 }

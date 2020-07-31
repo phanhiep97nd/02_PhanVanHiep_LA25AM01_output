@@ -253,7 +253,7 @@ public class AddUserInputController extends HttpServlet {
 					password = req.getParameter(Constant.PASSWORD_ADM003);
 					passwordConfirm = req.getParameter(Constant.PASSWORD_CONFIRM_ADM003);
 					codeLevel = req.getParameter(Constant.CODE_LEVEL_ADM003);
-					if (codeLevel != null) {
+					if (!"".equals(codeLevel)) {
 						for (int i = 0; i < listMstJapan.size(); i++) {
 							if (listMstJapan.get(i).getCodeLevel().equals(codeLevel)) {
 								nameLevel = listMstJapan.get(i).getNameLevel();

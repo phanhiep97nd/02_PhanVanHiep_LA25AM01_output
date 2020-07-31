@@ -20,7 +20,7 @@ public class Constant {
 	public static final String ER016 = "ER016";
 	public static final String MSG005 = "MSG005";
 	public static final String ER015 = "ER015";
-	
+
 	// Các thông báo validate ở màn hình ADM003
 	public static final String ER001_LOGINNAME = MessageProperties.getValueByKey("ER001_LOGINNAME");
 	public static final String ER003_LOGINNAME = MessageProperties.getValueByKey("ER003_LOGINNAME");
@@ -32,6 +32,7 @@ public class Constant {
 	public static final String ER006_FULLNAME = MessageProperties.getValueByKey("ER006_FULLNAME");
 	public static final String ER006_FULLNAMEKANA = MessageProperties.getValueByKey("ER006_FULLNAMEKANA");
 	public static final String ER009_FULLNAMEKANA = MessageProperties.getValueByKey("ER009_FULLNAMEKANA");
+	public static final String ER011_BIRTHDAY = MessageProperties.getValueByKey("ER011_BIRTHDAY");
 	public static final String ER001_MAIL = MessageProperties.getValueByKey("ER001_MAIL");
 	public static final String ER003_MAIL = MessageProperties.getValueByKey("ER003_MAIL");
 	public static final String ER005_MAIL = MessageProperties.getValueByKey("ER005_MAIL");
@@ -45,12 +46,12 @@ public class Constant {
 	public static final String ER008_PASSWORD = MessageProperties.getValueByKey("ER008_PASSWORD");
 	public static final String ER017_PASSWORD_CONFIRM = MessageProperties.getValueByKey("ER017_PASSWORD_CONFIRM");
 	public static final String ER004_CODELEVEL = MessageProperties.getValueByKey("ER004_CODELEVEL");
+	public static final String ER011_STARTDATE = MessageProperties.getValueByKey("ER011_STARTDATE");
+	public static final String ER011_ENDDATE = MessageProperties.getValueByKey("ER011_ENDDATE");
 	public static final String ER012_ENDDATE = MessageProperties.getValueByKey("ER012_ENDDATE");
 	public static final String ER001_TOTAL = MessageProperties.getValueByKey("ER001_TOTAL");
 	public static final String ER018_TOTAL = MessageProperties.getValueByKey("ER018_TOTAL");
 	public static final String ER006_TOTAL = MessageProperties.getValueByKey("ER006_TOTAL");
-	
-	
 
 	// constant path properties
 	public static final String PROPERTIES_MESSAGE_PATH = "//message.properties";
@@ -79,13 +80,13 @@ public class Constant {
 	public static final String SESSION_SORT_LIKE = "sortLike";
 	public static final String SESSION_CURRENTPAGE = "currentPage";
 	public static final String SESSION_ADDUSER_CONFIRM = "addUserConfirm";
-	
+
 	// constant các hạng mục ở màn hình login
 	public static final String NAME_TEXTBOX_LOGINNAME = "loginId";
 	public static final String NAME_TEXTBOX_PASSWORD = "password";
 	public static final String REQUEST_LISTERROR = "listErr";
 	public static final String REQUEST_LOGINNAME = "loginName";
-	
+
 	// constant các hạng mục ở MH listUser
 	public static final int RULE_ADMIN = 0;
 	public static final int RULE_USER = 1;
@@ -126,7 +127,6 @@ public class Constant {
 	public static final String REQUEST_SORTBY_FULLNAME = "sortByFullName";
 	public static final String REQUEST_SORTBY_CODELEVEL = "sortByCodeLevel";
 	public static final String REQUEST_SORTBY_ENDDATE = "sortByEndDate";
-	
 
 	// constant URL type
 	public static final String URL_TYPE_DEFAULT = "?type=default";
@@ -134,8 +134,8 @@ public class Constant {
 	// constant config
 	public static final String LIMIT = "LIMIT";
 	public static final String LIMIT_PAGE = "LIMIT_PAGE";
-	
-	//constant các hạng mục ở màn hình ADM003
+
+	// constant các hạng mục ở màn hình ADM003
 	public static final String DEFAULT_EMPTY = "";
 	public static final int DEFAULT_ZERO = 0;
 	public static final String REQUEST_LISTMSTGROUP = "listMstGroup";
@@ -165,12 +165,18 @@ public class Constant {
 	public static final String END_MONTH_ADM003 = "endmonth";
 	public static final String END_DAY_ADM003 = "endday";
 	public static final String TOTAL_ADM003 = "total";
-	
+
 	// constant validate màn hình ADM003
 	public static final int MIN_LENGTH_LOGINNAME = 4;
 	public static final int MAX_LENGTH_LOGINNAME = 15;
 	public static final String FORMAT_LOGINNAME = "^[a-zA-Z_][0-9a-zA-Z_]+";
-	
-	
+	public static final int MAX_LENGTH_FULLNAME = 255;
+	public static final int MAX_LENGTH_FULLNAMEKATANA = 255;
+	public static final int MAX_LENGTH_EMAIL = 100;
+	public static final String FORMAT_EMAIL = "^[a-zA-Z0-9_\\.-]{1,}@[a-z0-9]{1,}\\.[a-z0-9]{1,}$";
+	public static final String FORMAT_TEL = "\\d{1,}-\\d{1,}-\\d{1,}";
+	public static final int MAX_LENGTH_TEL = 14;
+	public static final int MIN_LENGTH_PASS = 5;
+	public static final int MAX_LENGTH_PASS = 15;
 
 }

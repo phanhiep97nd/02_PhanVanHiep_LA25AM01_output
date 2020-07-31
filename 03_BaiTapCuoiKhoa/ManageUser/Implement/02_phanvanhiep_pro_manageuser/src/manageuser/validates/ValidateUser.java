@@ -11,8 +11,10 @@ import java.util.List;
 
 import manageuser.entities.UserInfoEntity;
 import manageuser.logics.MstGroupLogic;
+import manageuser.logics.MstJapanLogic;
 import manageuser.logics.TblUserLogic;
 import manageuser.logics.impl.MstGroupLogicImpl;
+import manageuser.logics.impl.MstJapanLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
@@ -28,10 +30,8 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình login
 	 * 
-	 * @param loginName
-	 *            login_name nhập từ màn hình
-	 * @param pass
-	 *            pass nhập từ màn hình
+	 * @param loginName login_name nhập từ màn hình
+	 * @param pass      pass nhập từ màn hình
 	 * @return list lỗi
 	 */
 	public static List<String> validateLogin(String loginName, String pass)
@@ -62,8 +62,7 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình ADM003
 	 * 
-	 * @param userInfor
-	 *            đối tượng userInfor để validate các thuộc tính
+	 * @param userInfor đối tượng userInfor để validate các thuộc tính
 	 * @return list lỗi
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -71,33 +70,225 @@ public class ValidateUser {
 	public static List<String> validateUserInfor(UserInfoEntity userInforEntity)
 			throws ClassNotFoundException, SQLException {
 		List<String> listError = new ArrayList<>();
-		// validate loginName
-		String errorLoginName = validateLoginName(userInforEntity.getLoginName());
-		String errorGroup = validateGroup(userInforEntity.getGroupId());
-		String errorFullName = validateFullName(userInforEntity.getFullName());
-		String errorFullNameKatana = validateFullNameKatana(userInforEntity.getFullNameKatana());
-		// nếu có lỗi
-		if (!"".equals(errorLoginName)) {
-			// thêm lỗi vào trong danh sách lỗi
-			listError.add(errorLoginName);
-		}
-		if (!"".equals(errorGroup)) {
-			listError.add(errorGroup);
-		}
-		if (!"".equals(errorFullName)) {
-			listError.add(errorFullName);
-		}
-		if (!"".equals(errorFullNameKatana)) {
-			listError.add(errorFullNameKatana);
+		try {
+			// validate loginName
+			String errorLoginName = validateLoginName(userInforEntity.getLoginName());
+			if (!"".equals(errorLoginName)) {
+				// thêm lỗi vào trong danh sách lỗi
+				listError.add(errorLoginName);
+			}
+
+			// validate selecbox group
+			String errorGroup = validateGroup(userInforEntity.getGroupId());
+			if (!"".equals(errorGroup)) {
+				listError.add(errorGroup);
+			}
+
+			// validate fullName
+			String errorFullName = validateFullName(userInforEntity.getFullName());
+			if (!"".equals(errorFullName)) {
+				listError.add(errorFullName);
+			}
+
+			// Validate fullnameKana
+			// nếu có nhập fullNameKatana
+			if (!"".equals(userInforEntity.getFullNameKatana())) {
+				String errorFullNameKatana = validateFullNameKatana(userInforEntity.getFullNameKatana());
+				if (!"".equals(errorFullNameKatana)) {
+					listError.add(errorFullNameKatana);
+				}
+			}
+
+			// Validate birthday
+			String errorBirthday = validateBirthday(userInforEntity.getBirthday());
+			if (!"".equals(errorBirthday)) {
+				listError.add(errorBirthday);
+			}
+
+			// Validate email
+			String errorEmail = validateEmail(userInforEntity.getUserId(), userInforEntity.getEmail());
+			if (!"".equals(errorEmail)) {
+				listError.add(errorEmail);
+			}
+
+			// Validate Tel
+			String errorTel = validateTel(userInforEntity.getTel());
+			if (!"".equals(errorTel)) {
+				listError.add(errorTel);
+			}
+
+			// Validate Password
+			String errorPassword = validatePassword(userInforEntity.getPassword());
+			if (!"".equals(errorPassword)) {
+				listError.add(errorPassword);
+			}
+
+			// Validate Password Confirm
+			// Nếu password không có lỗi
+			if ("".equals(errorBirthday)) {
+				String errorPassConfirm = validatePassConfirm(userInforEntity.getPassword(),
+						userInforEntity.getPasswordConfirm());
+				if (!"".equals(errorPassConfirm)) {
+					listError.add(errorPassConfirm);
+				}
+			}
+
+			// Nếu có chọn codeLevel
+			if (!"".equals(userInforEntity.getCodeLevel())) {
+				// Validate codeLevel
+				String errorCodeLevel = validateCodeLevel(userInforEntity.getCodeLevel());
+				if (!"".equals(errorCodeLevel)) {
+					listError.add(errorCodeLevel);
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : ValidateUser.validateUserInfor " + e.getMessage());
+			throw e;
 		}
 		return listError;
 	}
 
 	/**
+	 * Validate pulldown codeLevel
+	 * 
+	 * @param codeLevel giá trị cần kiểm tra
+	 * @return lỗi nếu có
+	 * @throws SQLException, ClassNotFoundException
+	 */
+	private static String validateCodeLevel(String codeLevel) throws SQLException, ClassNotFoundException {
+		// Khởi tạo biến chứa lỗi
+		String errCodeLevel = "";
+		// Khởi tạo đối tượng mstJapanLogicImpl
+		MstJapanLogic mstJapanLogicImpl = new MstJapanLogicImpl();
+		try {
+			if (!mstJapanLogicImpl.checkExistCodeLevel(codeLevel)) {
+				errCodeLevel = Constant.ER004_CODELEVEL;
+			}
+			return errCodeLevel;
+		} catch (SQLException | ClassNotFoundException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : ValidateUser.validateCodeLevel " + e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Validate passConfirm
+	 * 
+	 * @param pass            dùng để check với passConfirm
+	 * @param passwordConfirm chuỗi cần kiểm tra
+	 * @return lỗi nếu có
+	 */
+	private static String validatePassConfirm(String password, String passwordConfirm) {
+		// Khởi tạo biến chứa lỗi
+		String errPassConfirm = "";
+		// Kiểm tra passwordConfirm có bằng password không?
+		if (!Common.compareString(password, passwordConfirm)) {
+			errPassConfirm = Constant.ER017_PASSWORD_CONFIRM;
+		}
+		return errPassConfirm;
+	}
+
+	/**
+	 * Validate hạng mục password
+	 * 
+	 * @param password chuỗi cần validate
+	 * @return lỗi nếu có
+	 */
+	private static String validatePassword(String password) {
+		// Khởi tạo biến chứa lỗi
+		String errPassword = "";
+		// check không nhập
+		if (Common.checkEmpty(password)) {
+			errPassword = Constant.ER001_PASSWORD;
+			// check kí tự 1 byte
+		} else if (!Common.isHalfsize(password)) {
+			errPassword = Constant.ER008_PASSWORD;
+			// check độ dài khoảng
+		} else if (!Common.checkLength(password, Constant.MIN_LENGTH_PASS, Constant.MAX_LENGTH_PASS)) {
+			errPassword = Constant.ER007_PASSWORD;
+		}
+		return errPassword;
+	}
+
+	/**
+	 * validate hạng mục tel
+	 * 
+	 * @param tel chuỗi cần validate
+	 * @return lỗi nếu có lỗi
+	 */
+	private static String validateTel(String tel) {
+		// Khởi tạo biến chứa lỗi
+		String errTel = "";
+		// kiểm tra chưa nhập
+		if (Common.checkEmpty(tel)) {
+			errTel = Constant.ER001_TEL;
+			// kiểm tra max kí tự
+		} else if (!Common.checkLength(tel, 0, Constant.MAX_LENGTH_TEL)) {
+			errTel = Constant.ER006_TEL;
+			// kiểm tra forrmart
+		} else if (!Common.checkFormat(tel, Constant.FORMAT_TEL)) {
+			errTel = Constant.ER005_TEL;
+		}
+		return errTel;
+	}
+
+	/**
+	 * validate hạng mục email
+	 * 
+	 * @param userId để bổ xung điều kiện check trong trường hợp edit
+	 * @param email  email cần kiểm tra
+	 * @return lỗi nếu có
+	 * @throws ClassNotFoundException, SQLException
+	 */
+	private static String validateEmail(int userId, String email) throws ClassNotFoundException, SQLException {
+		// Khởi tạo biến chứa lỗi
+		String errEmail = "";
+		// Khởi tạo đối tượng tblUserLogic
+		TblUserLogic tblUserLogic = new TblUserLogicImpl();
+		try {
+			// Kiểm tra không nhập
+			if (Common.checkEmpty(email)) {
+				errEmail = Constant.ER001_MAIL;
+				// kiểm tra max kí tự
+			} else if (!Common.checkLength(email, 0, Constant.MAX_LENGTH_EMAIL)) {
+				errEmail = Constant.ER006_MAIL;
+				// kiểm tra forrmat
+			} else if (!Common.checkFormat(email, Constant.FORMAT_EMAIL)) {
+				errEmail = Constant.ER005_MAIL;
+				// kiểm tra tồn tại
+			} else if (tblUserLogic.checkExistedEmail(userId, email)) {
+				errEmail = Constant.ER003_MAIL;
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : ValidateUser.validateEmail " + e.getMessage());
+			throw e;
+		}
+		return errEmail;
+	}
+
+	/**
+	 * validate hạng mục birthday
+	 * 
+	 * @param birthday chuỗi cần kiểm tra
+	 * @return lỗi nếu có
+	 */
+	private static String validateBirthday(String birthday) {
+		// Khởi tạo biến chứa lỗi
+		String errBirthday = "";
+		// Kiểm tra ngày tháng năm hợp lệ
+		if (!Common.checkDate(birthday)) {
+			errBirthday = Constant.ER011_BIRTHDAY;
+		}
+		return errBirthday;
+	}
+
+	/**
 	 * validate selectbox group
 	 * 
-	 * @param groupId
-	 *            groupId cần kiểm tra
+	 * @param groupId groupId cần kiểm tra
 	 * @return lỗi nếu có
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -107,21 +298,26 @@ public class ValidateUser {
 		String errGroup = "";
 		// Khởi tạo đối tượng mstGroupLogicImpl
 		MstGroupLogic mstGroupLogicImpl = new MstGroupLogicImpl();
-		// Kiểm tra chưa chọn
-		if (Constant.GROUPID_DEFAULT == groupId) {
-			errGroup = Constant.ER002_GROUPID;
-			// Kiểm tra tồn tại groupId
-		} else if (!mstGroupLogicImpl.checkExistGroup(groupId)) {
-			errGroup = Constant.ER004_GROUPID;
+		try {
+			// Kiểm tra chưa chọn
+			if (Constant.GROUPID_DEFAULT == groupId) {
+				errGroup = Constant.ER002_GROUPID;
+				// Kiểm tra tồn tại groupId
+			} else if (!mstGroupLogicImpl.checkExistGroup(groupId)) {
+				errGroup = Constant.ER004_GROUPID;
+			}
+			return errGroup;
+		} catch (ClassNotFoundException | SQLException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : ValidateUser.validateGroup " + e.getMessage());
+			throw e;
 		}
-		return errGroup;
 	}
 
 	/**
 	 * Validate trường Fullname Kana
 	 * 
-	 * @param fullNameKatana
-	 *            tên kana cần validate
+	 * @param fullNameKatana tên kana cần validate
 	 * @return lỗi nếu có
 	 */
 	private static String validateFullNameKatana(String fullNameKatana) {
@@ -131,7 +327,7 @@ public class ValidateUser {
 		if (!Common.isKatakana(fullNameKatana)) {
 			errFullNameKatana = Constant.ER009_FULLNAMEKANA;
 			// Kiểm tra max kí tự
-		} else if (!Common.checkLength(fullNameKatana, 0, 255)) {
+		} else if (!Common.checkLength(fullNameKatana, 0, Constant.MAX_LENGTH_FULLNAMEKATANA)) {
 			errFullNameKatana = Constant.ER006_FULLNAMEKANA;
 		}
 		return errFullNameKatana;
@@ -140,8 +336,7 @@ public class ValidateUser {
 	/**
 	 * Validate trường fullName
 	 * 
-	 * @param fullName
-	 *            giá trị cần validate
+	 * @param fullName giá trị cần validate
 	 * @return lỗi
 	 */
 	private static String validateFullName(String fullName) {
@@ -151,7 +346,7 @@ public class ValidateUser {
 		if (Common.checkEmpty(fullName)) {
 			errFullName = Constant.ER001_FULLNAME;
 			// Kiểm tra max kí tự
-		} else if (!Common.checkLength(fullName, 0, 255)) {
+		} else if (!Common.checkLength(fullName, 0, Constant.MAX_LENGTH_FULLNAME)) {
 			errFullName = Constant.ER006_FULLNAME;
 		}
 		return errFullName;
@@ -160,8 +355,7 @@ public class ValidateUser {
 	/**
 	 * validate giá trị của trường loginName
 	 * 
-	 * @param loginName
-	 *            giá trị cần validate
+	 * @param loginName giá trị cần validate
 	 * @return lỗi nếu có
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -172,20 +366,26 @@ public class ValidateUser {
 		// Khởi tạo đối tượng tblUserLogic
 		TblUserLogic tblUserLogic = new TblUserLogicImpl();
 		// Nếu rỗng thì gán mã lỗi ER001
-		if (Common.checkEmpty(loginName)) {
-			errLoginName = Constant.ER001_LOGINNAME;
-			// Kiểm tra format
-		} else if (!Common.checkFormat(loginName, Constant.FORMAT_LOGINNAME)) {
-			errLoginName = Constant.ER0019_LOGINNAME;
-			// Kiểm tra độ dài khoảng
-		} else if (!Common.checkLength(loginName, Constant.MIN_LENGTH_LOGINNAME, Constant.MAX_LENGTH_LOGINNAME)) {
-			errLoginName = Constant.ER007_LOGINNAME;
-			// Check tồn tại trong DB
-		} else if (tblUserLogic.checkExistedLoginName(loginName)) {
-			errLoginName = Constant.ER003_LOGINNAME;
+		try {
+			if (Common.checkEmpty(loginName)) {
+				errLoginName = Constant.ER001_LOGINNAME;
+				// Kiểm tra format
+			} else if (!Common.checkFormat(loginName, Constant.FORMAT_LOGINNAME)) {
+				errLoginName = Constant.ER0019_LOGINNAME;
+				// Kiểm tra độ dài khoảng
+			} else if (!Common.checkLength(loginName, Constant.MIN_LENGTH_LOGINNAME, Constant.MAX_LENGTH_LOGINNAME)) {
+				errLoginName = Constant.ER007_LOGINNAME;
+				// Check tồn tại trong DB
+			} else if (tblUserLogic.checkExistedLoginName(loginName)) {
+				errLoginName = Constant.ER003_LOGINNAME;
+			}
+			// trả về lỗi
+			return errLoginName;
+		} catch (ClassNotFoundException | SQLException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : ValidateUser.validateLoginName " + e.getMessage());
+			throw e;
 		}
-		// trả về lỗi
-		return errLoginName;
 	}
 
 }
