@@ -295,7 +295,6 @@ public class AddUserInputController extends HttpServlet {
 				String key = req.getParameter("key");
 				// lấy userInforEntity từ session
 				userInforEntity = (UserInfoEntity) session.getAttribute(Constant.SESSION_ADDUSER_CONFIRM+key);
-				// xóa session 
 				session.removeAttribute(Constant.SESSION_ADDUSER_CONFIRM+key);
 				// nếu không nhập trình độ tiếng nhật
 				if ("".equals(userInforEntity.getCodeLevel())) {

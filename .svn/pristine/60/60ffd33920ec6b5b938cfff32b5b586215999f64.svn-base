@@ -71,7 +71,7 @@ public class Constant {
 	public static final String URL_OUT = "logout.do";
 	public static final String URL_LISTUSER = "listUser.do";
 	public static final String URL_SYSTEMERROR = "systemError.do";
-	public static final String URL_ADDUSERCONFIRM = "addUserConfirm.do?key=";
+	public static final String URL_ADDUSERCONFIRM = "addUserConfirm.do";
 
 	// constant session
 	public static final String SESSION_LOGINNAME = "loginName";
@@ -145,7 +145,6 @@ public class Constant {
 	public static final String REQUEST_LISTDAY = "listDay";
 	public static final String REQUEST_USERINFORENTITY = "userInfoEntity";
 	public static final String REQUEST_TYPE = "type";
-	public static final String REQUEST_KEY = "key";
 	public static final String TYPE_VALIDATE = "validate";
 	public static final String LOGIN_NAME_ADM003 = "loginName";
 	public static final String GROUPID_ADM003 = "groupId";
@@ -170,7 +169,7 @@ public class Constant {
 	// constant validate màn hình ADM003
 	public static final int MIN_LENGTH_LOGINNAME = 4;
 	public static final int MAX_LENGTH_LOGINNAME = 15;
-	public static final String FORMAT_LOGINNAME = "[a-zA-Z_]{1,}[0-9a-zA-Z_]+";
+	public static final String FORMAT_LOGINNAME = "^[a-zA-Z_][0-9a-zA-Z_]+";
 	public static final int MAX_LENGTH_FULLNAME = 255;
 	public static final int MAX_LENGTH_FULLNAMEKATANA = 255;
 	public static final int MAX_LENGTH_EMAIL = 100;

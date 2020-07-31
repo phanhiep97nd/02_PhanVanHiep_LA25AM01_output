@@ -73,100 +73,100 @@ public class ValidateUser {
 	public static List<String> validateUserInfor(UserInfoEntity userInforEntity)
 			throws ClassNotFoundException, SQLException {
 		List<String> listError = new ArrayList<>();
-//		try {
-//			// validate loginName
-//			String errorLoginName = validateLoginName(userInforEntity.getLoginName());
-//			if (!"".equals(errorLoginName)) {
-//				// thêm lỗi vào trong danh sách lỗi
-//				listError.add(errorLoginName);
-//			}
-//
-//			// validate selecbox group
-//			String errorGroup = validateGroup(userInforEntity.getGroupId());
-//			if (!"".equals(errorGroup)) {
-//				listError.add(errorGroup);
-//			}
-//
-//			// validate fullName
-//			String errorFullName = validateFullName(userInforEntity.getFullName());
-//			if (!"".equals(errorFullName)) {
-//				listError.add(errorFullName);
-//			}
-//
-//			// Validate fullnameKana
-//			// nếu có nhập fullNameKatana
-//			if (!"".equals(userInforEntity.getFullNameKatana())) {
-//				String errorFullNameKatana = validateFullNameKatana(userInforEntity.getFullNameKatana());
-//				if (!"".equals(errorFullNameKatana)) {
-//					listError.add(errorFullNameKatana);
-//				}
-//			}
-//
-//			// Validate birthday
-//			String errorBirthday = validateBirthday(userInforEntity.getBirthday());
-//			if (!"".equals(errorBirthday)) {
-//				listError.add(errorBirthday);
-//			}
-//
-//			// Validate email
-//			String errorEmail = validateEmail(userInforEntity.getUserId(), userInforEntity.getEmail());
-//			if (!"".equals(errorEmail)) {
-//				listError.add(errorEmail);
-//			}
-//
-//			// Validate Tel
-//			String errorTel = validateTel(userInforEntity.getTel());
-//			if (!"".equals(errorTel)) {
-//				listError.add(errorTel);
-//			}
-//
-//			// Validate Password
-//			String errorPassword = validatePassword(userInforEntity.getPassword());
-//			if (!"".equals(errorPassword)) {
-//				listError.add(errorPassword);
-//			}
-//
-//			// Validate Password Confirm
-//			// Nếu password không có lỗi
-//			if ("".equals(errorBirthday)) {
-//				String errorPassConfirm = validatePassConfirm(userInforEntity.getPassword(),
-//						userInforEntity.getPasswordConfirm());
-//				if (!"".equals(errorPassConfirm)) {
-//					listError.add(errorPassConfirm);
-//				}
-//			}
-//
-//			// Nếu có chọn codeLevel
-//			if (!"".equals(userInforEntity.getCodeLevel())) {
-//				// Validate codeLevel
-//				String errorCodeLevel = validateCodeLevel(userInforEntity.getCodeLevel());
-//				if (!"".equals(errorCodeLevel)) {
-//					listError.add(errorCodeLevel);
-//				}
-//
-//				// Validate startDate
-//				String errorStartDate = validateStartDate(userInforEntity.getStartDate());
-//				if (!"".equals(errorStartDate)) {
-//					listError.add(errorStartDate);
-//				}
-//
-//				// Validate endDate
-//				String errorEndDate = validateEndDate(userInforEntity.getStartDate(), userInforEntity.getEndDate());
-//				if (!"".equals(errorEndDate)) {
-//					listError.add(errorEndDate);
-//				}
-//
-//				// Validate Total
-//				String errorTotal = validateTotal(userInforEntity.getTotal());
-//				if (!"".equals(errorTotal)) {
-//					listError.add(errorTotal);
-//				}
-//			}
-//		} catch (ClassNotFoundException | SQLException e) {
-//			// Hiển thị ở console lỗi
-//			System.out.println("Error : ValidateUser.validateUserInfor " + e.getMessage());
-//			throw e;
-//		}
+		try {
+			// validate loginName
+			String errorLoginName = validateLoginName(userInforEntity.getLoginName());
+			if (!"".equals(errorLoginName)) {
+				// thêm lỗi vào trong danh sách lỗi
+				listError.add(errorLoginName);
+			}
+
+			// validate selecbox group
+			String errorGroup = validateGroup(userInforEntity.getGroupId());
+			if (!"".equals(errorGroup)) {
+				listError.add(errorGroup);
+			}
+
+			// validate fullName
+			String errorFullName = validateFullName(userInforEntity.getFullName());
+			if (!"".equals(errorFullName)) {
+				listError.add(errorFullName);
+			}
+
+			// Validate fullnameKana
+			// nếu có nhập fullNameKatana
+			if (!"".equals(userInforEntity.getFullNameKatana())) {
+				String errorFullNameKatana = validateFullNameKatana(userInforEntity.getFullNameKatana());
+				if (!"".equals(errorFullNameKatana)) {
+					listError.add(errorFullNameKatana);
+				}
+			}
+
+			// Validate birthday
+			String errorBirthday = validateBirthday(userInforEntity.getBirthday());
+			if (!"".equals(errorBirthday)) {
+				listError.add(errorBirthday);
+			}
+
+			// Validate email
+			String errorEmail = validateEmail(userInforEntity.getUserId(), userInforEntity.getEmail());
+			if (!"".equals(errorEmail)) {
+				listError.add(errorEmail);
+			}
+
+			// Validate Tel
+			String errorTel = validateTel(userInforEntity.getTel());
+			if (!"".equals(errorTel)) {
+				listError.add(errorTel);
+			}
+
+			// Validate Password
+			String errorPassword = validatePassword(userInforEntity.getPassword());
+			if (!"".equals(errorPassword)) {
+				listError.add(errorPassword);
+			}
+
+			// Validate Password Confirm
+			// Nếu password không có lỗi
+			if ("".equals(errorBirthday)) {
+				String errorPassConfirm = validatePassConfirm(userInforEntity.getPassword(),
+						userInforEntity.getPasswordConfirm());
+				if (!"".equals(errorPassConfirm)) {
+					listError.add(errorPassConfirm);
+				}
+			}
+
+			// Nếu có chọn codeLevel
+			if (!"".equals(userInforEntity.getCodeLevel())) {
+				// Validate codeLevel
+				String errorCodeLevel = validateCodeLevel(userInforEntity.getCodeLevel());
+				if (!"".equals(errorCodeLevel)) {
+					listError.add(errorCodeLevel);
+				}
+
+				// Validate startDate
+				String errorStartDate = validateStartDate(userInforEntity.getStartDate());
+				if (!"".equals(errorStartDate)) {
+					listError.add(errorStartDate);
+				}
+
+				// Validate endDate
+				String errorEndDate = validateEndDate(userInforEntity.getStartDate(), userInforEntity.getEndDate());
+				if (!"".equals(errorEndDate)) {
+					listError.add(errorEndDate);
+				}
+
+				// Validate Total
+				String errorTotal = validateTotal(userInforEntity.getTotal());
+				if (!"".equals(errorTotal)) {
+					listError.add(errorTotal);
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : ValidateUser.validateUserInfor " + e.getMessage());
+			throw e;
+		}
 		return listError;
 	}
 
@@ -177,17 +177,15 @@ public class ValidateUser {
 	 *            giá trị cần kiểm tra
 	 * @return lỗi nếu có
 	 */
-	private static String validateTotal(String total) {
+	private static String validateTotal(int total) {
+		String totalString = Integer.toString(total);
 		// khai báo biến chữ lỗi
 		String errTotal = "";
-		// check chưa nhập(Mặc định total bằng 0 nên phải check 0)
-		if (Common.checkEmpty(total)) {
+		if (Common.checkEmpty(totalString)) {
 			errTotal = Constant.ER001_TOTAL;
-			// check hallfsize
-		} else if (!Common.isHalfsize(total)) {
+		} else if (!Common.isHalfsize(totalString)) {
 			errTotal = Constant.ER018_TOTAL;
-			// check max length
-		} else if (!Common.checkLength(total, 0, Constant.MAX_LENGTH_TOTAL)) {
+		} else if (!Common.checkLength(totalString, 0, Constant.MAX_LENGTH_TOTAL)) {
 			errTotal = Constant.ER006_TOTAL;
 		}
 		return errTotal;

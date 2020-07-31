@@ -226,7 +226,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					} else {
 						userInfo.setEndDate(dateFormat.format(rs.getDate("end_date")));
 					}
-					userInfo.setTotal(rs.getString("total"));
+					userInfo.setTotal(rs.getInt("total"));
 
 					// thêm userInfo vào danh sách listUserInfo
 					listUserInfo.add(userInfo);

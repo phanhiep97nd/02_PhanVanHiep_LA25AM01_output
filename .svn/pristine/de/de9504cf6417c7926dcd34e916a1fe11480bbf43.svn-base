@@ -101,12 +101,10 @@ public class AddUserInputController extends HttpServlet {
 				listError = ValidateUser.validateUserInfor(userInfoEntity);
 				// Kiểm tra xem có lỗi hay không
 				if (listError.size() == 0) {
-					// lấy ra key
-					String key = Common.generateSalt();
 					// gán userInfoEntity lên sesion
-					session.setAttribute(Constant.SESSION_ADDUSER_CONFIRM + key, userInfoEntity);
+					session.setAttribute(Constant.SESSION_ADDUSER_CONFIRM, userInfoEntity);
 					// sendRedirect đến URL addUserConfirm
-					resp.sendRedirect(Constant.URL_ADDUSERCONFIRM + key);
+					resp.sendRedirect(Constant.URL_ADDUSERCONFIRM);
 				} else {
 					setDataLogic(req);
 					req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
@@ -185,6 +183,7 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	private UserInfoEntity getDefaultValue(HttpServletRequest req) throws ClassNotFoundException, SQLException {
 		try {
+
 			// Khởi tạo listGroup để lưu tất cả các group lấy được
 			ArrayList<MstGroupEntity> listMstGroup = new ArrayList<>();
 			// Khởi tạo listMstJapan để lưu tất cả các group lấy được
@@ -221,7 +220,7 @@ public class AddUserInputController extends HttpServlet {
 					Integer.toString(dayNow));
 			String startDate = Common.setFormatDate(Integer.toString(yearNow), Integer.toString(monthNow),
 					Integer.toString(dayNow));
-			String total = Constant.DEFAULT_EMPTY;
+			int total = Constant.DEFAULT_ZERO;
 
 			// Lấy về type từ req
 			type = req.getParameter(Constant.REQUEST_TYPE);
@@ -269,7 +268,8 @@ public class AddUserInputController extends HttpServlet {
 					String endMonth = req.getParameter(Constant.END_MONTH_ADM003);
 					String endDay = req.getParameter(Constant.END_DAY_ADM003);
 					endDate = Common.setFormatDate(endYear, endMonth, endDay);
-					total = req.getParameter(Constant.TOTAL_ADM003);
+					total = Common.convertStringToInt(req.getParameter(Constant.TOTAL_ADM003).trim(),
+							Constant.DEFAULT_ZERO);
 				}
 
 				// gán giá trị các thuộc tính đối tượng userInforEntity
@@ -291,12 +291,8 @@ public class AddUserInputController extends HttpServlet {
 			} else if (Common.compareString(Constant.TYPE_BACK, type)) {
 				// khai báo session
 				HttpSession session = req.getSession();
-				//Lấy key từ req
-				String key = req.getParameter("key");
 				// lấy userInforEntity từ session
-				userInforEntity = (UserInfoEntity) session.getAttribute(Constant.SESSION_ADDUSER_CONFIRM+key);
-				// xóa session 
-				session.removeAttribute(Constant.SESSION_ADDUSER_CONFIRM+key);
+				userInforEntity = (UserInfoEntity) session.getAttribute(Constant.SESSION_ADDUSER_CONFIRM);
 				// nếu không nhập trình độ tiếng nhật
 				if ("".equals(userInforEntity.getCodeLevel())) {
 					userInforEntity.setEndDate(endDate);

@@ -6,19 +6,20 @@ package manageuser.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.TblUserDao;
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.MstGroupEntity;
+import manageuser.logics.MstGroupLogic;
+import manageuser.logics.impl.MstGroupLogicImpl;
 
 /**
  * Chứa các hàm common của dự án
@@ -26,22 +27,6 @@ import manageuser.dao.impl.TblUserDaoImpl;
  * @author Phan Van Hiep
  */
 public class Common {
-	
-	/**
-	 * Tạo ra chuỗi salt
-	 * 
-	 * @return trả về chuỗi salt vừa random ra
-	 * @throws SQLException
-	 */
-	public static String generateSalt() throws SQLException {
-			String saltFinal = "";
-				String random = java.time.LocalDateTime.now().toString();
-				byte[] salt = new byte[32];
-				salt = random.getBytes();
-				saltFinal = Base64.getEncoder().encodeToString(salt);
-			return saltFinal;
-	}
-
 
 	/**
 	 * Hàm mã hóa password
@@ -430,25 +415,28 @@ public class Common {
 		int month = Common.convertStringToInt(lstDate[1], 0);
 		int day = Common.convertStringToInt(lstDate[2], 0);
 		int yearNow = Common.getDate().get(Calendar.YEAR);
-		boolean check = true;
+		// kiểm tra năm
+		if (year >= 1990 && year <= yearNow) {
+			return true;
+		}
 		// Kiểm tra ngày tháng
 		switch (month) {
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			if (day < 0 || day > 30) {
-				check = false;
+			if (day > 0 && day <= 30) {
+				return true;
 			}
 			break;
 		case 2:
 			if (year % 4 == 0) {
-				if (day < 0 || day > 29) {
-					check = false;
+				if (day > 0 && day <= 29) {
+					return true;
 				}
 			} else {
-				if (day < 0 || day > 28) {
-					check = false;
+				if (day > 0 && day <= 28) {
+					return true;
 				}
 			}
 
@@ -460,16 +448,15 @@ public class Common {
 		case 8:
 		case 10:
 		case 12:
-			if (day < 0 || day > 31) {
-				check = false;
+			if (day > 0 && day <= 31) {
+				return true;
 			}
 			break;
 
 		default:
-			check = false;
 			break;
 		}
-		return check;
+		return false;
 	}
 
 	/**
@@ -480,7 +467,7 @@ public class Common {
 	 * @return true nếu là hallfsize, false nếu ngược lại
 	 */
 	public static boolean isHalfsize(String text) {
-		return Pattern.matches("[a-zA-Z0-9]+", text);
+		return Pattern.matches("[0-9]+", text);
 	}
 
 	/**
@@ -513,5 +500,5 @@ public class Common {
 		}
 		return checkER012;
 	}
-	
+
 }

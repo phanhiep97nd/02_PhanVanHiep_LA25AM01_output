@@ -6,19 +6,19 @@ package manageuser.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.TblUserDao;
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.MstGroupEntity;
+import manageuser.logics.MstGroupLogic;
+import manageuser.logics.impl.MstGroupLogicImpl;
 
 /**
  * Chứa các hàm common của dự án
@@ -26,30 +26,12 @@ import manageuser.dao.impl.TblUserDaoImpl;
  * @author Phan Van Hiep
  */
 public class Common {
-	
-	/**
-	 * Tạo ra chuỗi salt
-	 * 
-	 * @return trả về chuỗi salt vừa random ra
-	 * @throws SQLException
-	 */
-	public static String generateSalt() throws SQLException {
-			String saltFinal = "";
-				String random = java.time.LocalDateTime.now().toString();
-				byte[] salt = new byte[32];
-				salt = random.getBytes();
-				saltFinal = Base64.getEncoder().encodeToString(salt);
-			return saltFinal;
-	}
-
 
 	/**
 	 * Hàm mã hóa password
 	 * 
-	 * @param salt
-	 *            password người dùng nhập vào
-	 * @param salt
-	 *            chuỗi salt là ngày giờ hiện tại
+	 * @param salt password người dùng nhập vào
+	 * @param salt chuỗi salt là ngày giờ hiện tại
 	 * @return chuỗi khi đã được mã hóa
 	 * @throws NoSuchAlgorithmException
 	 */
@@ -68,10 +50,8 @@ public class Common {
 	/**
 	 * Kiểm tra 2 chuỗi có giống nhau không
 	 * 
-	 * @param str1
-	 *            chuỗi cần so sánh
-	 * @param str2
-	 *            chuỗi cần so sánh
+	 * @param str1 chuỗi cần so sánh
+	 * @param str2 chuỗi cần so sánh
 	 * @return boolean
 	 */
 	public static boolean compareString(String str1, String str2) {
@@ -87,10 +67,9 @@ public class Common {
 	/**
 	 * Kiểm tra xem đã đăng nhập thành công chưa
 	 * 
-	 * @param session
-	 *            truyền vào session để kiểm tra
-	 * @return boolean (Nếu đăng nhập rồi thì trả về true, chưa đăng nhập thì
-	 *         trả về false)
+	 * @param session truyền vào session để kiểm tra
+	 * @return boolean (Nếu đăng nhập rồi thì trả về true, chưa đăng nhập thì trả về
+	 *         false)
 	 * @throws Exception
 	 */
 	public static boolean checkLogin(HttpSession session) throws Exception {
@@ -101,8 +80,7 @@ public class Common {
 				TblUserDao userDaoImpl = new TblUserDaoImpl();
 				// Lấy giá trị từ session
 				String loginName = (String) session.getAttribute(Constant.SESSION_LOGINNAME);
-				// Nếu lấy được đối tượng UserDaoImpl từ hàm
-				// getTblUserByLoginName nghĩa là
+				// Nếu lấy được đối tượng UserDaoImpl từ hàm getTblUserByLoginName nghĩa là
 				// loginName này có tồn tại trong DB
 				if (userDaoImpl.getTblUserByLoginId(loginName) != null) {
 					return true;
@@ -120,8 +98,7 @@ public class Common {
 	/**
 	 * replaceWildCard thay đổi giá trị wideCard nhập vào tránh lỗi sqlInjection
 	 * 
-	 * @param str
-	 *            giá trị nhập vào
+	 * @param str giá trị nhập vào
 	 * @return str đã được được thay thế
 	 */
 	public static String replaceWildCard(String str) {
@@ -136,10 +113,8 @@ public class Common {
 	/**
 	 * Chuyển chuỗi về dạng số nguyên
 	 * 
-	 * @param input
-	 *            là giá trị chuỗi cần chuyển
-	 * @param defaultValue
-	 *            giá trị mặc định mong muốn
+	 * @param input        là giá trị chuỗi cần chuyển
+	 * @param defaultValue giá trị mặc định mong muốn
 	 * @return number trả về số nguyên
 	 */
 	public static int convertStringToInt(String input, int defaultValue) {
@@ -149,8 +124,7 @@ public class Common {
 			// chuyển đổi sang số nguyên
 			numberValue = Integer.parseInt(input);
 		} catch (NumberFormatException e) {
-			// Nếu giá trị truyền vào không phải chuỗi, gán bằng giá trị mặc
-			// định
+			// Nếu giá trị truyền vào không phải chuỗi, gán bằng giá trị mặc định
 			numberValue = defaultValue;
 		}
 		// trả về giá trị số đã được chuyển đổi
@@ -178,10 +152,8 @@ public class Common {
 	/**
 	 * Lấy offset(Vị trí bắt đầu lấy data)
 	 * 
-	 * @param currentPage
-	 *            trang hiện tại
-	 * @param limit
-	 *            số lượng bản ghi hiển thị trên 1 page
+	 * @param currentPage trang hiện tại
+	 * @param limit       số lượng bản ghi hiển thị trên 1 page
 	 * @return trả về offset
 	 */
 	public static int getOffset(int currentPage, int limit) {
@@ -196,10 +168,8 @@ public class Common {
 	/**
 	 * Tính tổng số trang
 	 * 
-	 * @param totalUser
-	 *            tổng số user tìm được
-	 * @param limit
-	 *            số lượng bản ghi hiển thị trên 1 trang
+	 * @param totalUser tổng số user tìm được
+	 * @param limit     số lượng bản ghi hiển thị trên 1 trang
 	 * @return trả về tổng số trang
 	 */
 	public static int getTotalPage(int totalUser, int limit) {
@@ -209,8 +179,7 @@ public class Common {
 		if (totalUser % limit == 0) {
 			// totalPage bằng thương của totalUser và limit
 			totalPage = totalUser / limit;
-			// ngược lại nếu tổng số User không chia hết cho số bản ghi trên 1
-			// page
+			// ngược lại nếu tổng số User không chia hết cho số bản ghi trên 1 page
 		} else {
 			// totalPage bằng thương của totalUser và limit cộng thêm 1
 			totalPage = totalUser / limit + 1;
@@ -222,12 +191,9 @@ public class Common {
 	/**
 	 * Lấy ra danh sách chuỗi paging để hiển thị lên màn hình
 	 * 
-	 * @param totalUser
-	 *            tổng số user tìm kiếm được
-	 * @param currentPage
-	 *            trang hiện tại
-	 * @param limit
-	 *            số lượng bản ghi hiển thị trên 1 trang
+	 * @param totalUser   tổng số user tìm kiếm được
+	 * @param currentPage trang hiện tại
+	 * @param limit       số lượng bản ghi hiển thị trên 1 trang
 	 * @return listPaging trả về list paging hiển thị
 	 */
 	public static ArrayList<Integer> getListPaging(int totalUser, int currentPage, int limit) {
@@ -242,8 +208,7 @@ public class Common {
 		int startPage = ((currentPage - 1) / limitPage) * limitPage + 1;
 		// Page kết thúc chuỗi paging
 		int endPage = startPage + limitPage - 1;
-		// Nếu page kết thúc chuỗi lớn hơn tổng số page thì page kết thúc bằng
-		// page cuối
+		// Nếu page kết thúc chuỗi lớn hơn tổng số page thì page kết thúc bằng page cuối
 		// cùng
 		if (endPage > totalPage) {
 			endPage = totalPage;
@@ -259,10 +224,8 @@ public class Common {
 	/**
 	 * Lấy ra danh sách năm để gắn cho selectbox năm
 	 * 
-	 * @param startYear
-	 *            năm bắt đầu
-	 * @param endYear
-	 *            năm kết thúc
+	 * @param startYear năm bắt đầu
+	 * @param endYear   năm kết thúc
 	 * @return trả về danh sách năm
 	 */
 	public static List<Integer> getListYear(int startYear, int endYear) {
@@ -321,12 +284,9 @@ public class Common {
 	/**
 	 * Sử dụng để chuyển các chuỗi về định dạng ngày YYYY/MM/DD
 	 * 
-	 * @param year
-	 *            chuỗi năm
-	 * @param month
-	 *            chuỗi tháng
-	 * @param day
-	 *            chuỗi ngày
+	 * @param year  chuỗi năm
+	 * @param month chuỗi tháng
+	 * @param day   chuỗi ngày
 	 * @return chuỗi có đạnh dạng YYYY/MM/DD
 	 */
 	public static String setFormatDate(String year, String month, String day) {
@@ -337,8 +297,7 @@ public class Common {
 	/**
 	 * Kiểm tra xem một chuỗi có rỗng không
 	 * 
-	 * @param str
-	 *            chuỗi cần kiểm tra
+	 * @param str chuỗi cần kiểm tra
 	 * @return true nếu rỗng và ngược lại
 	 */
 	public static boolean checkEmpty(String str) {
@@ -348,15 +307,11 @@ public class Common {
 		}
 		return false;
 	}
-
+	
 	/**
-	 * Kiểm tra độ dài của chuỗi có nằm trong khoảng từ minLength đến maxLength
-	 * không
-	 * 
-	 * @param maxLength
-	 *            độ dài lớn nhất
-	 * @param minLength
-	 *            độ dài nhỏ nhất
+	 * Kiểm tra độ dài của chuỗi có nằm trong khoảng từ minLength đến maxLength không
+	 * @param maxLength độ dài lớn nhất 
+	 * @param minLength độ dài nhỏ nhất 
 	 * @return true nếu độ dài chuỗi trong khoảng cho phép, ngược lại là false
 	 */
 	public static boolean checkLength(String str, int minLength, int maxLength) {
@@ -368,11 +323,8 @@ public class Common {
 
 	/**
 	 * Kiểm tra chuỗi truyền vào đã đúng format chưa
-	 * 
-	 * @param str
-	 *            chuỗi cần kiểm tra
-	 * @param format
-	 *            format dùng để kiểm tra
+	 * @param str  chuỗi cần kiểm tra
+	 * @param format format dùng để kiểm tra 
 	 * @return true nếu chuỗi đúng format, false nếu ngược lại
 	 */
 	public static boolean checkFormat(String str, String format) {
@@ -381,137 +333,38 @@ public class Common {
 		}
 		return false;
 	}
-
-	/**
-	 * check kí tự Kana
-	 * 
-	 * @param text
-	 *            chuỗi cần check
-	 * @return true nếu là kí tự kana, false nếu ngược lại
-	 */
-	public static boolean isKatakana(String text) {
-		char[] c = text.toCharArray();
-
-		for (int i = 0; i < c.length; i++) {
-			if ((Character.UnicodeBlock.of(c[i]) != Character.UnicodeBlock.KATAKANA) && (!isDigit(c[i]))
-					&& (!Character.isWhitespace(c[i]))) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Kiểm tra digit một kí tự
-	 * 
-	 * @param c
-	 *            kí tự cần kiểm tra
-	 * @return true nếu là kí tự diGit
-	 */
-	private static boolean isDigit(char c) {
-		int x = (int) c;
-		if ((x >= 48) && (x <= 57)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Kiểm tra ngày tháng năm hợp lệ
-	 * 
-	 * @param birthday
-	 *            chuỗi cần kiểm tra
-	 * @return true nếu ngày tháng năm hợp lệ, false nếu
-	 */
-	public static boolean checkDate(String birthday) {
-		// Lấy ra ngày, tháng, năm từ chuỗi truyền vào
-		String[] lstDate = birthday.trim().split("/");
-		int year = Common.convertStringToInt(lstDate[0], 0);
-		int month = Common.convertStringToInt(lstDate[1], 0);
-		int day = Common.convertStringToInt(lstDate[2], 0);
-		int yearNow = Common.getDate().get(Calendar.YEAR);
-		boolean check = true;
-		// Kiểm tra ngày tháng
-		switch (month) {
-		case 4:
-		case 6:
-		case 9:
-		case 11:
-			if (day < 0 || day > 30) {
-				check = false;
-			}
-			break;
-		case 2:
-			if (year % 4 == 0) {
-				if (day < 0 || day > 29) {
-					check = false;
-				}
-			} else {
-				if (day < 0 || day > 28) {
-					check = false;
-				}
-			}
-
-			break;
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			if (day < 0 || day > 31) {
-				check = false;
-			}
-			break;
-
-		default:
-			check = false;
-			break;
-		}
-		return check;
-	}
-
-	/**
-	 * Check kí tự hallfsize
-	 * 
-	 * @param text
-	 *            chuỗi cần kiểm tra
-	 * @return true nếu là hallfsize, false nếu ngược lại
-	 */
-	public static boolean isHalfsize(String text) {
-		return Pattern.matches("[a-zA-Z0-9]+", text);
-	}
-
-	/**
-	 * Check ngày hết hạn lớn hơn ngày bắt đàu
-	 * 
-	 * @param startDate
-	 *            ngày bắt đầu
-	 * @param endDate
-	 *            ngày hết hạn
-	 * @return true nếu là ngày hết hạn lướn hơn
-	 */
-	public static boolean checkER012(String startDate, String endDate) {
-		boolean checkER012 = false;
-		// Lấy về ngày tháng năm bắt đầu
-		String[] lstStartDate = startDate.trim().split("/");
-		int startYear = Integer.parseInt(lstStartDate[0]);
-		int startMonth = Integer.parseInt(lstStartDate[1]);
-		int startDay = Integer.parseInt(lstStartDate[1]);
-		// Lấy về ngày tháng năm kết thúc
-		String[] lstEndDate = endDate.trim().split("/");
-		int endYear = Integer.parseInt(lstEndDate[0]);
-		int endMonth = Integer.parseInt(lstEndDate[1]);
-		int endDay = Integer.parseInt(lstEndDate[1]);
-		if (endYear > startYear) {
-			checkER012 = true;
-		} else if (endYear == startYear && endMonth > startMonth) {
-			checkER012 = true;
-		} else if (endYear == startYear && endMonth == startMonth && endDay > startDay) {
-			checkER012 = true;
-		}
-		return checkER012;
-	}
 	
+    /**
+     * check kí tự Kana
+     * 
+     * @param text chuỗi cần check
+     * @return true nếu là kí tự kana, false nếu ngược lại
+     */    
+    public static boolean isKatakana(String text) {
+        char[] c = text.toCharArray();
+    
+            for (int i = 0; i < c.length; i++) {
+                if ((Character.UnicodeBlock.of(c[i]) != Character.UnicodeBlock.KATAKANA) && (!isDigit(c[i]))
+                        && (!Character.isWhitespace(c[i]))) {
+            return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * Kiểm tra digit một kí tự
+     * 
+     * @param c kí tự cần kiểm tra
+     * @return true nếu là kí tự diGit
+     */
+    private static boolean isDigit(char c) {
+        int x = (int) c; 
+        if ((x >= 48) && (x <= 57)) {
+            return true;
+        }  
+        return false;
+    }
+
+    
 }
