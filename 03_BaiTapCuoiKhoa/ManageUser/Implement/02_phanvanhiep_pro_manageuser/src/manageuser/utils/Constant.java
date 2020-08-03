@@ -64,6 +64,7 @@ public class Constant {
 	public static final String PATH_ADM003 = "/Views/jsp/ADM003.jsp";
 	public static final String PATH_ADM004 = "/Views/jsp/ADM004.jsp";
 	public static final String PATH_ADM005 = "/Views/jsp/ADM005.jsp";
+	public static final String PATH_ADM006 = "/Views/jsp/ADM006.jsp";
 	public static final String PATH_SYSTEM_ERROR = "/Views/jsp/System_Error.jsp";
 
 	// constant URL
@@ -180,5 +181,12 @@ public class Constant {
 	public static final int MIN_LENGTH_PASS = 5;
 	public static final int MAX_LENGTH_PASS = 15;
 	public static final int MAX_LENGTH_TOTAL = 10;
+	public static final String SESSION_CONFIRM_ADM003 = "confirmADM003";
+	
+	// Insert DB
+	public static final String URL_SUCCESS = "success.do?type=";
+	public static final String TYPE_ADD_SUCCESS = "addCuccsess";
+	public static final String MSG001 = MessageProperties.getValueByKey("MSG001");
+	public static final String MSG002 = MessageProperties.getValueByKey("MSG002");
 
 }

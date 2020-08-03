@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import manageuser.entities.UserInfoEntity;
+import manageuser.logics.TblUserLogic;
+import manageuser.logics.impl.TblUserLogicImpl;
+import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
@@ -22,7 +25,7 @@ import manageuser.utils.Constant;
  */
 public class AddUserConfirmController extends HttpServlet {
 	/*
-	 * (non-Javadoc)
+	 * xử lí khi nhấn xác nhận ở màn hình ADM003 (non-Javadoc)
 	 * 
 	 * @see
 	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
@@ -33,21 +36,84 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			// khai báo session
 			HttpSession session = req.getSession();
+			// nếu từ màn ADM003 click xác nhận(Sesion confirmAdDM003 khác null)
+			if (session.getAttribute(Constant.SESSION_CONFIRM_ADM003) != null) {
+				// Xóa session confirmAdDM003
+				session.removeAttribute(Constant.SESSION_CONFIRM_ADM003);
+				// Lấy key từ req
+				String key = req.getParameter(Constant.REQUEST_KEY);
+				// lấy userInfoEntity từ session
+				UserInfoEntity userInfoEntity = (UserInfoEntity) session
+						.getAttribute(Constant.SESSION_ADDUSER_CONFIRM + key);
 
-			//Lấy key từ req
-			String key = req.getParameter(Constant.REQUEST_KEY);
-			// lấy userInfoEntity từ session
-			UserInfoEntity userInfoEntity = (UserInfoEntity) session.getAttribute(Constant.SESSION_ADDUSER_CONFIRM+key);
+				// truyền userInfoEntity vào request
+				req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
+				// truyền key lên req
+				req.setAttribute(Constant.REQUEST_KEY, key);
+				// forward
+				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM004).forward(req, resp);
 
-			// truyền userInfoEntity vào request
-			req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
-			// truyền key lên req
-			req.setAttribute(Constant.REQUEST_KEY, key);
-			// forward
-			req.getServletContext().getRequestDispatcher(Constant.PATH_ADM004).forward(req, resp);
+				// không phải là từ click xác nhận ở màn hình ADM003
+			} else {
+				// hiển thị ra màn hình ADM002
+				resp.sendRedirect(Constant.URL_LISTUSER);
+			}
 		} catch (Exception e) {
 			// Hiển thị ở console lỗi
 			System.out.println("Error : AddUserConfirmController.doGet " + e.getMessage());
+			// Chuyển đến màn hình System_Error
+			resp.sendRedirect(Constant.URL_SYSTEMERROR);
+		}
+	}
+
+	/*
+	 * Xử lí khi nhấn button Ok ở ADM004 (non-Javadoc)
+	 * 
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			// khai báo session
+			HttpSession session = req.getSession();
+			// key từ request
+			String key = req.getParameter(Constant.REQUEST_KEY);
+			System.out.println(key);
+			// lấy userInfoEntity từ session
+			UserInfoEntity userInfoEntity = (UserInfoEntity) session
+					.getAttribute(Constant.SESSION_ADDUSER_CONFIRM + key);
+			// Kiểm tra đăng nhập thành công
+			if (Common.checkLogin(session)) {
+				// khởi tạo đối tượng tblUserLogicImpl
+				TblUserLogic tblUserLogicImpl = new TblUserLogicImpl();
+				System.out.println(userInfoEntity.getLoginName());
+				// Kiểm tra tồn tại loginName và email
+				boolean checkExistLoginName = tblUserLogicImpl.checkExistedLoginName(userInfoEntity.getLoginName());
+				boolean checkExistEmail = tblUserLogicImpl.checkExistedEmail(userInfoEntity.getUserId(),
+						userInfoEntity.getEmail());
+				// Nếu không tồn tại loginName và email
+				if (!checkExistLoginName && !checkExistEmail) {
+					// Nếu thêm thành công(gọi đến hàm createUser)
+					if (tblUserLogicImpl.createUser(userInfoEntity)) {
+						// gọi đến URL Success
+						resp.sendRedirect(Constant.URL_SUCCESS + Constant.TYPE_ADD_SUCCESS);
+					} else {
+						// Chuyển đến màn hình System_Error
+						resp.sendRedirect(Constant.URL_SYSTEMERROR);
+					}
+				} else {
+					// Chuyển đến màn hình System_Error
+					resp.sendRedirect(Constant.URL_SYSTEMERROR);
+				}
+			} else {
+				// gọi đến URL login.do để về màn hình login
+				resp.sendRedirect(Constant.URL_LOGIN);
+			}
+
+		} catch (Exception e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : AddUserConfirmController.doPost " + e.getMessage());
 			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.URL_SYSTEMERROR);
 		}

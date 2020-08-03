@@ -5,6 +5,7 @@ TblUserDao.java, Jul 13, 2020 Phan Van Hiep
 package manageuser.dao;
 
 import java.awt.List;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -72,5 +73,38 @@ public interface TblUserDao extends BaseDao {
 	 * @return đối tượng tblUserEntity
 	 */
 	TblUserEntity getUserByEmail(int userId, String email) throws SQLException, ClassNotFoundException;
+
+	/**
+	 * Lấy về Connection
+	 * @return đối tượng Connection
+	 */
+	Connection getConnection();
+
+	/**
+	 * quyết định có tự động ghi vào DB hay ko 
+	 * @param isAutoCommit có tự động commit hay là ko
+	 * @throws SQLException 
+	 */
+	void setDisableCommit(boolean isAutoCommit) throws SQLException;
+
+	/**
+	 * ghi các thược tính của các đối tượng tblUserEntity vào DB
+	 * @param tblUserEntity giá trị cần ghi vào DB
+	 * @return userId
+	 * @throws SQLException 
+	 */
+	int insertUser(TblUserEntity tblUserEntity) throws SQLException;
+
+	/**
+	 * Thực hiện insert 
+	 * @throws SQLException 
+	 */
+	void commitData() throws SQLException;
+
+	/**
+	 * Trả lại dữ liệu về trạng thái chưa insert
+	 * @throws SQLException 
+	 */
+	void rollBack() throws SQLException;
 
 }

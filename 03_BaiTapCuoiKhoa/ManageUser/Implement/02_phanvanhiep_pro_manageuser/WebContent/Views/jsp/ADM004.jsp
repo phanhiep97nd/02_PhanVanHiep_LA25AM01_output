@@ -17,7 +17,7 @@
 	<!-- End vung header -->	
 
 <!-- Begin vung input-->	
-	<form action="ADM006.html" method="post" name="inputform">	
+	<form action="addUserOK.do?key=${key }" method="post" name="inputform">	
 	<table  class="tbl_input" border="0" width="75%"  cellpadding="0" cellspacing="0" >			
 		<tr>
 			<th align="left">

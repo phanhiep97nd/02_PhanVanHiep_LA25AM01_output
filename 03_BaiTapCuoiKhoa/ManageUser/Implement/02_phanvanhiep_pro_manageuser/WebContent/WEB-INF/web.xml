@@ -58,6 +58,22 @@
     <url-pattern>/addUserConfirm.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>addUserOK</servlet-name>
+    <servlet-class>manageuser.controllers.AddUserConfirmController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addUserOK</servlet-name>
+    <url-pattern>/addUserOK.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>success</servlet-name>
+    <servlet-class>manageuser.controllers.SuccessController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>success</servlet-name>
+    <url-pattern>/success.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>systemError</servlet-name>
     <servlet-class>manageuser.controllers.SystemErrorController</servlet-class>
   </servlet>

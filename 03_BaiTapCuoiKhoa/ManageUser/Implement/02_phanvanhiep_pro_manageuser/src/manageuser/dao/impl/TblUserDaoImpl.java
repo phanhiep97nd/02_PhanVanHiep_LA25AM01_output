@@ -4,9 +4,11 @@
  */
 package manageuser.dao.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -408,4 +410,122 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 		}
 	}
+
+	/**
+	 * Lấy về Connection
+	 * 
+	 * @return đối tượng Connection
+	 */
+	@Override
+	public Connection getConnection() {
+		return conn;
+	}
+
+	/**
+	 * quyết định có tự động ghi vào DB hay ko
+	 * 
+	 * @param isAutoCommit có tự động commit hay là ko
+	 * @throws SQLException
+	 */
+	@Override
+	public void setDisableCommit(boolean isAutoCommit) throws SQLException {
+		try {
+			conn.setAutoCommit(isAutoCommit);
+		} catch (SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error : TblUserDaoImpl.setAutoCommit " + e.getMessage());
+			// gửi lỗi
+			throw e;
+		}
+
+	}
+
+	/**
+	 * ghi các thược tính của các đối tượng tblUserEntity vào DB
+	 * 
+	 * @param tblUserEntity giá trị cần ghi vào DB
+	 * @return userId
+	 * @throws SQLException
+	 */
+	@Override
+	public int insertUser(TblUserEntity tblUserEntity) throws SQLException {
+		try {
+			// khai báo kết quả trả về
+			int result = 0;
+			if (conn != null) {
+				// tạo câu truy vấn
+				StringBuilder sql = new StringBuilder(
+						"INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, rule, salt)");
+				sql.append(" VALUES(?,?,?,?,?,?,?,?,?,?)");
+				// Thực hiện câu truy vấn
+				pstm = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
+				// khai báo vị trí tham số
+				int index = 1;
+				// set các giá trị cho các tham số
+				pstm.setInt(index++, tblUserEntity.getGroupId());
+				pstm.setString(index++, tblUserEntity.getLoginName());
+				pstm.setString(index++, tblUserEntity.getPass());
+				pstm.setString(index++, tblUserEntity.getFullName());
+				pstm.setString(index++, tblUserEntity.getFullNameKana());
+				pstm.setString(index++, tblUserEntity.getEmail());
+				pstm.setString(index++, tblUserEntity.getTel());
+				pstm.setString(index++, tblUserEntity.getBirthday());
+				pstm.setInt(index++, tblUserEntity.getRule());
+				pstm.setString(index++, tblUserEntity.getSalt());
+
+				// thực thi truy vấn
+				pstm.execute();
+				// Lấy về kết quả từ hàm tự tăng
+				ResultSet rs = pstm.getGeneratedKeys();
+				while (rs.next()) {
+					// lấy ra userID
+					result = rs.getInt(1);
+				}
+			}
+			// trả về userid
+			return result;
+		} catch (SQLException e) {
+			// thông báo lỗi ở màn hình console
+			System.out.println("Error : TblUserDaoImpl.insertUser " + e.getMessage());
+			// throw lỗi
+			throw e;
+
+		}
+	}
+
+	/**
+	 * Thực hiện insert
+	 * 
+	 * @throws SQLException
+	 */
+	@Override
+	public void commitData() throws SQLException {
+		try {
+			if (conn != null) {
+				conn.commit();
+			}
+		} catch (SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error : TblUserDaoImpl.commitData " + e.getMessage());
+			// gửi lỗi
+			throw e;
+		}
+	}
+
+	@Override
+	public void rollBack() throws SQLException {
+		try {
+			// lấy lại dữ liệu ban đầu
+			if (conn != null) {
+				conn.rollback();
+			}
+		} catch (SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error: TblUserDaoImpl.rollBack " + e.getMessage());
+			// throw lỗi
+			throw e;
+		}
+		
+	}
+
 }

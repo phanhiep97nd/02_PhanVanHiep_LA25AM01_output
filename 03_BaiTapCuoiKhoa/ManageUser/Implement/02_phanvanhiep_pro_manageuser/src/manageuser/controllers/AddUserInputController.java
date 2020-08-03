@@ -105,6 +105,8 @@ public class AddUserInputController extends HttpServlet {
 					String key = Common.generateSalt();
 					// gán userInfoEntity lên sesion
 					session.setAttribute(Constant.SESSION_ADDUSER_CONFIRM + key, userInfoEntity);
+					// gán lên session một giá trị confirmADM003 để kiểm tra có từ màn ADM003 qua hay ko
+					session.setAttribute(Constant.SESSION_CONFIRM_ADM003, Constant.SESSION_CONFIRM_ADM003);
 					// sendRedirect đến URL addUserConfirm
 					resp.sendRedirect(Constant.URL_ADDUSERCONFIRM + key);
 				} else {

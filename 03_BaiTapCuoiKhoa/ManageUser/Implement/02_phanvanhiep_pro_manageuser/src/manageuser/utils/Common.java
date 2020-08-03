@@ -19,6 +19,9 @@ import javax.servlet.http.HttpSession;
 
 import manageuser.dao.TblUserDao;
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.TblDetailUserJapanEntity;
+import manageuser.entities.TblUserEntity;
+import manageuser.entities.UserInfoEntity;
 
 /**
  * Chứa các hàm common của dự án
@@ -26,30 +29,27 @@ import manageuser.dao.impl.TblUserDaoImpl;
  * @author Phan Van Hiep
  */
 public class Common {
-	
+
 	/**
 	 * Tạo ra chuỗi salt
 	 * 
 	 * @return trả về chuỗi salt vừa random ra
 	 * @throws SQLException
 	 */
-	public static String generateSalt() throws SQLException {
-			String saltFinal = "";
-				String random = java.time.LocalDateTime.now().toString();
-				byte[] salt = new byte[32];
-				salt = random.getBytes();
-				saltFinal = Base64.getEncoder().encodeToString(salt);
-			return saltFinal;
+	public static String generateSalt() {
+		String saltFinal = "";
+		String random = java.time.LocalDateTime.now().toString();
+		byte[] salt = new byte[32];
+		salt = random.getBytes();
+		saltFinal = Base64.getEncoder().encodeToString(salt);
+		return saltFinal;
 	}
-
 
 	/**
 	 * Hàm mã hóa password
 	 * 
-	 * @param salt
-	 *            password người dùng nhập vào
-	 * @param salt
-	 *            chuỗi salt là ngày giờ hiện tại
+	 * @param salt password người dùng nhập vào
+	 * @param salt chuỗi salt là ngày giờ hiện tại
 	 * @return chuỗi khi đã được mã hóa
 	 * @throws NoSuchAlgorithmException
 	 */
@@ -68,10 +68,8 @@ public class Common {
 	/**
 	 * Kiểm tra 2 chuỗi có giống nhau không
 	 * 
-	 * @param str1
-	 *            chuỗi cần so sánh
-	 * @param str2
-	 *            chuỗi cần so sánh
+	 * @param str1 chuỗi cần so sánh
+	 * @param str2 chuỗi cần so sánh
 	 * @return boolean
 	 */
 	public static boolean compareString(String str1, String str2) {
@@ -87,10 +85,9 @@ public class Common {
 	/**
 	 * Kiểm tra xem đã đăng nhập thành công chưa
 	 * 
-	 * @param session
-	 *            truyền vào session để kiểm tra
-	 * @return boolean (Nếu đăng nhập rồi thì trả về true, chưa đăng nhập thì
-	 *         trả về false)
+	 * @param session truyền vào session để kiểm tra
+	 * @return boolean (Nếu đăng nhập rồi thì trả về true, chưa đăng nhập thì trả về
+	 *         false)
 	 * @throws Exception
 	 */
 	public static boolean checkLogin(HttpSession session) throws Exception {
@@ -120,8 +117,7 @@ public class Common {
 	/**
 	 * replaceWildCard thay đổi giá trị wideCard nhập vào tránh lỗi sqlInjection
 	 * 
-	 * @param str
-	 *            giá trị nhập vào
+	 * @param str giá trị nhập vào
 	 * @return str đã được được thay thế
 	 */
 	public static String replaceWildCard(String str) {
@@ -136,10 +132,8 @@ public class Common {
 	/**
 	 * Chuyển chuỗi về dạng số nguyên
 	 * 
-	 * @param input
-	 *            là giá trị chuỗi cần chuyển
-	 * @param defaultValue
-	 *            giá trị mặc định mong muốn
+	 * @param input        là giá trị chuỗi cần chuyển
+	 * @param defaultValue giá trị mặc định mong muốn
 	 * @return number trả về số nguyên
 	 */
 	public static int convertStringToInt(String input, int defaultValue) {
@@ -178,10 +172,8 @@ public class Common {
 	/**
 	 * Lấy offset(Vị trí bắt đầu lấy data)
 	 * 
-	 * @param currentPage
-	 *            trang hiện tại
-	 * @param limit
-	 *            số lượng bản ghi hiển thị trên 1 page
+	 * @param currentPage trang hiện tại
+	 * @param limit       số lượng bản ghi hiển thị trên 1 page
 	 * @return trả về offset
 	 */
 	public static int getOffset(int currentPage, int limit) {
@@ -196,10 +188,8 @@ public class Common {
 	/**
 	 * Tính tổng số trang
 	 * 
-	 * @param totalUser
-	 *            tổng số user tìm được
-	 * @param limit
-	 *            số lượng bản ghi hiển thị trên 1 trang
+	 * @param totalUser tổng số user tìm được
+	 * @param limit     số lượng bản ghi hiển thị trên 1 trang
 	 * @return trả về tổng số trang
 	 */
 	public static int getTotalPage(int totalUser, int limit) {
@@ -222,12 +212,9 @@ public class Common {
 	/**
 	 * Lấy ra danh sách chuỗi paging để hiển thị lên màn hình
 	 * 
-	 * @param totalUser
-	 *            tổng số user tìm kiếm được
-	 * @param currentPage
-	 *            trang hiện tại
-	 * @param limit
-	 *            số lượng bản ghi hiển thị trên 1 trang
+	 * @param totalUser   tổng số user tìm kiếm được
+	 * @param currentPage trang hiện tại
+	 * @param limit       số lượng bản ghi hiển thị trên 1 trang
 	 * @return listPaging trả về list paging hiển thị
 	 */
 	public static ArrayList<Integer> getListPaging(int totalUser, int currentPage, int limit) {
@@ -259,10 +246,8 @@ public class Common {
 	/**
 	 * Lấy ra danh sách năm để gắn cho selectbox năm
 	 * 
-	 * @param startYear
-	 *            năm bắt đầu
-	 * @param endYear
-	 *            năm kết thúc
+	 * @param startYear năm bắt đầu
+	 * @param endYear   năm kết thúc
 	 * @return trả về danh sách năm
 	 */
 	public static List<Integer> getListYear(int startYear, int endYear) {
@@ -321,12 +306,9 @@ public class Common {
 	/**
 	 * Sử dụng để chuyển các chuỗi về định dạng ngày YYYY/MM/DD
 	 * 
-	 * @param year
-	 *            chuỗi năm
-	 * @param month
-	 *            chuỗi tháng
-	 * @param day
-	 *            chuỗi ngày
+	 * @param year  chuỗi năm
+	 * @param month chuỗi tháng
+	 * @param day   chuỗi ngày
 	 * @return chuỗi có đạnh dạng YYYY/MM/DD
 	 */
 	public static String setFormatDate(String year, String month, String day) {
@@ -337,8 +319,7 @@ public class Common {
 	/**
 	 * Kiểm tra xem một chuỗi có rỗng không
 	 * 
-	 * @param str
-	 *            chuỗi cần kiểm tra
+	 * @param str chuỗi cần kiểm tra
 	 * @return true nếu rỗng và ngược lại
 	 */
 	public static boolean checkEmpty(String str) {
@@ -353,10 +334,8 @@ public class Common {
 	 * Kiểm tra độ dài của chuỗi có nằm trong khoảng từ minLength đến maxLength
 	 * không
 	 * 
-	 * @param maxLength
-	 *            độ dài lớn nhất
-	 * @param minLength
-	 *            độ dài nhỏ nhất
+	 * @param maxLength độ dài lớn nhất
+	 * @param minLength độ dài nhỏ nhất
 	 * @return true nếu độ dài chuỗi trong khoảng cho phép, ngược lại là false
 	 */
 	public static boolean checkLength(String str, int minLength, int maxLength) {
@@ -369,10 +348,8 @@ public class Common {
 	/**
 	 * Kiểm tra chuỗi truyền vào đã đúng format chưa
 	 * 
-	 * @param str
-	 *            chuỗi cần kiểm tra
-	 * @param format
-	 *            format dùng để kiểm tra
+	 * @param str    chuỗi cần kiểm tra
+	 * @param format format dùng để kiểm tra
 	 * @return true nếu chuỗi đúng format, false nếu ngược lại
 	 */
 	public static boolean checkFormat(String str, String format) {
@@ -385,8 +362,7 @@ public class Common {
 	/**
 	 * check kí tự Kana
 	 * 
-	 * @param text
-	 *            chuỗi cần check
+	 * @param text chuỗi cần check
 	 * @return true nếu là kí tự kana, false nếu ngược lại
 	 */
 	public static boolean isKatakana(String text) {
@@ -404,8 +380,7 @@ public class Common {
 	/**
 	 * Kiểm tra digit một kí tự
 	 * 
-	 * @param c
-	 *            kí tự cần kiểm tra
+	 * @param c kí tự cần kiểm tra
 	 * @return true nếu là kí tự diGit
 	 */
 	private static boolean isDigit(char c) {
@@ -419,8 +394,7 @@ public class Common {
 	/**
 	 * Kiểm tra ngày tháng năm hợp lệ
 	 * 
-	 * @param birthday
-	 *            chuỗi cần kiểm tra
+	 * @param birthday chuỗi cần kiểm tra
 	 * @return true nếu ngày tháng năm hợp lệ, false nếu
 	 */
 	public static boolean checkDate(String birthday) {
@@ -475,8 +449,7 @@ public class Common {
 	/**
 	 * Check kí tự hallfsize
 	 * 
-	 * @param text
-	 *            chuỗi cần kiểm tra
+	 * @param text chuỗi cần kiểm tra
 	 * @return true nếu là hallfsize, false nếu ngược lại
 	 */
 	public static boolean isHalfsize(String text) {
@@ -486,10 +459,8 @@ public class Common {
 	/**
 	 * Check ngày hết hạn lớn hơn ngày bắt đàu
 	 * 
-	 * @param startDate
-	 *            ngày bắt đầu
-	 * @param endDate
-	 *            ngày hết hạn
+	 * @param startDate ngày bắt đầu
+	 * @param endDate   ngày hết hạn
 	 * @return true nếu là ngày hết hạn lướn hơn
 	 */
 	public static boolean checkER012(String startDate, String endDate) {
@@ -513,5 +484,64 @@ public class Common {
 		}
 		return checkER012;
 	}
-	
+
+	/**
+	 * lấy về đối tượng TblUserEntity từ đối tượng UserInfoEntity
+	 * 
+	 * @param userInfoEntity dùng để lấy ra các giá trị của thuộc tính để gán vào
+	 *                       TblUserEntity
+	 * @return đối tượng TblUserEntity đã lấy được
+	 * @throws NoSuchAlgorithmException
+	 */
+	public static TblUserEntity getTblUserEntityFromTblUserInfor(UserInfoEntity userInfoEntity)
+			throws NoSuchAlgorithmException {
+		// khởi tạo tblUser
+		TblUserEntity tblUserEntity = new TblUserEntity();
+		try {
+			// set các giá trị cho thuộc tính của tblUserEntity
+			tblUserEntity.setLoginName(userInfoEntity.getLoginName());
+			tblUserEntity.setGroupId(userInfoEntity.getGroupId());
+			tblUserEntity.setFullName(userInfoEntity.getFullName());
+			tblUserEntity.setFullNameKana(userInfoEntity.getFullNameKatana());
+			tblUserEntity.setBirthday(userInfoEntity.getBirthday());
+			tblUserEntity.setEmail(userInfoEntity.getEmail());
+			tblUserEntity.setTel(userInfoEntity.getTel());
+			// lấy ra pass
+			String pass = userInfoEntity.getPassword();
+			// tạo salt
+			String salt = generateSalt();
+			// mã hóa past word
+			pass = enscryptPassword(pass, salt);
+			tblUserEntity.setPass(pass);
+			tblUserEntity.setSalt(salt);
+			tblUserEntity.setRule(Constant.RULE_USER);
+			return tblUserEntity;
+		} catch (NoSuchAlgorithmException e) {
+			// thông báo lỗi
+			System.out.println("Error : Common.getTblUserEntityFromTblUserInfor " + e.getMessage());
+			// gửi lỗi
+			throw e;
+		}
+	}
+
+	/**
+	 * lấy về đối tượng TblDetailUserJapanEntity từ đối tượng userInfoEntity
+	 * 
+	 * @param userInfoEntity dùng để lấy ra các giá trị của thuộc tính để gán vào
+	 *                       TblDetailUserJapanEntity
+	 * @return đối tượng TblDetailUserJapanEntity đã lấy được
+	 */
+	public static TblDetailUserJapanEntity getTblDetailUserJapanEntity(UserInfoEntity userInfoEntity) {
+		// khởi tạo tblDetailUserJapanEntity
+		TblDetailUserJapanEntity tblDetailUserJapanEntity = new TblDetailUserJapanEntity();
+		// set các giá trị cho các thuộc tính của tblDetailUserJapanEntity
+		tblDetailUserJapanEntity.setUserId(userInfoEntity.getUserId());
+		tblDetailUserJapanEntity.setCodeLevel(userInfoEntity.getCodeLevel());
+		tblDetailUserJapanEntity.setEndDate(userInfoEntity.getEndDate());
+		tblDetailUserJapanEntity.setStartDate(userInfoEntity.getStartDate());
+		tblDetailUserJapanEntity.setTotal(userInfoEntity.getTotal());
+		// trả về đối tượng tblDetailUserJapanEntity đã được gán giá trị cho các thuộc tính
+		return tblDetailUserJapanEntity;
+	}
+
 }

@@ -5,16 +5,19 @@
 package manageuser.logics.impl;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import manageuser.dao.TblDetailUserJapanDao;
 import manageuser.dao.TblUserDao;
+import manageuser.dao.impl.TblDetailUserJapanDaoImpl;
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.TblDetailUserJapanEntity;
 import manageuser.entities.TblUserEntity;
 import manageuser.entities.UserInfoEntity;
 import manageuser.logics.TblUserLogic;
 import manageuser.utils.Common;
-import manageuser.utils.MessageProperties;
 
 /**
  * Implement UserLogic để Xử lý logic cho các chức năng liên quan đến tbl_user
@@ -177,6 +180,66 @@ public class TblUserLogicImpl implements TblUserLogic {
 			System.out.println("Error : TblUserLogicImpl.checkExistedEmail " + e.getMessage());
 			// Throw lỗi
 			throw e;
+		}
+	}
+
+	/**
+	 * Insert data user vào bảng tbl_user và tbl_detail_user_japan
+	 * 
+	 * @param userInfoEntity truyền vào đối tượng userInfoEntity cần insert
+	 * @return true nếu insert thành công, false nếu insert không thành công
+	 * @throws ClassNotFoundException, SQLException
+	 */
+	@Override
+	public boolean createUser(UserInfoEntity userInfoEntity)
+			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+		// Khởi tạo đối tượng tblUserDaoImpl
+		TblUserDao tblUserDaoImpl = new TblUserDaoImpl();
+		try {
+			// mở kết nối database
+			tblUserDaoImpl.openConnection();
+			// Lấy về Connection
+			Connection conn = tblUserDaoImpl.getConnection();
+			if (conn != null) {
+				// dữ liệu chỉ được thêm khi gọi lệnh commit
+				tblUserDaoImpl.setDisableCommit(false);
+				// lấy ra tblUserEntity
+				TblUserEntity tblUserEntity = Common.getTblUserEntityFromTblUserInfor(userInfoEntity);
+				// insert vào bảng tbl_user và lấy về userId
+				int userId = tblUserDaoImpl.insertUser(tblUserEntity);
+				userInfoEntity.setUserId(userId);
+				// nếu lấy về được userId nghĩa là thêm thành công vào tbl_user
+				if (userId != 0) {
+					// nếu có nhập trình độ tiếng nhật
+					if (!"".equals(userInfoEntity.getCodeLevel())) {
+						// lấy ra tblDetailUserJapanEntity
+						TblDetailUserJapanEntity tblDetailUserJapanEntity = Common
+								.getTblDetailUserJapanEntity(userInfoEntity);
+
+						// khởi tạo tblDetailUserJapanDaoImpl
+						TblDetailUserJapanDao tblDetailUserJapanDaoImpl = new TblDetailUserJapanDaoImpl();
+						// set connection
+						tblDetailUserJapanDaoImpl.setConn(conn);
+						// insert vào bảng tbl_detail_user_japan
+						tblDetailUserJapanDaoImpl.insertTblDetailUserJapan(tblDetailUserJapanEntity);
+					}
+					// thêm vào cơ sở dữ liệu
+					tblUserDaoImpl.commitData();
+					// trả về thêm thành công
+					return true;
+				}
+			}
+			return false;
+		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException  e) {
+			// lấy lại dữ liệu ban đầu
+						tblUserDaoImpl.rollBack();
+			// thông báo lỗi
+			System.out.println("Error : TblUserLogicImpl.createUser " + e.getMessage());
+			// gửi lỗi
+			throw e;
+		} finally {
+			// đóng cơ sở dữ liệu
+			tblUserDaoImpl.closeConnection();
 		}
 	}
 
