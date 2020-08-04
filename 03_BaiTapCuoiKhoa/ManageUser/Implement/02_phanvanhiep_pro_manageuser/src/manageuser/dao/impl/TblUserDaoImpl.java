@@ -28,7 +28,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Lấy ra user trong bảng tbl_user bằng loginName
 	 * 
-	 * @param loginName loginName người dùng nhập vào
+	 * @param loginName
+	 *            loginName người dùng nhập vào
 	 * @return trả về một user tìm được trong DB
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -73,17 +74,25 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	}
 
 	/**
-	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
-	 * tbl_detail_user_japan
+	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group,
+	 * mst_japan, tbl_detail_user_japan
 	 * 
-	 * @param offset          vị trí bắt đầu lấy
-	 * @param limit           số bản ghi tối đa trên 1 page
-	 * @param groupId         là id của nhóm được chọn trong pulldown
-	 * @param fullName        là fullname tìm kiếm nhập vào từ textbox
-	 * @param sortType        là loại sắp xếp theo fullName, codeLevel hay endDate
-	 * @param sortByFullName  giá trị sắp xếp (ASC/DESC) cột fullName
-	 * @param sortByCodeLevel giá trị sắp xếp (ASC/DESC) cột codelevel
-	 * @param sortByEndDate   giá trị sắp xếp (ASC/DESC) cột endDate
+	 * @param offset
+	 *            vị trí bắt đầu lấy
+	 * @param limit
+	 *            số bản ghi tối đa trên 1 page
+	 * @param groupId
+	 *            là id của nhóm được chọn trong pulldown
+	 * @param fullName
+	 *            là fullname tìm kiếm nhập vào từ textbox
+	 * @param sortType
+	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
+	 * @param sortByFullName
+	 *            giá trị sắp xếp (ASC/DESC) cột fullName
+	 * @param sortByCodeLevel
+	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
+	 * @param sortByEndDate
+	 *            giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -424,13 +433,16 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * quyết định có tự động ghi vào DB hay ko
 	 * 
-	 * @param isAutoCommit có tự động commit hay là ko
+	 * @param isAutoCommit
+	 *            có tự động commit hay là ko
 	 * @throws SQLException
 	 */
 	@Override
 	public void setDisableCommit(boolean isAutoCommit) throws SQLException {
 		try {
-			conn.setAutoCommit(isAutoCommit);
+			if (conn != null) {
+				conn.setAutoCommit(isAutoCommit);
+			}
 		} catch (SQLException e) {
 			// thông báo lỗi
 			System.out.println("Error : TblUserDaoImpl.setAutoCommit " + e.getMessage());
@@ -443,21 +455,23 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * ghi các thược tính của các đối tượng tblUserEntity vào DB
 	 * 
-	 * @param tblUserEntity giá trị cần ghi vào DB
+	 * @param tblUserEntity
+	 *            giá trị cần ghi vào DB
 	 * @return userId
 	 * @throws SQLException
 	 */
 	@Override
 	public int insertUser(TblUserEntity tblUserEntity) throws SQLException {
 		try {
-			// khai báo kết quả trả về
-			int result = 0;
+			// userId trả về
+			int userId = 0;
 			if (conn != null) {
 				// tạo câu truy vấn
 				StringBuilder sql = new StringBuilder(
 						"INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, rule, salt)");
 				sql.append(" VALUES(?,?,?,?,?,?,?,?,?,?)");
-				// Thực hiện câu truy vấn
+				// Gọi đến hàm prepareStatement có khả năng truy suất đến các trường được tạo tự động
+				// Hằng số truyền vào cho biết trình điều khiển có nên tạo khóa tự động có sẵn để truy xuất hay không.(Nó sẽ được bỏ qua khi ko phải là câu lẹnh insert)
 				pstm = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 				// khai báo vị trí tham số
 				int index = 1;
@@ -475,15 +489,15 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 				// thực thi truy vấn
 				pstm.execute();
-				// Lấy về kết quả từ hàm tự tăng
+				// Lấy về kết quả từ trường tự tăng
 				ResultSet rs = pstm.getGeneratedKeys();
 				while (rs.next()) {
 					// lấy ra userID
-					result = rs.getInt(1);
+					userId = rs.getInt(1);
 				}
 			}
 			// trả về userid
-			return result;
+			return userId;
 		} catch (SQLException e) {
 			// thông báo lỗi ở màn hình console
 			System.out.println("Error : TblUserDaoImpl.insertUser " + e.getMessage());
@@ -502,6 +516,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public void commitData() throws SQLException {
 		try {
 			if (conn != null) {
+				// bắt đầu thực hiện thao tác vào DB
 				conn.commit();
 			}
 		} catch (SQLException e) {
@@ -512,11 +527,15 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 	}
 
+	/**
+	 * Trả lại dữ liệu về trạng thái chưa insert
+	 * @throws SQLException 
+	 */
 	@Override
 	public void rollBack() throws SQLException {
 		try {
-			// lấy lại dữ liệu ban đầu
 			if (conn != null) {
+				// lấy lại dữ liệu ban đầu
 				conn.rollback();
 			}
 		} catch (SQLException e) {
@@ -525,7 +544,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			// throw lỗi
 			throw e;
 		}
-		
+
 	}
 
 }

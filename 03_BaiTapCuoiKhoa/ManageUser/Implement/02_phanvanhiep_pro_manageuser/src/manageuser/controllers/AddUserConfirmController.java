@@ -79,7 +79,6 @@ public class AddUserConfirmController extends HttpServlet {
 			HttpSession session = req.getSession();
 			// key từ request
 			String key = req.getParameter(Constant.REQUEST_KEY);
-			System.out.println(key);
 			// lấy userInfoEntity từ session
 			UserInfoEntity userInfoEntity = (UserInfoEntity) session
 					.getAttribute(Constant.SESSION_ADDUSER_CONFIRM + key);
@@ -87,7 +86,6 @@ public class AddUserConfirmController extends HttpServlet {
 			if (Common.checkLogin(session)) {
 				// khởi tạo đối tượng tblUserLogicImpl
 				TblUserLogic tblUserLogicImpl = new TblUserLogicImpl();
-				System.out.println(userInfoEntity.getLoginName());
 				// Kiểm tra tồn tại loginName và email
 				boolean checkExistLoginName = tblUserLogicImpl.checkExistedLoginName(userInfoEntity.getLoginName());
 				boolean checkExistEmail = tblUserLogicImpl.checkExistedEmail(userInfoEntity.getUserId(),

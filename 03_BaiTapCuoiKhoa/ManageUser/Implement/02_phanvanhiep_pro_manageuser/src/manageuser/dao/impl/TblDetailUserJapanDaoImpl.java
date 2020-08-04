@@ -39,7 +39,7 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 				StringBuilder sql = new StringBuilder(
 						"INSERT INTO tbl_detail_user_japan (user_id, code_level, start_date, end_date, total)");
 				sql.append(" VALUES(?,?,?,?,?)");
-				// Thực hiện câu truy vấn
+				// gọi đến hàm prepareStatement
 				pstm = conn.prepareStatement(sql.toString());
 				// khai báo vị trí tham số
 				int index = 1;
@@ -50,7 +50,7 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 				pstm.setString(index++, tblDetailUserJapanEntity.getEndDate());
 				pstm.setString(index++, tblDetailUserJapanEntity.getTotal());
 
-				// thực thi truy vấn
+				// thực hiện câu truy vấn truy vấn
 				pstm.execute();
 			}
 		} catch (SQLException e) {
