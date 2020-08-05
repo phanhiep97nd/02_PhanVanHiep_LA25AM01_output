@@ -188,7 +188,7 @@
 							</tr>
 							<tr class="japan" id="japan4">
 								<td class="lbl_left">点数:</td>
-								<td align="left"><input class="txBox" type="number"
+								<td align="left"><input class="txBox" type="text"
 									name="total"
 									value="<c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if>"
 									size="15" onfocus="this.style.borderColor='#0066ff';"
