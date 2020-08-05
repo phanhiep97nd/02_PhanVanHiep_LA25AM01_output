@@ -136,7 +136,7 @@
 										<c:forEach items="${listMstJapan}" var="mstJapan">
 											<option value="${mstJapan.getCodeLevel() }"
 												<c:if test="${userInfoEntity.codeLevel == mstJapan.getCodeLevel()}">selected</c:if>>
-												${mstJapan.getCodeLevel() }</option>
+												${mstJapan.getNameLevel() }</option>
 										</c:forEach>
 								</select></td>
 							</tr>

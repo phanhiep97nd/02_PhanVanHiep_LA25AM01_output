@@ -44,6 +44,7 @@ public class AddUserInputController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			req.setCharacterEncoding("UTF-8");
 			// Khởi tạo session từ request
 			HttpSession session = req.getSession();
 
@@ -83,6 +84,7 @@ public class AddUserInputController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			req.setCharacterEncoding("UTF-8");
 			// Khởi tạo session từ request
 			HttpSession session = req.getSession();
 			// Khởi tạo listError để lấy về danh sách lỗi từ hàm

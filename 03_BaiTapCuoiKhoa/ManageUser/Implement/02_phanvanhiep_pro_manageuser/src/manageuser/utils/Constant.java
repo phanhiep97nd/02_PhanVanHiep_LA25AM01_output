@@ -11,10 +11,10 @@ package manageuser.utils;
  */
 public class Constant {
 	// constant database va message
-	public static final String URL = "URL";
 	public static final String DRIVER = "DRIVER";
 	public static final String USER_NAME = "USER_NAME";
 	public static final String PASS = "PASS";
+	public static final String URL = "URL";
 	public static final String ER001_USERNAME = "ER001_USERNAME";
 	public static final String ER001_PASS = "ER001_PASS";
 	public static final String ER016 = "ER016";
