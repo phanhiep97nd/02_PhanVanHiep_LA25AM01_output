@@ -56,7 +56,7 @@ public class AddUserConfirmController extends HttpServlet {
 				// không phải là từ click xác nhận ở màn hình ADM003
 			} else {
 				// hiển thị ra màn hình ADM002
-				resp.sendRedirect(Constant.URL_SYSTEMERROR);
+				resp.sendRedirect(Constant.URL_LISTUSER);
 			}
 		} catch (Exception e) {
 			// Hiển thị ở console lỗi

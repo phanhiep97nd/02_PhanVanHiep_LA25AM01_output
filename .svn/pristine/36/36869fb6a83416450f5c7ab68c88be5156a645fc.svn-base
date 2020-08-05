@@ -31,12 +31,6 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 		this.conn = (com.mysql.jdbc.Connection) connection;
 	}
 
-	/**
-	 * insert dữ liệu vào DB
-	 * 
-	 * @param tblDetailUserJapanEntity đối tượng tblDetailUserJapanEntity cần ghi vào DB
-	 * @return
-	 */
 	@Override
 	public void insertTblDetailUserJapan(TblDetailUserJapanEntity tblDetailUserJapanEntity) throws SQLException {
 		try {

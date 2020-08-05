@@ -1,0 +1,37 @@
+/**
+ * Copyright(C) 2020  Luvina Software
+ * TblDetailUserJapanDao.java, Aug 4, 2020 Phan Văn Hiệp
+ */
+package manageuser.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import manageuser.entities.TblDetailUserJapanEntity;
+
+/**
+ * Interface Xử lý Thao tác với DB bảng tbl_detail_user_japan
+ * 
+ * @author Phan Van Hiep
+ */
+public interface TblDetailUserJapanDao extends BaseDao {
+
+	/**
+	 * set Connection
+	 * 
+	 * @param conn đối tượng Connection
+	 * @return
+	 */
+	void setConn(Connection conn);
+
+	/**
+	 * insert dữ liệu vào bảng tb_detail_user_japan
+	 * 
+	 * @param tblDetailUserJapanEntity dữ liệu người dùng nhập vào ở phần trình độ
+	 *                                 tiếng Nhật
+	 * @return true là thêm thành công, false ngược lại
+	 * @throws SQLException
+	 */
+	void insertTblDetailUserJapan(TblDetailUserJapanEntity tblDetailUserJapanEntity) throws SQLException;
+
+}
