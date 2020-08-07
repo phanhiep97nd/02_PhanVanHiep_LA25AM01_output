@@ -27,8 +27,17 @@ public class SystemErrorController extends HttpServlet{
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String ER015 = MessageProperties.getValueByKey(Constant.ER015);
-		req.setAttribute("ER015", ER015);
+		// lấy message từ req
+		String messReq = req.getParameter(Constant.REQUEST_MESSAGE);
+		// Khai báo chuỗi chứa lỗi
+		String message = "";
+		if(messReq == null){
+			message = MessageProperties.getValueByKey(Constant.ER015);
+		} else if(Constant.ER013.equals(messReq)){
+			message = MessageProperties.getValueByKey(Constant.ER013);
+		}
+		// gán lên req và forward sang màn hình systemError
+		req.setAttribute(Constant.REQUEST_MESSAGE, message);
 		req.getServletContext().getRequestDispatcher(Constant.PATH_SYSTEM_ERROR).forward(req, resp);
 	}
 }

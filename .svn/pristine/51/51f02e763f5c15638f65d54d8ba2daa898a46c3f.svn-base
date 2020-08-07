@@ -20,7 +20,6 @@ public class Constant {
 	public static final String ER016 = "ER016";
 	public static final String MSG005 = "MSG005";
 	public static final String ER015 = "ER015";
-	public static final String ER013 = "ER013";
 
 	// Các thông báo validate ở màn hình ADM003
 	public static final String ER001_LOGINNAME = MessageProperties.getValueByKey("ER001_LOGINNAME");
@@ -92,7 +91,6 @@ public class Constant {
 	// constant các hạng mục ở MH listUser
 	public static final int RULE_ADMIN = 0;
 	public static final int RULE_USER = 1;
-	public static final int USER_ID_DEFAULT = 0;
 	public static final int GROUPID_DEFAULT = 0;
 	public static final String FULLNAME_DEFAULT = "";
 	public static final String SORTTYPE_DEFAULT = "";
@@ -190,12 +188,5 @@ public class Constant {
 	public static final String TYPE_ADD_SUCCESS = "addCuccsess";
 	public static final String MSG001 = MessageProperties.getValueByKey("MSG001");
 	public static final String MSG002 = MessageProperties.getValueByKey("MSG002");
-	
-	// ADM005
-	public static final String REQUEST_ID = "id";
-	public static final String URL_ERROR_NOTEXIST_ID = "?message=ER013";
-	
-	//systemError
-	public static final String REQUEST_MESSAGE = "message";
 
 }

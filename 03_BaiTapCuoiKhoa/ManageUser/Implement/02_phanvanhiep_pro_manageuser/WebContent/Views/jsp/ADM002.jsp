@@ -119,7 +119,7 @@
 
 		<c:forEach items="${listUserInfo}" var="userInfor">
 			<tr>
-				<td align="right"><a href="showUser.do">${fn:escapeXml(userInfor.getUserId())}</a>
+				<td align="right"><a href="viewDetailUser.do?id=${fn:escapeXml(userInfor.getUserId())}">${fn:escapeXml(userInfor.getUserId())}</a>
 				</td>
 				<td>${fn:escapeXml(userInfor.getFullName())}</td>
 				<td align="center">${fn:escapeXml(userInfor.getBirthday())}</td>

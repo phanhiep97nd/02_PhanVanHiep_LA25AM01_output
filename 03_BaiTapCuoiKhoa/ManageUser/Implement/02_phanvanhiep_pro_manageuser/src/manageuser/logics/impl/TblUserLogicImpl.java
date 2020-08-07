@@ -263,4 +263,58 @@ public class TblUserLogicImpl implements TblUserLogic {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#getUserInfoByUserId(int)
+	 */
+	@Override
+	public UserInfoEntity getUserInfoByUserId(int userId) throws SQLException, ClassNotFoundException {
+		// Khai báo đối tượng UserInfoEntity
+		UserInfoEntity userInfoEntity = null;
+		// Khởi tạo đối tượng TblUserDaoImpl
+		TblUserDao tblUserDao = new TblUserDaoImpl();
+		try {
+			// Gán giá trị cho userInfoEntity bằng cách gọi đến hàm
+			// getUserInfoByUserId
+			userInfoEntity = tblUserDao.getUserInfoByUserId(userId);
+			// trả về
+			return userInfoEntity;
+		} catch (SQLException | ClassNotFoundException e) {
+			// thông báo lỗi
+			System.out.println("Error : TblUserLogicImpl.getUserInfoByUserId " + e.getMessage());
+			// gửi lỗi
+			throw e;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#checkExistUserById(int)
+	 */
+	@Override
+	public Boolean checkExistUserById(int userId) throws ClassNotFoundException, SQLException {
+		// Khởi tạo một TblUserDao
+		TblUserDao userDaoImpl = new TblUserDaoImpl();
+		try {
+			// Khái báo một đối tượng TblUserEntity và gán bằng giá trị lấy về
+			// từ hàm
+			// getTblUserByLoginName
+			TblUserEntity user = userDaoImpl.getTblUserById(userId);
+			// Mếu loginNae rỗng nghĩa là không tồn tại
+			if (user.getLoginName() == null) {
+				return false;
+			} else {
+				return true;
+			}
+
+		} catch (ClassNotFoundException | SQLException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error : TblUserLogicImpl.checkExistUserById " + e.getMessage());
+			// Throw lỗi
+			throw e;
+		}
+	}
+
 }

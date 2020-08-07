@@ -88,6 +88,21 @@ public interface TblUserLogic {
 	 * @throws NoSuchAlgorithmException 
 	 */
 	boolean createUser(UserInfoEntity userInfoEntity) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
-
+	
+	/**
+	 * Lấy ra đối tượng userInfo từ userId 
+	 * @param userId để lấy ra đối tượng userInfo trong DB từ userId
+	 * @return đối tượng UserInfoEntity lấy được
+	 */
+	UserInfoEntity getUserInfoByUserId(int userId) throws SQLException, ClassNotFoundException;
+	
+	/**
+	 * Kiểm tra có tồn tại user với Id cần kiểm tra ko
+	 * @param userId userId cần kiểm tra
+	 * @return trả về true nếu tồn tại, false nếu ngược lại
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	Boolean checkExistUserById(int userId) throws ClassNotFoundException, SQLException;
 	
 }

@@ -106,5 +106,18 @@ public interface TblUserDao extends BaseDao {
 	 * @throws SQLException 
 	 */
 	void rollBack() throws SQLException;
-
+	
+	/**
+	 * Lấy ra đối tượng userInfo từ userId 
+	 * @param userId để lấy ra đối tượng userInfo trong DB từ userId
+	 * @return đối tượng UserInfoEntity lấy được
+	 */
+	UserInfoEntity getUserInfoByUserId(int userId) throws SQLException, ClassNotFoundException;
+	
+	/**
+	 * Lấy ra đối tượng user từ userId
+	 * @param userId userId dùng để tìm kiếm
+	 * @return đối tượng tblUserEntity tìm được
+	 */
+	TblUserEntity getTblUserById(int userId) throws SQLException, ClassNotFoundException;
 }

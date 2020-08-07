@@ -470,8 +470,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				StringBuilder sql = new StringBuilder(
 						"INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, rule, salt)");
 				sql.append(" VALUES(?,?,?,?,?,?,?,?,?,?)");
-				// Gọi đến hàm prepareStatement có khả năng truy suất đến các trường được tạo tự động
-				// Hằng số truyền vào cho biết trình điều khiển có nên tạo khóa tự động có sẵn để truy xuất hay không.(Nó sẽ được bỏ qua khi ko phải là câu lẹnh insert)
+				// Gọi đến hàm prepareStatement có khả năng truy suất đến các
+				// trường được tạo tự động
+				// Hằng số truyền vào cho biết trình điều khiển có nên tạo khóa
+				// tự động có sẵn để truy xuất hay không.(Nó sẽ được bỏ qua khi
+				// ko phải là câu lẹnh insert)
 				pstm = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 				// khai báo vị trí tham số
 				int index = 1;
@@ -529,7 +532,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 	/**
 	 * Trả lại dữ liệu về trạng thái chưa insert
-	 * @throws SQLException 
+	 * 
+	 * @throws SQLException
 	 */
 	@Override
 	public void rollBack() throws SQLException {
@@ -547,4 +551,134 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#getUserByUserId(int)
+	 */
+	@Override
+	public UserInfoEntity getUserInfoByUserId(int userId) throws SQLException, ClassNotFoundException {
+		// Khai báo đối tượng UserInfoEntity
+		UserInfoEntity userInfoEntity = null;
+		// Khai đối tượng SimpleDateFormat chuyển định dạng ngày tháng năm về
+		// YYYY/MM/DD
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		try {
+			// mở kết nối đến cơ sở dữ liệu
+			openConnection();
+			// kiểm tra xem đã kết nối thành công?
+			if (conn != null) {
+				// khởi tạo chuỗi câu truy vẫn sql
+				StringBuilder sql = new StringBuilder();
+				sql.append(
+						" SELECT u.user_id,u.login_name, u.full_name, u.full_name_kana, u.birthday, u.email, u.tel, g.group_id, g.group_name,d.code_level, j.name_level, d.start_date, d.end_date, d.total");
+				sql.append(" FROM tbl_user u");
+				sql.append(" INNER JOIN mst_group g");
+				sql.append(" ON u.group_id = g.group_id");
+				sql.append(" LEFT JOIN (tbl_detail_user_japan d");
+				sql.append(" INNER JOIN mst_japan j");
+				sql.append(" ON d.code_level = j.code_level)");
+				sql.append(" ON u.user_id = d.user_id");
+				sql.append(" WHERE u.Rule = ?");
+				sql.append(" AND u.user_id = ?");
+
+				// gọi đến prepareStatement và truyền vào câu truy vấn sql
+				pstm = conn.prepareStatement(sql.toString());
+				// Khai báo index = 1
+				int index = 1;
+				// set giá trị vào câu truy vấn
+				pstm.setInt(index++, Constant.RULE_USER);
+				pstm.setInt(index++, userId);
+				// Khai báo đối tượng ResulSet để lưu các giá trị lấy về được từ
+				// DB
+				ResultSet rs = pstm.executeQuery();
+				// Chạy từng bản ghi từ rs
+				while (rs.next()) {
+					// Khởi tạo (Khởi tạo trong đây để nếu không tồn tại id thì
+					// hàm sẽ trả về null)
+					userInfoEntity = new UserInfoEntity();
+					// set giá trị cho các thuộc tính của đối tượng userInfo
+					userInfoEntity.setUserId(rs.getInt("user_id"));
+					userInfoEntity.setLoginName(rs.getString("login_name"));
+					userInfoEntity.setFullName(rs.getString("full_name"));
+					userInfoEntity.setFullNameKatana(rs.getString("full_name_kana"));
+					if (rs.getDate("birthday") == null) {
+						userInfoEntity.setBirthday("");
+					} else {
+						userInfoEntity.setBirthday(dateFormat.format(rs.getDate("birthday")));
+					}
+
+					userInfoEntity.setEmail(rs.getString("email"));
+					userInfoEntity.setTel(rs.getString("tel"));
+					userInfoEntity.setGroupId(rs.getInt("group_id"));
+					userInfoEntity.setGroupName(rs.getString("group_name"));
+					userInfoEntity.setCodeLevel(rs.getString("code_level"));
+					userInfoEntity.setNameLevel(rs.getString("name_level"));
+					if (rs.getDate("start_date") == null) {
+						userInfoEntity.setStartDate("");
+					} else {
+						userInfoEntity.setStartDate(dateFormat.format(rs.getDate("start_date")));
+					}
+					if (rs.getDate("end_date") == null) {
+						userInfoEntity.setEndDate("");
+					} else {
+						userInfoEntity.setEndDate(dateFormat.format(rs.getDate("end_date")));
+					}
+					userInfoEntity.setTotal(rs.getString("total"));
+				}
+			}
+			// trả về đối tượng userInfoEntity
+			return userInfoEntity;
+		} catch (ClassNotFoundException | SQLException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error: TblUserDaoImpl.getUserInfoByUserId " + e.getMessage());
+			// Throw lỗi
+			throw e;
+		} finally {
+			// đóng kết nối
+			closeConnection();
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#getUserById(int)
+	 */
+	@Override
+	public TblUserEntity getTblUserById(int userId) throws SQLException, ClassNotFoundException {
+		// Khởi taho một đối tượng TblUserEntity
+		TblUserEntity user = new TblUserEntity();
+		try {
+			// Mở kết nối
+			openConnection();
+			// Check nếu mở kết nối thành công
+			if (conn != null) {
+				// Câu lệnh SQL
+				String sql = "SELECT * FROM tbl_user WHERE user_id = ?";
+				// Gọi đến prepareStatement truyền vào câu lệnh SQL
+				pstm = conn.prepareStatement(sql);
+				// Gán giá trị tương ứng vào câu truy vấn
+				int index = 1;
+				pstm.setInt(index++, userId);
+				// Khởi tạo một đối tượng ResultSet để nhận kết quả trả về từ
+				// câu Query
+				ResultSet rs = pstm.executeQuery();
+				// Chạy từng kết quả của ResultSet
+				while (rs.next()) {
+					user.setLoginName(rs.getString("login_name"));
+				}
+			}
+		} catch (SQLException | NullPointerException e) {
+			// Thông báo lỗi ở màn hình console
+			System.out.println("Error: TblUserDaoImpl.getTblUserByLoginName " + e.getMessage());
+			throw e;
+		} finally {
+			// đóng kết nối
+			closeConnection();
+		}
+		// Trả về đối tượng user
+		return user;
+	}
 }
