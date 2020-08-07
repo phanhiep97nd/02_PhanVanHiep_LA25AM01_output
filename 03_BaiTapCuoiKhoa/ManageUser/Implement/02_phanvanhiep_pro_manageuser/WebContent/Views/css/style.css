@@ -9,6 +9,7 @@
 
 .tbl_input {
 	border: none;
+	white-space: nowrap;
 }
 
 .errMsg {
@@ -69,6 +70,7 @@
 	text-align: left;
 	font-size: 13px;
 	width: 120px;
+	white-space: nowrap;
 }
 
 .tbl_list {
