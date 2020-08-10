@@ -41,12 +41,13 @@ public class ViewDetailUserController extends HttpServlet {
 			TblUserLogic tblUserLogic = new TblUserLogicImpl();
 			// Lấy id từ request
 			int userId = Common.convertStringToInt(req.getParameter(Constant.REQUEST_ID), Constant.USER_ID_DEFAULT);
-			// Lấy về giá trị cho đối tượng userInfoEntity
-			userInfoEntity = tblUserLogic.getUserInfoByUserId(userId);
 			// Nếu tồn tại user
 			if (!tblUserLogic.checkExistUserById(userId)) {
+				// Thông báo lỗi không tồn tại Id
 				resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_NOTEXIST_ID);
 			} else {
+				// Lấy về giá trị cho đối tượng userInfoEntity
+				userInfoEntity = tblUserLogic.getUserInfoByUserId(userId);
 				// gán userInfoEntity lên req
 				req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
 				// forward sang trang ADM002

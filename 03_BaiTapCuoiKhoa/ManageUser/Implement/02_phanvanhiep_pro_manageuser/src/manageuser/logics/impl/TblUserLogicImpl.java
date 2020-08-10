@@ -26,13 +26,10 @@ import manageuser.utils.Common;
  */
 public class TblUserLogicImpl implements TblUserLogic {
 	/**
-	 * Kiểm tra xem loginName và pass người dùng nhập có tồn tại trong DB hay
-	 * khoong
+	 * Kiểm tra xem loginName và pass người dùng nhập có tồn tại trong DB hay khoong
 	 * 
-	 * @param loginName
-	 *            login_name người dùng nhập
-	 * @param pass
-	 *            password người dùng nhập
+	 * @param loginName login_name người dùng nhập
+	 * @param pass      password người dùng nhập
 	 * @return trả về kết quả là giá trị boolean có tồn tại trong DB không
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -62,25 +59,17 @@ public class TblUserLogicImpl implements TblUserLogic {
 	}
 
 	/**
-	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group,
-	 * mst_japan, tbl_detail_user_japan
+	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
+	 * tbl_detail_user_japan
 	 * 
-	 * @param offset
-	 *            vị trí bắt đầu lấy
-	 * @param limit
-	 *            số bản ghi tối đa trên 1 page
-	 * @param groupId
-	 *            là id của nhóm được chọn trong pulldown
-	 * @param fullName
-	 *            là fullname tìm kiếm nhập vào từ textbox
-	 * @param sortType
-	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
-	 * @param sortByFullName
-	 *            giá trị sắp xếp (ASC/DESC) cột fullName
-	 * @param sortByCodeLevel
-	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
-	 * @param sortByEndDate
-	 *            giá trị sắp xếp (ASC/DESC) cột endDate
+	 * @param offset          vị trí bắt đầu lấy
+	 * @param limit           số bản ghi tối đa trên 1 page
+	 * @param groupId         là id của nhóm được chọn trong pulldown
+	 * @param fullName        là fullname tìm kiếm nhập vào từ textbox
+	 * @param sortType        là loại sắp xếp theo fullName, codeLevel hay endDate
+	 * @param sortByFullName  giá trị sắp xếp (ASC/DESC) cột fullName
+	 * @param sortByCodeLevel giá trị sắp xếp (ASC/DESC) cột codelevel
+	 * @param sortByEndDate   giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -109,10 +98,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	/**
 	 * Đếm tổng số User tìm được
 	 * 
-	 * @param groupId
-	 *            là nhóm được chọn trong selectbox
-	 * @param fullName
-	 *            là tên tìm kiếm được nhập từ textbox
+	 * @param groupId  là nhóm được chọn trong selectbox
+	 * @param fullName là tên tìm kiếm được nhập từ textbox
 	 * @return trả về số bản ghi có trong bảng thỏa mãn điều kiện tìm kiếm
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -139,8 +126,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * manageuser.logics.TblUserLogic#checkExistedLoginName(java.lang.String)
+	 * @see manageuser.logics.TblUserLogic#checkExistedLoginName(java.lang.String)
 	 */
 	@Override
 	public Boolean checkExistedLoginName(String loginName) throws ClassNotFoundException, SQLException {
@@ -169,25 +155,22 @@ public class TblUserLogicImpl implements TblUserLogic {
 	/**
 	 * Kiểm tra xem đã tồn tại email chưa
 	 * 
-	 * @param email
-	 *            email cần kiểm tra
-	 * @param userId
-	 *            để thêm điều kiện kiểm tra trong trường hợp edit
+	 * @param email email cần kiểm tra
 	 * @return trả về true nếu tồn tại, false nếu ngược lại
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	@Override
-	public Boolean checkExistedEmail(int userId, String email) throws ClassNotFoundException, SQLException {
+	public Boolean checkExistedEmail(String email) throws ClassNotFoundException, SQLException {
 		// Khởi tạo một TblUserDao
 		TblUserDao userDaoImpl = new TblUserDaoImpl();
 		try {
 			// Khái báo một đối tượng TblUserEntity và gán bằng giá trị lấy về
 			// từ hàm
 			// getTblUserByEmail
-			TblUserEntity user = userDaoImpl.getUserByEmail(userId, email);
+			TblUserEntity user = userDaoImpl.getUserByEmail(email);
 			// Nếu email rỗng nghĩa là chưa tồn tại
-			if (user.getEmail() == null) {
+			if (user.getLoginName() == null) {
 				return false;
 			} else {
 				return true;
@@ -204,11 +187,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 	/**
 	 * Insert data user vào bảng tbl_user và tbl_detail_user_japan
 	 * 
-	 * @param userInfoEntity
-	 *            truyền vào đối tượng userInfoEntity cần insert
+	 * @param userInfoEntity truyền vào đối tượng userInfoEntity cần insert
 	 * @return true nếu insert thành công, false nếu insert không thành công
-	 * @throws ClassNotFoundException,
-	 *             SQLException
+	 * @throws ClassNotFoundException, SQLException
 	 */
 	@Override
 	public boolean createUser(UserInfoEntity userInfoEntity)

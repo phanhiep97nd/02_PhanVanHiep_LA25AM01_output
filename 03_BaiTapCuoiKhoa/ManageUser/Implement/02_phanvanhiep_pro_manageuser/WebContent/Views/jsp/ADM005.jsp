@@ -18,7 +18,8 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="ADM003.html" method="post" name="inputform">
+	<form action="editUserInput.do" method="get" name="inputform">
+	<input type="hidden" value="${fn:escapeXml(userInfoEntity.userId)}" name="id">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>

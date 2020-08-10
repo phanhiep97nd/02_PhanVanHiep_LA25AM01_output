@@ -30,10 +30,8 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình login
 	 * 
-	 * @param loginName
-	 *            login_name nhập từ màn hình
-	 * @param pass
-	 *            pass nhập từ màn hình
+	 * @param loginName login_name nhập từ màn hình
+	 * @param pass      pass nhập từ màn hình
 	 * @return list lỗi
 	 */
 	public static List<String> validateLogin(String loginName, String pass)
@@ -64,8 +62,7 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình ADM003
 	 * 
-	 * @param userInfor
-	 *            đối tượng userInfor để validate các thuộc tính
+	 * @param userInfor đối tượng userInfor để validate các thuộc tính
 	 * @return list lỗi
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -109,7 +106,7 @@ public class ValidateUser {
 			}
 
 			// Validate email
-			String errorEmail = validateEmail(userInforEntity.getUserId(), userInforEntity.getEmail());
+			String errorEmail = validateEmail(userInforEntity.getEmail());
 			if (!"".equals(errorEmail)) {
 				listError.add(errorEmail);
 			}
@@ -173,8 +170,7 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục total
 	 * 
-	 * @param total
-	 *            giá trị cần kiểm tra
+	 * @param total giá trị cần kiểm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validateTotal(String total) {
@@ -196,8 +192,7 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục enđate
 	 * 
-	 * @param endDate
-	 *            giá trị cần kiếm tra
+	 * @param endDate giá trị cần kiếm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validateEndDate(String startDate, String endDate) {
@@ -216,8 +211,7 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục startDate
 	 * 
-	 * @param startDate
-	 *            giá trị cần kiểm tra
+	 * @param startDate giá trị cần kiểm tra
 	 * @return trả về lỗi nếu có
 	 */
 	private static String validateStartDate(String startDate) {
@@ -233,11 +227,9 @@ public class ValidateUser {
 	/**
 	 * Validate pulldown codeLevel
 	 * 
-	 * @param codeLevel
-	 *            giá trị cần kiểm tra
+	 * @param codeLevel giá trị cần kiểm tra
 	 * @return lỗi nếu có
-	 * @throws SQLException,
-	 *             ClassNotFoundException
+	 * @throws SQLException, ClassNotFoundException
 	 */
 	private static String validateCodeLevel(String codeLevel) throws SQLException, ClassNotFoundException {
 		// Khởi tạo biến chứa lỗi
@@ -259,10 +251,8 @@ public class ValidateUser {
 	/**
 	 * Validate passConfirm
 	 * 
-	 * @param pass
-	 *            dùng để check với passConfirm
-	 * @param passwordConfirm
-	 *            chuỗi cần kiểm tra
+	 * @param pass            dùng để check với passConfirm
+	 * @param passwordConfirm chuỗi cần kiểm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validatePassConfirm(String password, String passwordConfirm) {
@@ -278,8 +268,7 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục password
 	 * 
-	 * @param password
-	 *            chuỗi cần validate
+	 * @param password chuỗi cần validate
 	 * @return lỗi nếu có
 	 */
 	private static String validatePassword(String password) {
@@ -301,8 +290,7 @@ public class ValidateUser {
 	/**
 	 * validate hạng mục tel
 	 * 
-	 * @param tel
-	 *            chuỗi cần validate
+	 * @param tel chuỗi cần validate
 	 * @return lỗi nếu có lỗi
 	 */
 	private static String validateTel(String tel) {
@@ -324,15 +312,12 @@ public class ValidateUser {
 	/**
 	 * validate hạng mục email
 	 * 
-	 * @param userId
-	 *            để bổ xung điều kiện check trong trường hợp edit
-	 * @param email
-	 *            email cần kiểm tra
+	 * @param userId để bổ xung điều kiện check trong trường hợp edit
+	 * @param email  email cần kiểm tra
 	 * @return lỗi nếu có
-	 * @throws ClassNotFoundException,
-	 *             SQLException
+	 * @throws ClassNotFoundException, SQLException
 	 */
-	private static String validateEmail(int userId, String email) throws ClassNotFoundException, SQLException {
+	private static String validateEmail(String email) throws ClassNotFoundException, SQLException {
 		// Khởi tạo biến chứa lỗi
 		String errEmail = "";
 		// Khởi tạo đối tượng tblUserLogic
@@ -348,7 +333,7 @@ public class ValidateUser {
 			} else if (!Common.checkFormat(email, Constant.FORMAT_EMAIL)) {
 				errEmail = Constant.ER005_MAIL;
 				// kiểm tra tồn tại
-			} else if (tblUserLogic.checkExistedEmail(userId, email)) {
+			} else if (tblUserLogic.checkExistedEmail(email)) {
 				errEmail = Constant.ER003_MAIL;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -362,8 +347,7 @@ public class ValidateUser {
 	/**
 	 * validate hạng mục birthday
 	 * 
-	 * @param birthday
-	 *            chuỗi cần kiểm tra
+	 * @param birthday chuỗi cần kiểm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validateBirthday(String birthday) {
@@ -379,8 +363,7 @@ public class ValidateUser {
 	/**
 	 * validate selectbox group
 	 * 
-	 * @param groupId
-	 *            groupId cần kiểm tra
+	 * @param groupId groupId cần kiểm tra
 	 * @return lỗi nếu có
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -409,8 +392,7 @@ public class ValidateUser {
 	/**
 	 * Validate trường Fullname Kana
 	 * 
-	 * @param fullNameKatana
-	 *            tên kana cần validate
+	 * @param fullNameKatana tên kana cần validate
 	 * @return lỗi nếu có
 	 */
 	private static String validateFullNameKatana(String fullNameKatana) {
@@ -429,8 +411,7 @@ public class ValidateUser {
 	/**
 	 * Validate trường fullName
 	 * 
-	 * @param fullName
-	 *            giá trị cần validate
+	 * @param fullName giá trị cần validate
 	 * @return lỗi
 	 */
 	private static String validateFullName(String fullName) {
@@ -449,8 +430,7 @@ public class ValidateUser {
 	/**
 	 * validate giá trị của trường loginName
 	 * 
-	 * @param loginName
-	 *            giá trị cần validate
+	 * @param loginName giá trị cần validate
 	 * @return lỗi nếu có
 	 * @throws SQLException
 	 * @throws ClassNotFoundException

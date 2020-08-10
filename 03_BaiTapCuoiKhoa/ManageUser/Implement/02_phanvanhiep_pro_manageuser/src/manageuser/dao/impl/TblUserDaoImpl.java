@@ -372,8 +372,13 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		return user;
 	}
 
+	/**
+	 * Lấy ra đối tượng user từ email 
+	 * @param emai dùng để tìm kiếm user trong db
+	 * @return đối tượng tblUserEntity
+	 */
 	@Override
-	public TblUserEntity getUserByEmail(int userId, String email) throws SQLException, ClassNotFoundException {
+	public TblUserEntity getUserByEmail(String email) throws SQLException, ClassNotFoundException {
 		try {
 			// Khởi taho một đối tượng TblUserEntity
 			TblUserEntity tblUserEntity = new TblUserEntity();
@@ -383,27 +388,18 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			if (conn != null) {
 				// câu lệnh truy vấn
 				StringBuilder sql = new StringBuilder("SELECT * FROM tbl_user WHERE email = ?");
-				// nếu userid khác 0(Trường hợp edit)
-				if (userId != 0) {
-					sql.append(" AND user_id != ?");
-				}
 				// thực hiện truy vấn
 				pstm = conn.prepareStatement(sql.toString());
 				// Gán giá trị tương ứng vào câu truy vấn
 				int index = 1;
 				pstm.setString(index++, email);
-				// nếu userid khác 0(Trường hợp edit)
-				if (userId != 0) {
-					// set giá trị cho userId
-					pstm.setInt(index++, userId);
-				}
 				// Khởi tạo một đối tượng ResultSet để nhận kết quả trả về từ
 				// câu Query
 				ResultSet rs = pstm.executeQuery();
 				while (rs.next()) {
 					tblUserEntity = new TblUserEntity();
 					// gán giá trị cho thuộc tính email
-					tblUserEntity.setEmail(rs.getString("email"));
+					tblUserEntity.setLoginName(rs.getString("login_name"));
 				}
 			}
 			// trả về đối tượng tblUserEntity

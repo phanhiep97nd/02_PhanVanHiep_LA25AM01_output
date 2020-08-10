@@ -72,12 +72,11 @@ public interface TblUserLogic {
 	/**
 	 * Kiểm tra xem đã tồn tại email chưa
 	 * @param email email cần kiểm tra
-	 * @param userId để thêm điều kiện kiểm tra trong trường hợp edit
 	 * @return trả về true nếu tồn tại, false nếu ngược lại
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	Boolean checkExistedEmail(int userId, String email) throws ClassNotFoundException, SQLException;
+	Boolean checkExistedEmail(String email) throws ClassNotFoundException, SQLException;
 
 	/**
 	 * Insert data  user vào bảng tbl_user và tbl_detail_user_japan 

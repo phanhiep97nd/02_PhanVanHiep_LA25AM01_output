@@ -42,6 +42,7 @@
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
 								<td align="left"><input class="txBox" type="text"
 									name="loginName"
+									<c:if test="${userInfoEntity.userId != 0}">readonly</c:if>
 									value="${fn:escapeXml(userInfoEntity.loginName)}" size="15"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
@@ -111,20 +112,22 @@
 									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
-							<tr>
-								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
-								<td align="left"><input class="txBox" type="password"
-									name="password" value="" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
-									onblur="this.style.borderColor='#aaaaaa';" /></td>
-							</tr>
-							<tr>
-								<td class="lbl_left">パスワード（確認）:</td>
-								<td align="left"><input class="txBox" type="password"
-									name="passwordConfirm" value="" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
-									onblur="this.style.borderColor='#aaaaaa';" /></td>
-							</tr>
+							<c:if test="${userInfoEntity.userId == 0}">
+								<tr>
+									<td class="lbl_left"><font color="red">*</font> パスワード:</td>
+									<td align="left"><input class="txBox" type="password"
+										name="password" value="" size="30"
+										onfocus="this.style.borderColor='#0066ff';"
+										onblur="this.style.borderColor='#aaaaaa';" /></td>
+								</tr>
+								<tr>
+									<td class="lbl_left">パスワード（確認）:</td>
+									<td align="left"><input class="txBox" type="password"
+										name="passwordConfirm" value="" size="30"
+										onfocus="this.style.borderColor='#0066ff';"
+										onblur="this.style.borderColor='#aaaaaa';" /></td>
+								</tr>
+							</c:if>
 							<tr>
 								<th align="left" colspan="2"><a href="#"
 									onclick="showJapan()">日本語能力</a></th>

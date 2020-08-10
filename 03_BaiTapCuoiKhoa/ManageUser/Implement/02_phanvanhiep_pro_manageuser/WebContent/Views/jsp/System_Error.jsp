@@ -24,7 +24,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="center" colspan="2"><font color="red">${ER015 }</font>
+			<td align="center" colspan="2"><font color="red">${message }</font>
 			</td>
 		</tr>
 		<tr>

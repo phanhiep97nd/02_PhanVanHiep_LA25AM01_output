@@ -74,6 +74,14 @@
     <url-pattern>/success.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>editUserInput</servlet-name>
+    <servlet-class>manageuser.controllers.EditUserInputController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>editUserInput</servlet-name>
+    <url-pattern>/editUserInput.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>systemError</servlet-name>
     <servlet-class>manageuser.controllers.SystemErrorController</servlet-class>
   </servlet>

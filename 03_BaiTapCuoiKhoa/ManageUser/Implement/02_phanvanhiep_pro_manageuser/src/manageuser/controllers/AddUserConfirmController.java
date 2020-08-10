@@ -25,7 +25,7 @@ import manageuser.utils.Constant;
  */
 public class AddUserConfirmController extends HttpServlet {
 	/*
-	 * xử lí khi nhấn xác nhận ở màn hình ADM003 (non-Javadoc)
+	 * xử lí khi nhấn xác nhận ở màn hình ADM003
 	 * 
 	 * @see
 	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
@@ -67,7 +67,7 @@ public class AddUserConfirmController extends HttpServlet {
 	}
 
 	/*
-	 * Xử lí khi nhấn button Ok ở ADM004 (non-Javadoc)
+	 * Xử lí khi nhấn button Ok ở ADM004 
 	 * 
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.
 	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
@@ -88,8 +88,7 @@ public class AddUserConfirmController extends HttpServlet {
 				TblUserLogic tblUserLogicImpl = new TblUserLogicImpl();
 				// Kiểm tra tồn tại loginName và email
 				boolean checkExistLoginName = tblUserLogicImpl.checkExistedLoginName(userInfoEntity.getLoginName());
-				boolean checkExistEmail = tblUserLogicImpl.checkExistedEmail(userInfoEntity.getUserId(),
-						userInfoEntity.getEmail());
+				boolean checkExistEmail = tblUserLogicImpl.checkExistedEmail(userInfoEntity.getEmail());
 				// Nếu không tồn tại loginName và email
 				if (!checkExistLoginName && !checkExistEmail) {
 					// Nếu thêm thành công(gọi đến hàm createUser)

@@ -68,11 +68,10 @@ public interface TblUserDao extends BaseDao {
 
 	/**
 	 * Lấy ra đối tượng user từ email 
-	 * @param userId để kết hợp với điều kiện tìm kiếm trong trường hợp edit
 	 * @param emai dùng để tìm kiếm user trong db
 	 * @return đối tượng tblUserEntity
 	 */
-	TblUserEntity getUserByEmail(int userId, String email) throws SQLException, ClassNotFoundException;
+	TblUserEntity getUserByEmail(String email) throws SQLException, ClassNotFoundException;
 
 	/**
 	 * Lấy về Connection
