@@ -1,5 +1,0 @@
-package manageuser.controllers;
-
-public class LoginController {
-
-}
