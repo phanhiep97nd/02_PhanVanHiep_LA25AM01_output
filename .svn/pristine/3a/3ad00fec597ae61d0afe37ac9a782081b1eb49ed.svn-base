@@ -88,7 +88,7 @@ public class Constant {
 	// constant các hạng mục ở màn hình login
 	public static final String NAME_TEXTBOX_LOGINNAME = "loginId";
 	public static final String NAME_TEXTBOX_PASSWORD = "password";
-	public static final String REQUEST_LISTERROR = "listError";
+	public static final String REQUEST_LISTERROR = "listErr";
 	public static final String REQUEST_LOGINNAME = "loginName";
 
 	// constant các hạng mục ở MH listUser
@@ -151,7 +151,6 @@ public class Constant {
 	public static final String REQUEST_USERINFORENTITY = "userInfoEntity";
 	public static final String REQUEST_TYPE = "type";
 	public static final String REQUEST_KEY = "key";
-	//public static final String REQUEST_LISTERROR = "listError";
 	public static final String TYPE_VALIDATE = "validate";
 	public static final String LOGIN_NAME_ADM003 = "loginName";
 	public static final String GROUPID_ADM003 = "groupId";

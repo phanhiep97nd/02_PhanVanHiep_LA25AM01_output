@@ -171,6 +171,7 @@ public class ValidateUser {
 			System.out.println("Error : ValidateUser.validateUserInfor " + e.getMessage());
 			throw e;
 		}
+		System.out.println(listError.size());
 		return listError;
 	}
 

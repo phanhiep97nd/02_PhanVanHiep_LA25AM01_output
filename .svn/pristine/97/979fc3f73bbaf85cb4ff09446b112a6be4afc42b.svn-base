@@ -114,7 +114,7 @@ public class AddUserInputController extends HttpServlet {
 				} else {
 					Common.setDataLogic(req);
 					req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
-					req.setAttribute(Constant.REQUEST_LISTERROR, listError);
+					req.setAttribute("listError", listError);
 					req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
 				}
 

@@ -101,7 +101,7 @@
 						href="<c:choose>
 						<c:when
 							test="${userInfoEntity.userId == 0}">addUserInput.do?type=back&key=${key }</c:when>
-						<c:otherwise>editUserInput.do?type=back&id=${userInfoEntity.userId }&key=${key }</c:otherwise>
+						<c:otherwise>editUserInput.do?type=back&key=${key }</c:otherwise>
 					</c:choose>"><input
 							class="btn" type="button" value="戻る" /> </a></td>
 				</tr>

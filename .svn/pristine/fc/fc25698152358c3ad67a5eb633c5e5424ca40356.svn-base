@@ -111,7 +111,7 @@ public class ValidateUser {
 			}
 
 			 // Validate email
-			String errorEmail = validateEmail(userInforEntity.getEmail(), userInforEntity.getUserId());
+			String errorEmail = validateEmail(userInforEntity.getEmail());
 			if (!"".equals(errorEmail)) {
 				listError.add(errorEmail);
 			}
@@ -171,6 +171,7 @@ public class ValidateUser {
 			System.out.println("Error : ValidateUser.validateUserInfor " + e.getMessage());
 			throw e;
 		}
+		System.out.println(listError.size());
 		return listError;
 	}
 
@@ -336,7 +337,7 @@ public class ValidateUser {
 	 * @throws ClassNotFoundException,
 	 *             SQLException
 	 */
-	private static String validateEmail(String email, int userId) throws ClassNotFoundException, SQLException {
+	private static String validateEmail(String email) throws ClassNotFoundException, SQLException {
 		// Khởi tạo biến chứa lỗi
 		String errEmail = "";
 		// Khởi tạo đối tượng tblUserLogic
@@ -352,7 +353,7 @@ public class ValidateUser {
 			} else if (!Common.checkFormat(email, Constant.FORMAT_EMAIL)) {
 				errEmail = Constant.ER005_MAIL;
 				// kiểm tra tồn tại
-			} else if (tblUserLogic.checkExistedEmail(email, userId)) {
+			} else if (tblUserLogic.checkExistedEmail(email)) {
 				errEmail = Constant.ER003_MAIL;
 			}
 		} catch (ClassNotFoundException | SQLException e) {

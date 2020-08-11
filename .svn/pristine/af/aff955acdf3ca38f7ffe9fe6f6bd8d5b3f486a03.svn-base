@@ -20,7 +20,7 @@
 	<form action="<c:choose>
 						<c:when
 							test="${userInfoEntity.userId == 0}">addUserValidate.do?type=validate</c:when>
-						<c:otherwise>editUserValidate.do?type=validate&id=${userInfoEntity.userId}</c:otherwise>
+						<c:otherwise>editUserValidate.do?type=validate</c:otherwise>
 					</c:choose>" method="post"
 		name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"

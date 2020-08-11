@@ -52,7 +52,7 @@ public class AddUserInputController extends HttpServlet {
 			if (Common.checkLogin(session)) {
 				// gọi đến hàm setDataLogic để truyền các giá trị của pulldown
 				// lên req
-				Common.setDataLogic(req);
+				setDataLogic(req);
 				// lấy userInfoEntity
 				UserInfoEntity userInfoEntity = getDefaultValue(req);
 
@@ -74,7 +74,7 @@ public class AddUserInputController extends HttpServlet {
 	}
 
 	/**
-	 * Xử lý khi click vào button Xác nhận của ADM003
+	 * Xử lý khi click vào button Xác nhận của ADM002
 	 * 
 	 * @param req
 	 *            request
@@ -112,9 +112,9 @@ public class AddUserInputController extends HttpServlet {
 					// sendRedirect đến URL addUserConfirm
 					resp.sendRedirect(Constant.URL_ADDUSERCONFIRM + key);
 				} else {
-					Common.setDataLogic(req);
+					setDataLogic(req);
 					req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
-					req.setAttribute(Constant.REQUEST_LISTERROR, listError);
+					req.setAttribute("listError", listError);
 					req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
 				}
 
@@ -131,6 +131,53 @@ public class AddUserInputController extends HttpServlet {
 
 	}
 
+	/**
+	 * Set các giá trị cho các selectbox ở màn hình ADM003
+	 * 
+	 * @param request
+	 */
+	private void setDataLogic(HttpServletRequest req) throws ClassNotFoundException, SQLException {
+		// Khởi tạo listGroup để lưu tất cả các group lấy được
+		ArrayList<MstGroupEntity> listMstGroup = new ArrayList<>();
+		// Khởi tạo listMstJapan để lưu tất cả các group lấy được
+		List<MstJapanEntity> listMstJapan = new ArrayList<>();
+		// khởi tạo listYear
+		List<Integer> listYear = new ArrayList<>();
+		// khởi tạo listMonth
+		List<Integer> listMonth = new ArrayList<>();
+		// khởi tạo listMonth
+		ArrayList<Integer> listDay = new ArrayList<>();
+
+		// Khởi tạo đối tượng mstGroupLogicImpl
+		MstGroupLogic mstGroupLogicImpl = new MstGroupLogicImpl();
+		// Khởi tạo đối tượng mstJapanLogicImpl
+		MstJapanLogic mstJapanLogicImpl = new MstJapanLogicImpl();
+
+		try {
+			// lấy về giá trị listMstGroup
+			listMstGroup = mstGroupLogicImpl.getAllMstGroup();
+			// Lấy về giá trị listMstJapan
+			listMstJapan = mstJapanLogicImpl.getAllMstJapan();
+			// Lấy về listYear
+			listYear = Common.getListYear(1990, Common.getDate().get(Calendar.YEAR));
+			// Lấy về listMonth
+			listMonth = Common.getListMonth();
+			// Lấy về listDay
+			listDay = Common.getListDay();
+
+			// gán lên request
+			req.setAttribute(Constant.REQUEST_LISTMSTGROUP, listMstGroup);
+			req.setAttribute(Constant.REQUEST_LISTMSTJAPAN, listMstJapan);
+			req.setAttribute(Constant.REQUEST_LISTYEAR, listYear);
+			req.setAttribute(Constant.REQUEST_LISTMONTH, listMonth);
+			req.setAttribute(Constant.REQUEST_LISTDAY, listDay);
+		} catch (ClassNotFoundException | SQLException e) {
+			// Hiển thị ở console lỗi
+			System.out.println("Error : AddUserInputController.setDataLogic " + e.getMessage());
+			// throw lỗi
+			throw e;
+		}
+	}
 
 	/**
 	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương

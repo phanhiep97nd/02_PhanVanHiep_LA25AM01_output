@@ -156,20 +156,19 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * Kiểm tra xem đã tồn tại email chưa
 	 * 
 	 * @param email email cần kiểm tra
-	 * @param userId để check trong trường hợp edit
 	 * @return trả về true nếu tồn tại, false nếu ngược lại
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	@Override
-	public Boolean checkExistedEmail(String email, int userId) throws ClassNotFoundException, SQLException {
+	public Boolean checkExistedEmail(String email) throws ClassNotFoundException, SQLException {
 		// Khởi tạo một TblUserDao
 		TblUserDao userDaoImpl = new TblUserDaoImpl();
 		try {
 			// Khái báo một đối tượng TblUserEntity và gán bằng giá trị lấy về
 			// từ hàm
 			// getTblUserByEmail
-			TblUserEntity user = userDaoImpl.getUserByEmail(email, userId);
+			TblUserEntity user = userDaoImpl.getUserByEmail(email);
 			// Nếu email rỗng nghĩa là chưa tồn tại
 			if (user.getLoginName() == null) {
 				return false;

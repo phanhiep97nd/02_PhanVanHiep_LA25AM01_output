@@ -103,39 +103,28 @@ public class EditUserInputController extends HttpServlet {
 			// Khởi tạo đối tượng UserInfoEntity để lấy về giá trị từ hàm
 			// getDefaultValue
 			UserInfoEntity userInfoEntity = new UserInfoEntity();
-			// Khởi tạo đối tượng TblUserLogic
-			TblUserLogic tblUserLogic = new TblUserLogicImpl();
 			// Nếu checkLogin trả về true (Đã đăng nhập)
 			if (Common.checkLogin(session)) {
-				// Lấy id từ request
-				int userId = Common.convertStringToInt(req.getParameter(Constant.REQUEST_ID), Constant.USER_ID_DEFAULT);
-				// kiểm tra tồn tại user
-				if (tblUserLogic.checkExistUserById(userId)) {
-					// gán giá trị trả về từ hàm UserInfoEntity vào đối tượng
-					// userInfoEntity
-					userInfoEntity = getDefaultValue(req);
-					// gán giá trị trả về từ hàm validateuserInfor vào listError
-					listError = ValidateUser.validateUserInfor(userInfoEntity);
-					// Kiểm tra xem có lỗi hay không
-					if (listError.size() == 0) {
-						// lấy ra key
-						String key = Common.generateSalt();
-						// gán userInfoEntity lên sesion
-						session.setAttribute(Constant.SESSION_EDITUSER_CONFIRM + key, userInfoEntity);
-						// gán lên session một giá trị confirmADM003 để kiểm tra
-						// có từ màn ADM003 qua hay ko
-						session.setAttribute(Constant.SESSION_CONFIRM_ADM003, Constant.SESSION_CONFIRM_ADM003);
-						// sendRedirect đến URL editUserConfirm
-						resp.sendRedirect(Constant.URL_EDITUSERCONFIRM + key);
-					} else {
-						Common.setDataLogic(req);
-						req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
-						req.setAttribute(Constant.REQUEST_LISTERROR, listError);
-						req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
-					}
+				// gán giá trị trả về từ hàm UserInfoEntity vào đối tượng
+				// userInfoEntity
+				userInfoEntity = getDefaultValue(req);
+				// gán giá trị trả về từ hàm validateuserInfor vào listError
+				listError = ValidateUser.validateUserInfor(userInfoEntity);
+				// Kiểm tra xem có lỗi hay không
+				if (listError.size() == 0) {
+					// lấy ra key
+					String key = Common.generateSalt();
+					// gán userInfoEntity lên sesion
+					session.setAttribute(Constant.SESSION_EDITUSER_CONFIRM + key, userInfoEntity);
+					// gán lên session một giá trị confirmADM003 để kiểm tra có từ màn ADM003 qua hay ko
+					session.setAttribute(Constant.SESSION_CONFIRM_ADM003, Constant.SESSION_CONFIRM_ADM003);
+					// sendRedirect đến URL editUserConfirm
+					resp.sendRedirect(Constant.URL_EDITUSERCONFIRM + key);
 				} else {
-					// Thông báo lỗi không tồn tại Id
-					resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_NOTEXIST_ID);
+					Common.setDataLogic(req);
+					req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
+					req.setAttribute("listError", listError);
+					req.getServletContext().getRequestDispatcher(Constant.PATH_ADM003).forward(req, resp);
 				}
 			} else {
 				// gọi đến URL login.do để về màn hình login
@@ -149,6 +138,7 @@ public class EditUserInputController extends HttpServlet {
 		}
 
 	}
+	
 
 	/**
 	 * Lấy về các giá trị mặc đinh của các các hạng mục màn hình ADM003 tương
@@ -202,6 +192,7 @@ public class EditUserInputController extends HttpServlet {
 
 			// Lấy về type từ req
 			type = req.getParameter(Constant.REQUEST_TYPE);
+			System.out.println("type"+type);
 			// lấy về giá trị listMstGroup
 			listMstGroup = mstGroupLogicImpl.getAllMstGroup();
 			// Lấy về giá trị listMstJapan
@@ -275,12 +266,13 @@ public class EditUserInputController extends HttpServlet {
 			} else if (Common.compareString(Constant.TYPE_BACK, type)) {
 				// khai báo session
 				HttpSession session = req.getSession();
-				// Lấy key từ req
+				//Lấy key từ req
 				String key = req.getParameter("key");
+				System.out.println(key);
 				// lấy userInforEntity từ session
-				userInfoEntity = (UserInfoEntity) session.getAttribute(Constant.SESSION_EDITUSER_CONFIRM + key);
-				// xóa session
-				session.removeAttribute(Constant.SESSION_EDITUSER_CONFIRM + key);
+				userInfoEntity = (UserInfoEntity) session.getAttribute(Constant.SESSION_ADDUSER_CONFIRM+key);
+				// xóa session 
+				session.removeAttribute(Constant.SESSION_ADDUSER_CONFIRM+key);
 				// nếu không nhập trình độ tiếng nhật
 				if ("".equals(userInfoEntity.getCodeLevel())) {
 					userInfoEntity.setEndDate(endDate);

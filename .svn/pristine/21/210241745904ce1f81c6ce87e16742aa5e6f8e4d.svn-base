@@ -372,17 +372,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		return user;
 	}
 
-	/**
-	 * Lấy ra đối tượng user từ email
-	 * 
-	 * @param emai
-	 *            dùng để tìm kiếm user trong db
-	 * @param userId
-	 *            để thêm điều kiện select dùng cho trường hợp edit
-	 * @return đối tượng tblUserEntity
-	 */
 	@Override
-	public TblUserEntity getUserByEmail(String email, int userId) throws SQLException, ClassNotFoundException {
+	public TblUserEntity getUserByEmail(int userId, String email) throws SQLException, ClassNotFoundException {
 		try {
 			// Khởi taho một đối tượng TblUserEntity
 			TblUserEntity tblUserEntity = new TblUserEntity();
@@ -392,17 +383,18 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			if (conn != null) {
 				// câu lệnh truy vấn
 				StringBuilder sql = new StringBuilder("SELECT * FROM tbl_user WHERE email = ?");
-				// Trường hợp edit userId khác 0 thì thêm điều kiện select
+				// nếu userid khác 0(Trường hợp edit)
 				if (userId != 0) {
-					sql.append("AND user_id != ?");
+					sql.append(" AND user_id != ?");
 				}
 				// thực hiện truy vấn
 				pstm = conn.prepareStatement(sql.toString());
 				// Gán giá trị tương ứng vào câu truy vấn
 				int index = 1;
 				pstm.setString(index++, email);
-				// trường hợp edit
+				// nếu userid khác 0(Trường hợp edit)
 				if (userId != 0) {
+					// set giá trị cho userId
 					pstm.setInt(index++, userId);
 				}
 				// Khởi tạo một đối tượng ResultSet để nhận kết quả trả về từ
@@ -411,7 +403,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				while (rs.next()) {
 					tblUserEntity = new TblUserEntity();
 					// gán giá trị cho thuộc tính email
-					tblUserEntity.setLoginName(rs.getString("login_name"));
+					tblUserEntity.setEmail(rs.getString("email"));
 				}
 			}
 			// trả về đối tượng tblUserEntity

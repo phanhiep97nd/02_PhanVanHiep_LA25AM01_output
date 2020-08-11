@@ -12,19 +12,18 @@
 <title>ユーザ管理</title>
 </head>
 <body>
+
 	<!-- Begin vung header -->
 	<%@include file="header.jsp"%>
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="addUserOK.do?key=${key }" method="post" name="inputform">
+	<form action="ADM003.html" method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
 				<th align="left">
-					<div style="padding-left: 100px;">
-						情報確認<br> 入力された情報をＯＫボタンクリックでＤＢへ保存してください 
-					</div>
+					<div style="padding-left: 100px;">情報確認</div>
 					<div style="padding-left: 100px;">&nbsp;</div>
 				</th>
 			</tr>
@@ -70,20 +69,15 @@
 							</tr>
 							<tr class="japan" id="japan2">
 								<td class="lbl_left">資格交付日:</td>
-								<td align="left"><c:if
-										test="${userInfoEntity.nameLevel ne '' }">${fn:escapeXml(userInfoEntity.startDate)}</c:if></td>
+								<td align="left">${fn:escapeXml(userInfoEntity.startDate)}</td>
 							</tr>
 							<tr class="japan" id="japan3">
 								<td class="lbl_left">失効日:</td>
-								<td align="left"><c:if
-										test="${userInfoEntity.nameLevel ne '' }">${fn:escapeXml(userInfoEntity.endDate)}</c:if></td>
+								<td align="left">${fn:escapeXml(userInfoEntity.endDate)}</td>
 							</tr>
 							<tr class="japan" id="japan4">
 								<td class="lbl_left">点数:</td>
-								<td align="left"><c:if
-										test="${userInfoEntity.nameLevel ne '' }">
-										<c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if>
-									</c:if></td>
+								<td align="left">${fn:escapeXml(userInfoEntity.total)}</td>
 							</tr>
 						</table>
 					</div>
@@ -92,18 +86,14 @@
 		</table>
 		<div style="padding-left: 100px;">&nbsp;</div>
 		<!-- Begin vung button -->
-		<div style="padding-left: 45px;">
+		<div style="padding-left: 100px;">
 			<table border="0" cellpadding="4" cellspacing="0" width="300px">
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
-					<td><input class="btn" type="submit" value="OK" /></td>
-					<td><a
-						href="<c:choose>
-						<c:when
-							test="${userInfoEntity.userId == 0}">addUserInput.do?type=back&key=${key }</c:when>
-						<c:otherwise>editUserInput.do?type=back&id=${userInfoEntity.userId }&key=${key }</c:otherwise>
-					</c:choose>"><input
-							class="btn" type="button" value="戻る" /> </a></td>
+					<td><input class="btn" type="submit" value="編集" /></td>
+					<td><input class="btn" type="button" value="削除" /></td>
+					<td><a href="listUser.do?type=back"><input class="btn"
+							type="button" value="戻る" /></a></td>
 				</tr>
 			</table>
 			<!-- End vung button -->
