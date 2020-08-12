@@ -1,0 +1,9 @@
+<HTML>
+<HEAD><TITLE>Menu</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFCCFF">
+Navigation frame<BR>
+<a href="frame1.html" target="mainframe">Gioi Thieu Lop</a> <br>
+<a href="frame2.html" target="mainframe">San pham</a>
+</BODY>
+</HTML>

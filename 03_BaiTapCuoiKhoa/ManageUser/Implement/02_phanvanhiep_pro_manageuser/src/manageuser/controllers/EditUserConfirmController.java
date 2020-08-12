@@ -60,5 +60,14 @@ public class EditUserConfirmController extends HttpServlet {
 			resp.sendRedirect(Constant.URL_SYSTEMERROR);
 		}
 	}
+	
+	/* Xử lí khi nhấn OK ở màn hình ADM004
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doPost(req, resp);
+	}
 
 }

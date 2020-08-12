@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài tập thực hành Form 1</title>
+</head>
+<body>
+<center>
+    <h1 style="color: pink;">Personal Information</h1>
+</center>
+    <hr>
+    <form action="" method="post">
+        <h3>
+            First Name:
+            <input type="text">
+        </h3>
+        <p></p>
+        <h3>
+            Last Name:
+            <input type="text">
+        </h3>
+        <h3>
+        <input type="radio" name="sex">Male
+        <input type="radio" name="sex">Female
+        </h3>
+        <h3>Please all educational levels that you have completed:</h3>
+        <h3>
+            Elementary School
+            <input type="checkbox">
+            College
+            <input type="checkbox">
+            Graduate School
+            <input type="checkbox">
+        </h3>
+        <div>
+            <input type="Submit" value="Send">
+            <input type="reset" value="Reset">
+        </div>
+    </form>
+</body>
+</html>

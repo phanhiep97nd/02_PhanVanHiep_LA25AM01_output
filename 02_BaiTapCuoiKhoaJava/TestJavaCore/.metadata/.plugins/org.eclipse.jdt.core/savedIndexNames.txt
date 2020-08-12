@@ -1,1 +1,0 @@
-INDEX VERSION 1.130+C:\1_HiepPV_LA25AM01\04_Output\02_PhanVanHiep\02_BaiTapCuoiKhoaJava\TestJavaCore\.metadata\.plugins\org.eclipse.jdt.core
