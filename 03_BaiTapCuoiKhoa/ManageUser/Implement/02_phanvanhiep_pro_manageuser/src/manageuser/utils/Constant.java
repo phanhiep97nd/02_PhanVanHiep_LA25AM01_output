@@ -200,5 +200,11 @@ public class Constant {
 	
 	//systemError
 	public static final String REQUEST_MESSAGE = "message";
-
+	
+	// editUser
+	public static final String TYPE_EDIT_SUCCESS = "editCuccsess";
+	public static final String TYPE_DELETE_SUCCESS = "deleteSuccess";
+	
+	// delete
+	public static final String MSG003 = MessageProperties.getValueByKey("MSG003");
 }

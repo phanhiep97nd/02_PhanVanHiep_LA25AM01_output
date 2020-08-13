@@ -542,6 +542,7 @@ public class Common {
 			tblUserEntity.setBirthday(userInfoEntity.getBirthday());
 			tblUserEntity.setEmail(userInfoEntity.getEmail());
 			tblUserEntity.setTel(userInfoEntity.getTel());
+			tblUserEntity.setUserId(userInfoEntity.getUserId());
 			// Nếu là trường hợp add
 			if (tblUserEntity.getUserId() == 0) {
 				tblUserEntity.setLoginName(userInfoEntity.getLoginName());

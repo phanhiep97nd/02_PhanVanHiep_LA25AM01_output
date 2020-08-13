@@ -26,6 +26,10 @@ public class SuccessController extends HttpServlet {
 		String message = "";
 		if (Common.compareString(type, Constant.TYPE_ADD_SUCCESS)) {
 			message = Constant.MSG001;
+		} else if (Common.compareString(type, Constant.TYPE_EDIT_SUCCESS)) {
+			message = Constant.MSG002;
+		} else if(Common.compareString(type, Constant.TYPE_DELETE_SUCCESS)) {
+			message = Constant.MSG003;
 		}
 		req.setAttribute(Constant.REQUEST_MESSAGE, message);
 		req.getServletContext().getRequestDispatcher(Constant.PATH_ADM006).forward(req, resp);

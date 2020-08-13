@@ -255,10 +255,14 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		return listUserInfo;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Đếm tổng số bảng ghi mà kết quả tìm được
 	 * 
-	 * @see manageuser.dao.TblUserDao#getTotalUsers(int, java.lang.String)
+	 * @param groupId  là nhóm được chọn trong selectbox
+	 * @param fullName là tên tìm kiếm được nhập từ textbox
+	 * @return trả về số bản ghi tìm được theo điều kiện tìm kiếm
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
 	@Override
 	public int getTotalUsers(int groupId, String fullName) throws ClassNotFoundException, SQLException {
@@ -331,10 +335,10 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see manageuser.dao.TblUserDao#getTblUserByLoginName(java.lang.String)
+	/**
+	 * Lấy ra đối tượng user từ loginName
+	 * @param loginName loginName dùng để tìm kiếm
+	 * @return đối tượng tblUserEntity
 	 */
 	@Override
 	public TblUserEntity getUserByLoginName(String loginName) throws SQLException, ClassNotFoundException {
@@ -428,37 +432,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 	}
 
-	/**
-	 * Lấy về Connection
-	 * 
-	 * @return đối tượng Connection
-	 */
-	@Override
-	public Connection getConnection() {
-		return conn;
-	}
-
-	/**
-	 * quyết định có tự động ghi vào DB hay ko
-	 * 
-	 * @param isAutoCommit
-	 *            có tự động commit hay là ko
-	 * @throws SQLException
-	 */
-	@Override
-	public void setDisableCommit(boolean isAutoCommit) throws SQLException {
-		try {
-			if (conn != null) {
-				conn.setAutoCommit(isAutoCommit);
-			}
-		} catch (SQLException e) {
-			// thông báo lỗi
-			System.out.println("Error : TblUserDaoImpl.setAutoCommit " + e.getMessage());
-			// gửi lỗi
-			throw e;
-		}
-
-	}
 
 	/**
 	 * ghi các thược tính của các đối tượng tblUserEntity vào DB
@@ -518,51 +491,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 	}
 
-	/**
-	 * Thực hiện insert
-	 * 
-	 * @throws SQLException
-	 */
-	@Override
-	public void commitData() throws SQLException {
-		try {
-			if (conn != null) {
-				// bắt đầu thực hiện thao tác vào DB
-				conn.commit();
-			}
-		} catch (SQLException e) {
-			// thông báo lỗi
-			System.out.println("Error : TblUserDaoImpl.commitData " + e.getMessage());
-			// gửi lỗi
-			throw e;
-		}
-	}
 
 	/**
-	 * Trả lại dữ liệu về trạng thái chưa insert
-	 * 
-	 * @throws SQLException
-	 */
-	@Override
-	public void rollBack() throws SQLException {
-		try {
-			if (conn != null) {
-				// lấy lại dữ liệu ban đầu
-				conn.rollback();
-			}
-		} catch (SQLException e) {
-			// thông báo lỗi
-			System.out.println("Error: TblUserDaoImpl.rollBack " + e.getMessage());
-			// throw lỗi
-			throw e;
-		}
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see manageuser.dao.TblUserDao#getUserByUserId(int)
+	 * Lấy ra đối tượng userInfo từ userId 
+	 * @param userId để lấy ra đối tượng userInfo trong DB từ userId
+	 * @return đối tượng UserInfoEntity lấy được
 	 */
 	@Override
 	public UserInfoEntity getUserInfoByUserId(int userId) throws SQLException, ClassNotFoundException {
@@ -649,10 +582,10 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see manageuser.dao.TblUserDao#getUserById(int)
+	/**
+	 * Lấy ra đối tượng user từ userId
+	 * @param userId userId dùng để tìm kiếm
+	 * @return đối tượng tblUserEntity tìm được
 	 */
 	@Override
 	public TblUserEntity getTblUserById(int userId) throws SQLException, ClassNotFoundException {
@@ -688,5 +621,83 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		// Trả về đối tượng user
 		return user;
+	}
+
+	/**
+	 * Thực hiện update các trường trong bảng tbl_user
+	 * @param tblUserEntity dùng để lấy ra các giá trị cần update
+	 * @return trả về true nếu update thành công
+	 * @throws SQLException 
+	 */
+	@Override
+	public boolean updateTblUser(TblUserEntity tblUserEntity) throws SQLException {
+		try {
+			if (conn != null) {
+				// câu truy vấn update dữ liệu vào bảng tbl_user
+				StringBuilder sql = new StringBuilder("UPDATE tbl_user");
+				sql.append(" SET group_id = ?, full_name = ?, full_name_kana = ?, email = ?, tel = ?, birthday = ? ");
+				sql.append("WHERE user_id = ?");
+				pstm = conn.prepareStatement(sql.toString());
+
+				// khai báo vị trí tham số
+				int index = 1;
+				// Gán giá trị tương ứng vào câu truy vấn
+				pstm.setInt(index++, tblUserEntity.getGroupId());
+				pstm.setString(index++, tblUserEntity.getFullName());
+				pstm.setString(index++, tblUserEntity.getFullNameKana());
+				pstm.setString(index++, tblUserEntity.getEmail());
+				pstm.setString(index++, tblUserEntity.getTel());
+				pstm.setString(index++, tblUserEntity.getBirthday());
+				pstm.setInt(index++, tblUserEntity.getUserId());
+				// thực thi truy vấn(Trả về số cột bị tác động)
+				int columnUpdated = pstm.executeUpdate();
+				if (columnUpdated != 0) {
+					// trả về true(update thành công)
+					return true;
+				}
+			}
+			// trả về update thất bại
+			return false;
+		} catch (SQLException e) {
+			// thông báo lỗi ở màn hình console
+			System.out.println("Error : TblUserDaoImpl.updateTblUser " + e.getMessage());
+			// throw lỗi
+			throw e;
+		}
+	}
+
+	/**
+	 * Thực hiện xóa scasc giá trị ở bảng tbl_user
+	 * @param userId id tương ứng với đối towjng cần xóa
+	 * @return trả về true nếu xóa thành công và ngược lại
+	 * @throws SQLException 
+	 */
+	@Override
+	public boolean deleteTblUser(int userId) throws SQLException {
+		try {
+			if (conn != null) {
+				// câu truy vấn để xóa dữ liệu từ bảng tbl_user
+				String sql = "DELETE FROM tbl_user WHERE user_id = ? AND rule = ?";
+				// khai báo PreparedStatement
+				pstm = conn.prepareStatement(sql);
+				int index = 1;
+				// Gán giá trị tương ứng vào câu truy vấn
+				pstm.setInt(index++, userId);
+				pstm.setInt(index++, Constant.RULE_USER);
+				// thực thi truy vấn
+				int result = pstm.executeUpdate();
+				if (result != 0) {
+					// delete thành công
+					return true;
+				}
+			}
+			// delete thất bại
+			return false;
+		} catch (SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error : TblUserDaoImpl.deleteTblUser " + e.getMessage());
+			// throw ngoại lệ
+			throw e;
+		}
 	}
 }

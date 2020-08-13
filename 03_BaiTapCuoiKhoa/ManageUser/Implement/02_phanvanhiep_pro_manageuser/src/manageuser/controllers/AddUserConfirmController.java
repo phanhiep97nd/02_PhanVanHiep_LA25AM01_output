@@ -33,7 +33,6 @@ public class AddUserConfirmController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			System.out.println("đã vào đây");
 			// khai báo session
 			HttpSession session = req.getSession();
 			// nếu từ màn ADM003 click xác nhận(Sesion confirmAdDM003 khác null)
@@ -93,8 +92,10 @@ public class AddUserConfirmController extends HttpServlet {
 						userInfoEntity.getUserId());
 				// Nếu không tồn tại loginName và email
 				if (!checkExistLoginName && !checkExistEmail) {
-					// Nếu thêm thành công(gọi đến hàm createUser)
-					if (tblUserLogicImpl.createUser(userInfoEntity)) {
+					// gọi đến hàm createUser
+					boolean checkInsert = tblUserLogicImpl.createUser(userInfoEntity);
+					// Nếu thêm thành công
+					if (checkInsert) {
 						// gọi đến URL Success
 						resp.sendRedirect(Constant.URL_SUCCESS + Constant.TYPE_ADD_SUCCESS);
 					} else {

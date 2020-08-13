@@ -75,37 +75,12 @@ public interface TblUserDao extends BaseDao {
 	TblUserEntity getUserByEmail(String email, int userId) throws SQLException, ClassNotFoundException;
 
 	/**
-	 * Lấy về Connection
-	 * @return đối tượng Connection
-	 */
-	Connection getConnection();
-
-	/**
-	 * quyết định có tự động ghi vào DB hay ko 
-	 * @param isAutoCommit có tự động commit hay là ko
-	 * @throws SQLException 
-	 */
-	void setDisableCommit(boolean isAutoCommit) throws SQLException;
-
-	/**
 	 * ghi các thược tính của các đối tượng tblUserEntity vào DB
 	 * @param tblUserEntity giá trị cần ghi vào DB
 	 * @return userId
 	 * @throws SQLException 
 	 */
 	int insertUser(TblUserEntity tblUserEntity) throws SQLException;
-
-	/**
-	 * Thực hiện insert 
-	 * @throws SQLException 
-	 */
-	void commitData() throws SQLException;
-
-	/**
-	 * Trả lại dữ liệu về trạng thái chưa insert
-	 * @throws SQLException 
-	 */
-	void rollBack() throws SQLException;
 	
 	/**
 	 * Lấy ra đối tượng userInfo từ userId 
@@ -120,4 +95,20 @@ public interface TblUserDao extends BaseDao {
 	 * @return đối tượng tblUserEntity tìm được
 	 */
 	TblUserEntity getTblUserById(int userId) throws SQLException, ClassNotFoundException;
+
+	/**
+	 * Thực hiện update các trường trong bảng tbl_user
+	 * @param tblUserEntity dùng để lấy ra các giá trị cần update
+	 * @return trả về true nếu update thành công
+	 * @throws SQLException 
+	 */
+	boolean updateTblUser(TblUserEntity tblUserEntity) throws SQLException;
+
+	/**
+	 * Thực hiện xóa scasc giá trị ở bảng tbl_user
+	 * @param userId id tương ứng với đối towjng cần xóa
+	 * @return trả về true nếu xóa thành công và ngược lại
+	 * @throws SQLException 
+	 */
+	boolean deleteTblUser(int userId) throws SQLException;
 }

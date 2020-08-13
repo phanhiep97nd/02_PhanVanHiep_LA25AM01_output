@@ -144,4 +144,14 @@ public interface TblUserLogic {
 	 */
 	boolean editUser(UserInfoEntity userInfoEntity)
 			throws ClassNotFoundException, SQLException, NullPointerException, NoSuchAlgorithmException;
+
+	/**
+	 * xóa dữ liệu ở bảng tbl_user, tbl_detail_user_japan
+	 * @param userId id của user muốn xóa
+	 * @return true nếu xóa thành công và ngược lại
+	 * @throws NullPointerException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	boolean deleteUser(int userId) throws ClassNotFoundException, SQLException, NullPointerException;
 }

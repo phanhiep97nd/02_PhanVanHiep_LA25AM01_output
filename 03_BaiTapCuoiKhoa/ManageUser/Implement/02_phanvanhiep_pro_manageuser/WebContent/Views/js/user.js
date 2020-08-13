@@ -54,3 +54,11 @@ function changeMonth(obj, idYear, idDay) {
 function changeYear(idYear, idMonth, idDay) {
     changeMonth(document.getElementById(idMonth), idYear, idDay);
 }
+
+function deleteUser() {
+	var checkOK = confirm("削除しますが、よろしいでしょうか。");
+	var userId = document.getElementById('userId').value;
+	if (checkOK == true) {
+		 window.location="deleteUser.do?id=" + userId;
+	}
+}

@@ -47,10 +47,14 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 		return listGroup;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * checkExistGroup kiểm tra group có tồn tại hay không
 	 * 
-	 * @see manageuser.logics.MstGroupLogic#checkExistGroup(int)
+	 * @param groupId
+	 *            Id group cần kiểm tra
+	 * @return true nếu tồn tại, false nếu ngược lại
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
 	@Override
 	public Boolean checkExistGroup(int groupId) throws ClassNotFoundException, SQLException {

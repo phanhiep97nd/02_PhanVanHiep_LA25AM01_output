@@ -19,7 +19,7 @@
 
 	<!-- Begin vung input-->
 	<form action="editUserInput.do" method="get" name="inputform">
-	<input type="hidden" value="${fn:escapeXml(userInfoEntity.userId)}" name="id">
+	<input type="hidden" value="${fn:escapeXml(userInfoEntity.userId)}" name="id" id="userId">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -92,7 +92,7 @@
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="編集" /></td>
-					<td><input class="btn" type="button" value="削除" /></td>
+					<td><input class="btn" type="button" value="削除" onclick="deleteUser()"/></td>
 					<td><a href="listUser.do?type=back"><input class="btn"
 							type="button" value="戻る" /></a></td>
 				</tr>

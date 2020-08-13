@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import org.apache.tomcat.dbcp.dbcp2.Jdbc41Bridge;
+
 import com.mysql.jdbc.Connection;
 
 import manageuser.dao.BaseDao;
@@ -25,6 +27,26 @@ import manageuser.utils.DatabaseProperties;
 public class BaseDaoImpl implements BaseDao {
 	// Khởi tạo đối tượng Connection
 	protected Connection conn = null;
+
+	/**
+	 * Lấy về Connection
+	 * 
+	 * @return đối tượng Connection
+	 */
+	public Connection getConnection() {
+		return conn;
+	}
+
+	/**
+	 * set Connection
+	 * 
+	 * @param conn đối tượng Connection
+	 * @return
+	 */
+	public void setConn(java.sql.Connection conn) {
+		this.conn = (Connection)conn;
+	}
+
 	// Khởi tạo đối tượng PrepareStatement
 	protected PreparedStatement pstm = null;
 	// khai báo danh sách tên các cột trong cơ sở dữ liệu
@@ -136,4 +158,66 @@ public class BaseDaoImpl implements BaseDao {
 		return listColumn;
 	}
 
+	/**
+	 * quyết định có tự động ghi vào DB hay ko
+	 * 
+	 * @param isAutoCommit
+	 *            có tự động commit hay là ko
+	 * @throws SQLException
+	 */
+	@Override
+	public void setDisableCommit(boolean isAutoCommit) throws SQLException {
+		try {
+			if (conn != null) {
+				conn.setAutoCommit(isAutoCommit);
+			}
+		} catch (SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error : BaseDaoImpl.setAutoCommit " + e.getMessage());
+			// gửi lỗi
+			throw e;
+		}
+
+	}
+	
+	/**
+	 * Thực hiện insert
+	 * 
+	 * @throws SQLException
+	 */
+	@Override
+	public void commitData() throws SQLException {
+		try {
+			if (conn != null) {
+				// bắt đầu thực hiện thao tác vào DB
+				conn.commit();
+			}
+		} catch (SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error : BaseDaoImpl.commitData " + e.getMessage());
+			// gửi lỗi
+			throw e;
+		}
+	}
+
+	/**
+	 * Trả lại dữ liệu về trạng thái chưa insert
+	 * 
+	 * @throws SQLException
+	 */
+	@Override
+	public void rollBack() throws SQLException {
+		try {
+			if (conn != null) {
+				// lấy lại dữ liệu ban đầu
+				conn.rollback();
+			}
+		} catch (SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error: BaseDaoImpl.rollBack " + e.getMessage());
+			// throw lỗi
+			throw e;
+		}
+
+	}
 }

@@ -92,7 +92,16 @@ public class EditUserConfirmController extends HttpServlet {
 					boolean checkExistEmail = tblUserLogicImpl.checkExistedEmail(userInfoEntity.getEmail(),
 							userInfoEntity.getUserId());
 					if (!checkExistEmail) {
-
+						// gọi đến hàm updateUser
+						boolean checkEdit = tblUserLogicImpl.editUser(userInfoEntity);
+						// Nếu update thành công
+						if (checkEdit) {
+							// gọi đến URL Success
+							resp.sendRedirect(Constant.URL_SUCCESS + Constant.TYPE_EDIT_SUCCESS);
+						} else {
+							// Chuyển đến màn hình System_Error
+							resp.sendRedirect(Constant.URL_SYSTEMERROR);
+						}
 					} else {
 						// Chuyển đến MH System_Error hiển thị mã lỗi ER015
 						resp.sendRedirect(Constant.URL_SYSTEMERROR);

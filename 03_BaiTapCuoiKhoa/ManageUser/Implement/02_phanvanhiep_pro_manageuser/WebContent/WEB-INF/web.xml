@@ -109,6 +109,14 @@
 		<url-pattern>/editUserOK.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>deleteUser</servlet-name>
+		<servlet-class>manageuser.controllers.DeleteUserController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>deleteUser</servlet-name>
+		<url-pattern>/deleteUser.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>systemError</servlet-name>
 		<servlet-class>manageuser.controllers.SystemErrorController</servlet-class>
 	</servlet>

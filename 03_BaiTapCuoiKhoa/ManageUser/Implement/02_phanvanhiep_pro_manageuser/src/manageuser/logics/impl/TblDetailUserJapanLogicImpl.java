@@ -38,9 +38,9 @@ public class TblDetailUserJapanLogicImpl implements TblDetailUserJapanLogic {
 			// lấy về detailUserJapanEntity từ hàm getTblDetailJapanById
 			detailUserJapanEntity = tblDetailUserJapanDao.getTblDetailJapanById(userId);
 			if(detailUserJapanEntity.getUserId() == 0){
-				return true;
-			}else{
 				return false;
+			}else{
+				return true;
 			}
 		} catch (NullPointerException | ClassNotFoundException | SQLException e) {
 			// Thông báo lỗi ở màn hình console
