@@ -26,30 +26,34 @@ public class LoginController extends HttpServlet {
 	/**
 	 * Xử lí khi người dùng click button đăng nhập
 	 * 
-	 * @param req  request
-	 * @param resp response
+	 * @param req
+	 *            request
+	 * @param resp
+	 *            response
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// Lấy giá trị từ request mà người dùng nhập
-		String loginName = req.getParameter(Constant.NAME_TEXTBOX_LOGINNAME);
-		String pass = req.getParameter(Constant.NAME_TEXTBOX_PASSWORD);
 		try {
-			// Khai báo 1 list để lấy kết quả trả về từ hàm validateLogin
-			List<String> listErr = ValidateUser.validateLogin(loginName, pass);
 			// Khởi tạo session
 			HttpSession session = req.getSession();
+			// Lấy giá trị loginName và pass từ request mà người dùng nhập
+			String loginName = req.getParameter(Constant.NAME_TEXTBOX_LOGINNAME);
+			String pass = req.getParameter(Constant.NAME_TEXTBOX_PASSWORD);
+			// Khai báo 1 list để lấy kết quả trả về từ hàm validateLogin
+			List<String> listErr = ValidateUser.validateLogin(loginName, pass);
+			
 			// Nếu danh sách lỗi rỗng(Tồn tại loginName và pass trong DB)
 			if (listErr.size() == 0) {
 				// chuyển hướng đến URL listuser.do
 				resp.sendRedirect(Constant.URL_LISTUSER + Constant.URL_TYPE_DEFAULT);
-				// gán loginName lên session
+				// gán loginName lên session để check đã login ở các màn hình
 				session.setAttribute(Constant.SESSION_LOGINNAME, loginName);
-				// Nếu có lỗi xảy ra
+				// Nếu có validate có lỗi
 			} else {
 				// gán danh sách lỗi lên Request
 				req.setAttribute(Constant.REQUEST_LISTERROR, listErr);
-				// gán loginName lên request để giữ lại giá trị loginName trên textbox
+				// gán loginName lên request để giữ lại giá trị loginName trên
+				// textbox
 				req.setAttribute(Constant.REQUEST_LOGINNAME, loginName);
 				// forward đến trang ADM001.jsp
 				req.getServletContext().getRequestDispatcher(Constant.PATH_ADM001).forward(req, resp);
@@ -66,8 +70,10 @@ public class LoginController extends HttpServlet {
 	/**
 	 * Xử lí khi người dùng vào web và khi logout
 	 * 
-	 * @param req  request
-	 * @param resp response
+	 * @param req
+	 *            request
+	 * @param resp
+	 *            response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
