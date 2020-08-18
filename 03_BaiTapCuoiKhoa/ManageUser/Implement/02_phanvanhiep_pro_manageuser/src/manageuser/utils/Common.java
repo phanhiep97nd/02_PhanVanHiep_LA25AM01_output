@@ -489,6 +489,17 @@ public class Common {
 	public static boolean isHalfsize(String text) {
 		return Pattern.matches("[a-zA-Z0-9]+", text);
 	}
+	
+	/**
+	 * Check số hallfsize
+	 * 
+	 * @param text
+	 *            chuỗi cần kiểm tra
+	 * @return true nếu là hallfsize, false nếu ngược lại
+	 */
+	public static boolean isHalfsizeNumber(String text) {
+		return Pattern.matches("[0-9]+", text);
+	}
 
 	/**
 	 * Check ngày hết hạn lớn hơn ngày bắt đàu

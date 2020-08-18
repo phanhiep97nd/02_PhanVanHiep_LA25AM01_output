@@ -188,7 +188,7 @@ public class ValidateUser {
 		if (Common.checkEmpty(total)) {
 			errTotal = Constant.ER001_TOTAL;
 			// check hallfsize
-		} else if (!Common.isHalfsize(total)) {
+		} else if (!Common.isHalfsizeNumber(total)) {
 			errTotal = Constant.ER018_TOTAL;
 			// check max length
 		} else if (!Common.checkLength(total, 0, Constant.MAX_LENGTH_TOTAL)) {

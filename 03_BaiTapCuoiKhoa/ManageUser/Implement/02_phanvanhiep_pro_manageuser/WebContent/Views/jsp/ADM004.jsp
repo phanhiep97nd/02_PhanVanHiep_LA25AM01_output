@@ -88,7 +88,7 @@
 								<td class="lbl_left">点数:</td>
 								<td align="left"><c:if
 										test="${userInfoEntity.nameLevel ne '' }">
-										<c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if>
+										<c:if test="${userInfoEntity.total ne '0'}">${fn:escapeXml(userInfoEntity.total)}</c:if>
 									</c:if></td>
 							</tr>
 						</table>

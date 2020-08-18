@@ -59,7 +59,7 @@ public class DeleteUserController extends HttpServlet {
 				// Nếu không tồn tại user
 			} else if (rule == -1) {
 				// Thông báo lỗi không tồn tại Id
-				resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_NOTEXIST_ID);
+				resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_DELETE_NOTEXIST);
 			} else if (rule == 0) {
 				// Thông báo lỗi không thể xóa admin
 				resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_DELETE_ADMIN);

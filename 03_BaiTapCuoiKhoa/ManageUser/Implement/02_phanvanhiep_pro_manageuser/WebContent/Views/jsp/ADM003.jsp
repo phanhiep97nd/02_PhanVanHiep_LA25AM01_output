@@ -17,12 +17,13 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="<c:choose>
+	<form
+		action="<c:choose>
 						<c:when
 							test="${userInfoEntity.userId == 0}">addUserValidate.do?type=validate</c:when>
 						<c:otherwise>editUserValidate.do?type=validate&id=${userInfoEntity.userId}</c:otherwise>
-					</c:choose>" method="post"
-		name="inputform">
+					</c:choose>"
+		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -176,6 +177,7 @@
 									value="${fn:split(userInfoEntity.endDate, '/')}"></c:set>
 								<td align="left"><select name="endyear" id="endyear"
 									onchange="changeYear('endyear', 'endmonth', 'endday')">
+									<option value="${listYear[0]}">${listYear[0]}</option>
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year +1}"
 												<c:if test="${(year+1) ==  endDate[0]}">selected</c:if>>${year +1}</option>
@@ -197,7 +199,7 @@
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
 									name="total"
-									value="<c:if test="${userInfoEntity.total != 0}">${fn:escapeXml(userInfoEntity.total)}</c:if>"
+									value="<c:if test="${userInfoEntity.total ne '0'}">${fn:escapeXml(userInfoEntity.total)}</c:if>"
 									size="15" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -213,8 +215,14 @@
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
-					<td><a href="listUser.do?type=back"><input class="btn"
-							type="button" value="戻る" /></a></td>
+					<td><a
+						href="<c:choose>
+						<c:when
+							test="${userInfoEntity.userId == 0}">listUser.do?type=back</c:when>
+						<c:otherwise>viewDetailUser.do?id=${userInfoEntity.userId}</c:otherwise>
+					</c:choose>
+					"><input
+							class="btn" type="button" value="戻る" /></a></td>
 				</tr>
 			</table>
 			<!-- End vung button -->

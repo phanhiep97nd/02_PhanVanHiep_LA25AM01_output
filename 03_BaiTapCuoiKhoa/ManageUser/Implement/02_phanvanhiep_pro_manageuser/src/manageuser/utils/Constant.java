@@ -21,6 +21,7 @@ public class Constant {
 	public static final String MSG005 = "MSG005";
 	public static final String ER015 = "ER015";
 	public static final String ER013 = "ER013";
+	public static final String ER014 = "ER014";
 	public static final String ER020 = "ER020";
 
 	// Các thông báo validate ở màn hình ADM003
@@ -182,7 +183,7 @@ public class Constant {
 	public static final int MAX_LENGTH_FULLNAME = 255;
 	public static final int MAX_LENGTH_FULLNAMEKATANA = 255;
 	public static final int MAX_LENGTH_EMAIL = 100;
-	public static final String FORMAT_EMAIL = "^[a-zA-Z0-9_\\.-]{1,}@[a-z0-9]{1,}\\.[a-z0-9]{0,}$";
+	public static final String FORMAT_EMAIL = "^.+@[a-z0-9.-]{1,}\\.[a-zA-Z]{1,}$";
 	public static final String FORMAT_TEL = "\\d{1,}-\\d{1,}-\\d{1,}";
 	public static final int MAX_LENGTH_TEL = 14;
 	public static final int MIN_LENGTH_PASS = 5;
@@ -211,5 +212,6 @@ public class Constant {
 	public static final String MSG003 = MessageProperties.getValueByKey("MSG003");
 	public static final String MSG004 = MessageProperties.getValueByKey("MSG004");
 	public static final String URL_ERROR_DELETE_ADMIN = "?message=ER020";
+	public static final String URL_ERROR_DELETE_NOTEXIST = "?message=ER014";
 	
 }

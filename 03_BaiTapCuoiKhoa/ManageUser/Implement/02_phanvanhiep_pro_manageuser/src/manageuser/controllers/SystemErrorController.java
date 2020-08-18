@@ -16,9 +16,10 @@ import manageuser.utils.MessageProperties;
 
 /**
  * Xử lí khi có lỗi
+ * 
  * @author Phan Van Hiep
  */
-public class SystemErrorController extends HttpServlet{
+public class SystemErrorController extends HttpServlet {
 	/**
 	 * Xử lí khi có lỗi
 	 * 
@@ -31,12 +32,14 @@ public class SystemErrorController extends HttpServlet{
 		String messReq = req.getParameter(Constant.REQUEST_MESSAGE);
 		// Khai báo chuỗi chứa lỗi
 		String message = "";
-		if(messReq == null){
+		if (messReq == null) {
 			message = MessageProperties.getValueByKey(Constant.ER015);
-		} else if(Constant.ER013.equals(messReq)){
+		} else if (Constant.ER013.equals(messReq)) {
 			message = MessageProperties.getValueByKey(Constant.ER013);
-		} else if(Constant.ER020.equals(messReq)){
+		} else if (Constant.ER020.equals(messReq)) {
 			message = MessageProperties.getValueByKey(Constant.ER020);
+		} else if (Constant.ER014.equals(messReq)) {
+			message = MessageProperties.getValueByKey(Constant.ER014);
 		}
 		// gán lên req và forward sang màn hình systemError
 		req.setAttribute(Constant.REQUEST_MESSAGE, message);
