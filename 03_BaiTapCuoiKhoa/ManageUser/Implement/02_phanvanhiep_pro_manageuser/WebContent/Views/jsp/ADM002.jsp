@@ -74,7 +74,7 @@
 							</c:url>
 				href="${sortFullName }"> <c:choose>
 						<c:when
-							test="${sortByFullName eq 'ASC' || sortByFullName eq null}">▲▽</c:when>
+							test="${sortByFullName eq 'ASC' || sortByFullName == null}">▲▽</c:when>
 						<c:otherwise>△▼</c:otherwise>
 					</c:choose>
 			</a>
@@ -94,7 +94,7 @@
 							</c:url>
 				href="${sortCodeLevel }"> <c:choose>
 						<c:when
-							test="${sortByCodeLevel eq 'ASC' || sortByCodeLevel eq null}">▲▽</c:when>
+							test="${sortByCodeLevel eq 'ASC' || sortByCodeLevel == null}">▲▽</c:when>
 						<c:otherwise>△▼</c:otherwise>
 					</c:choose>
 			</a>
@@ -109,7 +109,7 @@
 								<c:param name="sortLike" value="${fn:escapeXml(sortByEndDate)}"></c:param>
 							</c:url>
 				href="${sortEndDate }"> <c:choose>
-						<c:when test="${sortByEndDate eq 'ASC' || sortByEndDate eq null}">▲▽</c:when>
+						<c:when test="${sortByEndDate eq 'ASC' || sortByEndDate == null}">▲▽</c:when>
 						<c:otherwise>△▼</c:otherwise>
 					</c:choose>
 			</a>
