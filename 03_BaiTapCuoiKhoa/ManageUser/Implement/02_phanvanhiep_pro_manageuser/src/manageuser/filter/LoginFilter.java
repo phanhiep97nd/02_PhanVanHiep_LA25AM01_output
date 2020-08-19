@@ -47,7 +47,7 @@ public class LoginFilter implements Filter {
 
 		try {
 			// Nếu vào MH login hoặc đẵ đăng nhập
-			if (reqPath.equals(Constant.PATH_LOGIN) || Common.checkLogin(session)) {
+			if (reqPath.equals(Constant.PATH_LOGIN_CONTROLLER) || reqPath.equals(Constant.PATH_SYSTEMERROR_CONTROLLER) || Common.checkLogin(session)) {
 				// Cho phép request vượt qua filter
 				chain.doFilter(request, response);
 				// Nếu chưa login

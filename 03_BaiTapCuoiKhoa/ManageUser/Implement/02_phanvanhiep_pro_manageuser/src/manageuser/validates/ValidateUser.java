@@ -47,7 +47,7 @@ public class ValidateUser {
 			if ("".equals(pass)) {
 				lstError.add(MessageProperties.getValueByKey((Constant.ER001_PASS)));
 			}
-			if (!"".equals(loginName) && !"".equals(pass)) {
+			if (lstError.size() == 0) {
 				if (!userLogic.checkExistLogin(loginName, pass)) {
 					lstError.add(MessageProperties.getValueByKey((Constant.ER016)));
 				}
@@ -73,7 +73,7 @@ public class ValidateUser {
 	public static List<String> validateUserInfor(UserInfoEntity userInforEntity)
 			throws ClassNotFoundException, SQLException {
 		List<String> listError = new ArrayList<>();
-		try {		
+		try {
 			// validate loginName
 			if (userInforEntity.getUserId() == 0) {
 				String errorLoginName = validateLoginName(userInforEntity.getLoginName());
@@ -110,7 +110,7 @@ public class ValidateUser {
 				listError.add(errorBirthday);
 			}
 
-			 // Validate email
+			// Validate email
 			String errorEmail = validateEmail(userInforEntity.getEmail(), userInforEntity.getUserId());
 			if (!"".equals(errorEmail)) {
 				listError.add(errorEmail);

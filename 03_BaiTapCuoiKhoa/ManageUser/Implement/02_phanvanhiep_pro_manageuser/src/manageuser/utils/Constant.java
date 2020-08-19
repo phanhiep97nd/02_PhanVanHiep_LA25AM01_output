@@ -71,11 +71,12 @@ public class Constant {
 	public static final String PATH_SYSTEM_ERROR = "/Views/jsp/System_Error.jsp";
 
 	// constant URL
-	public static final String PATH_LOGIN = "/login.do";
+	public static final String PATH_LOGIN_CONTROLLER = "/login.do";
 	public static final String URL_LOGIN = "login.do";
 	public static final String URL_OUT = "logout.do";
 	public static final String URL_LISTUSER = "listUser.do";
 	public static final String URL_SYSTEMERROR = "systemError.do";
+	public static final String PATH_SYSTEMERROR_CONTROLLER = "/systemError.do";
 	public static final String URL_ADDUSERCONFIRM = "addUserConfirm.do?key=";
 	public static final String URL_EDITUSERCONFIRM = "editUserConfirm.do?key=";
 
