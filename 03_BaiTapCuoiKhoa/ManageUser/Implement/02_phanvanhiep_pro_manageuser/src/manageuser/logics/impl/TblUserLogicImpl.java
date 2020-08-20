@@ -453,7 +453,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			// lấy lại dữ liệu ban đầu
 			tblUserDaoImpl.rollBack();
 			// thông báo lỗi
-			System.out.println("Error : TblUserLogicImpl.editUser " + e.getMessage());
+			System.out.println("Error : TblUserLogicImpl.deleteUser " + e.getMessage());
 			// gửi lỗi
 			throw e;
 		} finally {
