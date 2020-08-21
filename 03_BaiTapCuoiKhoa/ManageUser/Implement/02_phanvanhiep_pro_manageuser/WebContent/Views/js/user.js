@@ -1,8 +1,4 @@
 var isHideJapan = true;
-
-/**
- * Xử lí ẩn hiện vùng trình độ tiếng Nhật
- */
 function showJapan() {
 	if (isHideJapan) {
 		document.getElementById('japan1').classList.remove("japan");
@@ -21,9 +17,6 @@ function showJapan() {
 	}
 }
 
-/**
- * Xử lí khi người dùng thay đổi tháng
- */
 function changeMonth(obj, idYear, idDay) {
     var year = document.getElementById(idYear).value;
     var choose = obj.value;
@@ -58,16 +51,10 @@ function changeMonth(obj, idYear, idDay) {
     }
 }
 
-/**
- * Xử lí khi người dùng thay đổi năm
- */
 function changeYear(idYear, idMonth, idDay) {
     changeMonth(document.getElementById(idMonth), idYear, idDay);
 }
 
-/**
- * Xử lí khi người dùng click vào button delete
- */
 function deleteUser() {
 	let MSG004 = document.getElementById('MSG004').value;
 	let checkOK = confirm(MSG004);

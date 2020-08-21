@@ -25,6 +25,11 @@ import manageuser.utils.Constant;
 public class DeleteUserController extends HttpServlet {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lý khi click vào button delete ở màn hình ADM005
 	 * 
 	 * @param req

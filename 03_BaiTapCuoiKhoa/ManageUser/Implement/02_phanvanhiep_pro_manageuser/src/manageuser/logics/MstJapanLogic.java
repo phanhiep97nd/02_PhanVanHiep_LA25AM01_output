@@ -33,4 +33,14 @@ public interface MstJapanLogic {
 	 * @throws ClassNotFoundException
 	 */
 	Boolean checkExistCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException;
+	
+	/**
+	 * Lấy nameLevel tương ứng codeLevel trong DB
+	 * 
+	 * @param codeLevel để tìm ra nameLevel tương ứng
+	 * @return trả về tên trình độ tiếng nhật
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	String getNameLevel(String codeLevel) throws ClassNotFoundException, SQLException;
 }

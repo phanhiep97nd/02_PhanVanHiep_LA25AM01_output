@@ -26,6 +26,11 @@ import manageuser.utils.Constant;
  */
 public class ViewDetailUserController extends HttpServlet {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lí phương thức doGet
 	 * 
 	 * @param req

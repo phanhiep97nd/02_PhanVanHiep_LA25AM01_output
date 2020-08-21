@@ -77,4 +77,23 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 			throw e;
 		}
 	}
+	
+	/**
+	 * getGroupName lấy groupName tương ứng groupId
+	 * @param
+	 * @return trả về tên nhóm
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@Override
+	public String getGroupName(int groupId) throws ClassNotFoundException, SQLException {
+		//khai báo groupName
+		String groupName = "";
+		//khởi tạo đối tượng mstGroupDaoImpl
+		MstGroupDao mstGroupDaoImpl = new MstGroupDaoImpl();
+		//lấy groupName tương ứng
+		groupName = mstGroupDaoImpl.getGroupName(groupId);
+		//trả về groupName lấy được
+		return groupName;
+	}
 }

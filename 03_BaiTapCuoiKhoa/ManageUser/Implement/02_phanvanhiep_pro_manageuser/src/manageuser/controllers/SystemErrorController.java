@@ -21,6 +21,11 @@ import manageuser.utils.MessageProperties;
  */
 public class SystemErrorController extends HttpServlet {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lí khi có lỗi
 	 * 
 	 * @param req  request

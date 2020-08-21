@@ -81,4 +81,24 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 		}
 	}
 
+	/**
+	 * Lấy nameLevel tương ứng codeLevel trong DB
+	 * 
+	 * @param codeLevel để tìm ra nameLevel tương ứng
+	 * @return trả về tên trình độ tiếng nhật
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	@Override
+	public String getNameLevel(String codeLevel) throws ClassNotFoundException, SQLException {
+		// khởi tạo biến nameLevel
+		String nameLevel = "";
+		// khởi tạo đối tượng mstJapanDaoImpl
+		MstJapanDao mstJapanDaoImpl = new MstJapanDaoImpl();
+		// lấy namelevel tương ứng với codeLevel
+		nameLevel = mstJapanDaoImpl.getNameLevel(codeLevel);
+		// trả về nameLevel
+		return nameLevel;
+	}
+
 }

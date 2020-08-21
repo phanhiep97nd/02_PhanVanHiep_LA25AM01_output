@@ -22,6 +22,11 @@ import manageuser.utils.Constant;
 public class LogoutController extends HttpServlet {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lí khi người dùng click link logout
 	 * 
 	 * @param req  request

@@ -24,6 +24,11 @@ import manageuser.utils.Constant;
  * @author Phan Van Hiep
  */
 public class EditUserConfirmController extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/*
 	 * xử lí khi nhấn xác nhận ở màn hình ADM003
 	 * 

@@ -136,7 +136,7 @@
 		</c:forEach>
 
 	</table>
-	<c:if test="${totalPage == 0}">
+	<c:if test="${fn:length(listUserInfo) == 0}">
 		<p class="errMsg" colspan="2"
 			style="color: black; border: 0; box-shadow: 0">&nbsp;${notiMSG005}</p>
 	</c:if>

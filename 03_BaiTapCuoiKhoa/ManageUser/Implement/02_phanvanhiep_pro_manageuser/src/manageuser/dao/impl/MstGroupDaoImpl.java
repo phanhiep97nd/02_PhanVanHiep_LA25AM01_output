@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import manageuser.dao.MstGroupDao;
 import manageuser.entities.MstGroupEntity;
+import manageuser.utils.Constant;
 
 /**
  * Implement MstGroupDao để Xử lý Thao tác với DB bảng mst_group
@@ -64,4 +65,49 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 		return listGroup;
 	}
 
+	/**
+	 * getGroupName lấy groupName tương ứng groupId
+	 * 
+	 * @param
+	 * @return trả về tên nhóm
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	@Override
+	public String getGroupName(int groupId) throws ClassNotFoundException, SQLException {
+		// khổi tạo groupName
+		String groupName = "";
+		try {
+			// mở kết nối tới cơ sở dữ liệu
+			openConnection();
+			// kiểm tra xem đã kết nối được chưa
+			if (conn != null) {
+				// mở kết nối thành công câu lệnh sql lấy dữ liệu group_name trong bảng mst_group
+				String sql = "SELECT group_name FROM mst_group WHERE group_id=?";
+				// thực thi truy vấn
+				pstm = conn.prepareStatement(sql);
+				// khai báo vị trí tham số
+				int index = 1;
+				// truyền các giá trị vào cho các tham số
+				pstm.setInt(index++, groupId);
+				// bảng kết quả trả về khi thực hiện câu truy vấn sql
+				ResultSet rs = pstm.executeQuery();
+
+				// lấy dữ liệu từ ResultSet gán cho groupName
+				while (rs.next()) {
+					groupName = rs.getString("group_name");
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error: MstGroupDaoImpl.getGroupName " + e.getMessage());
+			throw e;
+		} finally {
+			// đóng kết nối lại
+			closeConnection();
+		}
+
+		// trả về danh tên nhóm mst_group
+		return groupName;
+	}
 }

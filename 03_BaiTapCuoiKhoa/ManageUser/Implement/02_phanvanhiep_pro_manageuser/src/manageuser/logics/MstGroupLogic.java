@@ -36,4 +36,14 @@ public interface MstGroupLogic {
 	 * @throws ClassNotFoundException
 	 */
 	Boolean checkExistGroup(int groupId) throws ClassNotFoundException, SQLException;
+	
+	/**
+	 * getGroupName lấy groupName tương ứng groupId
+	 * @param
+	 * @return trả về tên nhóm
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	String getGroupName(int groupId) throws ClassNotFoundException, SQLException;
+
 }

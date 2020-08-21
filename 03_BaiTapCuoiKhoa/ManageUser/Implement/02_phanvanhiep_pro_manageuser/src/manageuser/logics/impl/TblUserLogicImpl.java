@@ -158,18 +158,16 @@ public class TblUserLogicImpl implements TblUserLogic {
 			// getTblUserByLoginName
 			TblUserEntity user = userDaoImpl.getUserByLoginName(loginName);
 			// Mếu loginNae rỗng nghĩa là chưa tồn tại
-			if (user.getLoginName() == null) {
-				return false;
-			} else {
+			if (user.getLoginName() != null) {
 				return true;
-			}
-
+			} 
 		} catch (ClassNotFoundException | SQLException e) {
 			// Thông báo lỗi ở màn hình console
 			System.out.println("Error : TblUserLogicImpl.checkExistedLoginName " + e.getMessage());
 			// Throw lỗi
 			throw e;
 		}
+		return false;
 	}
 
 	/**
@@ -193,18 +191,16 @@ public class TblUserLogicImpl implements TblUserLogic {
 			// getTblUserByEmail
 			TblUserEntity user = userDaoImpl.getUserByEmail(email, userId);
 			// Nếu email rỗng nghĩa là chưa tồn tại
-			if (user.getLoginName() == null) {
-				return false;
-			} else {
+			if (user.getLoginName() != null) {
 				return true;
-			}
-
+			} 
 		} catch (ClassNotFoundException | SQLException e) {
 			// Thông báo lỗi ở màn hình console
 			System.out.println("Error : TblUserLogicImpl.checkExistedEmail " + e.getMessage());
 			// Throw lỗi
 			throw e;
 		}
+		return false;
 	}
 
 	/**
@@ -315,18 +311,16 @@ public class TblUserLogicImpl implements TblUserLogic {
 			// getTblUserByLoginName
 			TblUserEntity user = userDaoImpl.getTblUserById(userId);
 			// Mếu loginNae rỗng nghĩa là không tồn tại
-			if (user.getLoginName() == null) {
-				return false;
-			} else {
+			if (user.getLoginName() != null) {
 				return true;
-			}
-
+			} 
 		} catch (ClassNotFoundException | SQLException e) {
 			// Thông báo lỗi ở màn hình console
 			System.out.println("Error : TblUserLogicImpl.checkExistUserById " + e.getMessage());
 			// Throw lỗi
 			throw e;
 		}
+		return false;
 	}
 
 	/**
@@ -453,7 +447,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			// lấy lại dữ liệu ban đầu
 			tblUserDaoImpl.rollBack();
 			// thông báo lỗi
-			System.out.println("Error : TblUserLogicImpl.deleteUser " + e.getMessage());
+			System.out.println("Error : TblUserLogicImpl.editUser " + e.getMessage());
 			// gửi lỗi
 			throw e;
 		} finally {

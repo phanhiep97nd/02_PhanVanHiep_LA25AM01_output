@@ -33,6 +33,11 @@ import manageuser.utils.MessageProperties;
 public class ListUserController extends HttpServlet {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lí khi vào màn hình, click button search, click link sort và paging ở MH
 	 * ADM002
 	 * 
@@ -163,20 +168,22 @@ public class ListUserController extends HttpServlet {
 				}
 				// Nếu tồn tại session sortType (Lấy xuống để vẫn giữ được các giá trị sort)
 				if (session.getAttribute(Constant.SESSION_SORT_TYPE) != null) {
-					// Lấy giá trị từ SESSION_SORT_TYPE
+					// Lấy giá trị sortLike từ SESSION_SORT_TYPE
 					sortType = (String) session.getAttribute(Constant.SESSION_SORT_TYPE);
+					// Lấy giá trị sortLike từ session
+					sortLike = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
 					// Nếu là loại sắp xếp theo full_name
 					if (Common.compareString(Constant.SORT_TYPE_FULLNAME, sortType)) {
-						// Lấy giá trị sắp xếp theo fullname từ session
-						sortByFullName = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
+						// Lấy giá trị sắp xếp theo fullname từ sortLike trên session
+						sortByFullName = sortLike;
 						// Nếu là loại sắp xếp theo code level
 					} else if (Common.compareString(Constant.SORT_TYPE_CODELEVEL, sortType)) {
-						// lấy giá trị sắp xếp theo code level từ session
-						sortByCodeLevel = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
+						// lấy giá trị sắp xếp theo code level từ sortLike trên session
+						sortByCodeLevel = sortLike;
 						// Nếu là sắp xếp theo end_date
 					} else if (Common.compareString(Constant.SORT_TYPE_ENDDATE, sortType)) {
-						// Lấy giá trị sắp xếp theo code level từ session
-						sortByEndDate = (String) session.getAttribute(Constant.SESSION_SORT_LIKE);
+						// Lấy giá trị sắp xếp theo code level từ sortLike trên session
+						sortByEndDate = sortLike;
 					}
 				}
 			}

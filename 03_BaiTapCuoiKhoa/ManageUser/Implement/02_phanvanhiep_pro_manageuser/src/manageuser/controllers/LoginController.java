@@ -24,6 +24,11 @@ import manageuser.validates.ValidateUser;
 public class LoginController extends HttpServlet {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lí khi người dùng click button đăng nhập
 	 * 
 	 * @param req

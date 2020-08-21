@@ -34,6 +34,11 @@ import manageuser.validates.ValidateUser;
  */
 public class AddUserInputController extends HttpServlet {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lý khi click vào button Add của ADM002
 	 * 
 	 * @param req
@@ -171,10 +176,6 @@ public class AddUserInputController extends HttpServlet {
 
 			// Lấy về type từ req
 			type = req.getParameter(Constant.REQUEST_TYPE);
-			// lấy về giá trị listMstGroup
-			listMstGroup = mstGroupLogicImpl.getAllMstGroup();
-			// Lấy về giá trị listMstJapan
-			listMstJapan = mstJapanLogicImpl.getAllMstJapan();
 			// Nếu từ màn hình ADM002 hoặc click button submit ở màn hình ADM003
 			if (type == null || Common.compareString(Constant.TYPE_VALIDATE, type)) {
 				if (Common.compareString(Constant.TYPE_VALIDATE, type)) {
@@ -183,11 +184,8 @@ public class AddUserInputController extends HttpServlet {
 					groupId = Common.convertStringToInt(req.getParameter(Constant.GROUPID_ADM003),
 							Constant.GROUPID_DEFAULT);
 					if (groupId != 0) {
-						for (int i = 0; i < listMstGroup.size(); i++) {
-							if (groupId == listMstGroup.get(i).getGroupId()) {
-								groupName = listMstGroup.get(i).getGroupName();
-							}
-						}
+						// Lấy về groupName từ groupId
+						groupName = mstGroupLogicImpl.getGroupName(groupId);
 					}
 					fullName = req.getParameter(Constant.FULL_NAME_ADM003);
 					fullNameKatana = req.getParameter(Constant.FULL_NAME_KATANA_ADM003);
@@ -201,11 +199,8 @@ public class AddUserInputController extends HttpServlet {
 					passwordConfirm = req.getParameter(Constant.PASSWORD_CONFIRM_ADM003);
 					codeLevel = req.getParameter(Constant.CODE_LEVEL_ADM003);
 					if (!"".equals(codeLevel)) {
-						for (int i = 0; i < listMstJapan.size(); i++) {
-							if (listMstJapan.get(i).getCodeLevel().equals(codeLevel)) {
-								nameLevel = listMstJapan.get(i).getNameLevel();
-							}
-						}
+						// Lấy về nameLevel theo codeLevel
+						nameLevel = mstJapanLogicImpl.getNameLevel(codeLevel);
 						String startYear = req.getParameter(Constant.START_YEAR_ADM003);
 						String startMonth = req.getParameter(Constant.START_MONTH_ADM003);
 						String startDay = req.getParameter(Constant.START_DAY_ADM003);

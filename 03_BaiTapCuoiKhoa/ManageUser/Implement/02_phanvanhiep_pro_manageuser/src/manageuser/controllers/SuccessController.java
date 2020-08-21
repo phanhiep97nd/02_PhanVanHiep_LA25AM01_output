@@ -20,6 +20,11 @@ import manageuser.utils.Constant;
  * @author Phan Van Hiep
  */
 public class SuccessController extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String type = req.getParameter(Constant.REQUEST_TYPE);

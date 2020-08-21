@@ -12,6 +12,7 @@ import java.util.List;
 import manageuser.dao.MstJapanDao;
 import manageuser.entities.MstGroupEntity;
 import manageuser.entities.MstJapanEntity;
+import manageuser.utils.Constant;
 
 /**
  * Implement MstJapanDao để Xử lý Thao tác với DB bảng mst_japan
@@ -63,6 +64,52 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 			closeConnection();
 		}
 		return listMstJapan;
+	}
+
+	/**
+	 * Lấy nameLevel tương ứng codeLevel trong DB
+	 * 
+	 * @param codeLevel để tìm ra nameLevel tương ứng
+	 * @return trả về tên trình độ tiếng nhật
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	@Override
+	public String getNameLevel(String codeLevel) throws ClassNotFoundException, SQLException {
+		try {
+			// khai báo groupName
+			String nameLevel = "";
+			// mở kết nối tới cơ sở dữ liệu
+			openConnection();
+			// kiểm tra xem đã kết nối được chưa
+			if (conn != null) {
+				// mở kết nối thành công câu lệnh sql lấy dữ liệu namelevel trong bảng mst_japan
+				String sql = "SELECT name_level FROM mst_japan WHERE code_level LIKE ?";
+				// thực thi truy vấn
+				pstm = conn.prepareStatement(sql);
+				// khai báo vị trí tham số
+				int index = 1;
+				// truyền các giá trị vào cho các tham số
+				pstm.setString(index++, codeLevel);
+				// bảng kết quả trả về khi thực hiện câu truy vấn sql
+				ResultSet rs = pstm.executeQuery();
+
+				// lấy dữ liệu từ ResultSet gán cho biến nameLevel
+				while (rs.next()) {
+					nameLevel = rs.getString("name_level");
+				}
+			}
+			// trả vè namelevel lấy được trong bảng mst_japan
+			return nameLevel;
+		} catch (ClassNotFoundException | SQLException e) {
+			// thông báo lỗi
+			System.out.println("Error: MstJapanDaoImpl.getNameLevel " + e.getMessage());
+			throw e;
+		} finally {
+			// đóng kết nối lại
+			closeConnection();
+		}
+
 	}
 
 }

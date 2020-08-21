@@ -36,6 +36,11 @@ import manageuser.validates.ValidateUser;
  */
 public class EditUserInputController extends HttpServlet {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Xử lý khi click vào button Edit của ADM005
 	 * 
 	 * @param req
@@ -213,11 +218,8 @@ public class EditUserInputController extends HttpServlet {
 				groupId = Common.convertStringToInt(req.getParameter(Constant.GROUPID_ADM003),
 						Constant.GROUPID_DEFAULT);
 				if (groupId != 0) {
-					for (int i = 0; i < listMstGroup.size(); i++) {
-						if (groupId == listMstGroup.get(i).getGroupId()) {
-							groupName = listMstGroup.get(i).getGroupName();
-						}
-					}
+					// Lấy về groupName từ groupId
+					groupName = mstGroupLogicImpl.getGroupName(groupId);
 				}
 				fullName = req.getParameter(Constant.FULL_NAME_ADM003);
 				fullNameKatana = req.getParameter(Constant.FULL_NAME_KATANA_ADM003);
@@ -229,11 +231,8 @@ public class EditUserInputController extends HttpServlet {
 				tel = req.getParameter(Constant.TEL_ADM003);
 				codeLevel = req.getParameter(Constant.CODE_LEVEL_ADM003);
 				if (!"".equals(codeLevel)) {
-					for (int i = 0; i < listMstJapan.size(); i++) {
-						if (listMstJapan.get(i).getCodeLevel().equals(codeLevel)) {
-							nameLevel = listMstJapan.get(i).getNameLevel();
-						}
-					}
+					// Lấy về nameLevel theo codeLevel
+					nameLevel = mstJapanLogicImpl.getNameLevel(codeLevel);
 					String startYear = req.getParameter(Constant.START_YEAR_ADM003);
 					String startMonth = req.getParameter(Constant.START_MONTH_ADM003);
 					String startDay = req.getParameter(Constant.START_DAY_ADM003);
