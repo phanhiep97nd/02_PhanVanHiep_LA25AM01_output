@@ -1,6 +1,6 @@
 /**
  * Copyright(C) 2020  Luvina Software
-EditUserConfirmController.java, Aug 11, 2020 Phan Van Hiep
+AddUserConfirmController.java, Jul 29, 2020 Phan Van Hiep
  */
 package manageuser.controllers;
 
@@ -19,11 +19,11 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Controller xử lí hiển thị thông tin để confirm edit
+ * Controller xử lí hiển thị thông tin để confirm add
  * 
  * @author Phan Van Hiep
  */
-public class EditUserConfirmController extends HttpServlet {
+public class AddUserConfirmController extends HttpServlet {
 	/**
 	 * 
 	 */
@@ -40,17 +40,15 @@ public class EditUserConfirmController extends HttpServlet {
 		try {
 			// khai báo session
 			HttpSession session = req.getSession();
-			// Lấy về keyConfirm từ ADM003 trên session
-			String confirmADM003 = (String) session.getAttribute(Constant.SESSION_CONFIRM_ADM003);
-			// nếu từ màn ADM003 click xác nhận
-			if (Common.compareString(Constant.SESSION_CONFIRM_ADM003, confirmADM003)) {
+			// nếu từ màn ADM003 click xác nhận(Sesion confirmAdDM003 khác null)
+			if (session.getAttribute(Constant.SESSION_CONFIRM_ADM003) != null) {
 				// Xóa session confirmAdDM003
 				session.removeAttribute(Constant.SESSION_CONFIRM_ADM003);
 				// Lấy key từ req
 				String key = req.getParameter(Constant.REQUEST_KEY);
 				// lấy userInfoEntity từ session
 				UserInfoEntity userInfoEntity = (UserInfoEntity) session
-						.getAttribute(Constant.SESSION_EDITUSER_CONFIRM + key);
+						.getAttribute(Constant.SESSION_ADDUSER_CONFIRM + key);
 				// truyền userInfoEntity vào request
 				req.setAttribute(Constant.REQUEST_USERINFORENTITY, userInfoEntity);
 				// truyền key lên req
@@ -72,7 +70,7 @@ public class EditUserConfirmController extends HttpServlet {
 	}
 
 	/*
-	 * Xử lí khi nhấn OK ở màn hình ADM004
+	 * Xử lí khi nhấn button Ok ở ADM004
 	 * 
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.
 	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
@@ -86,42 +84,37 @@ public class EditUserConfirmController extends HttpServlet {
 			String key = req.getParameter(Constant.REQUEST_KEY);
 			// lấy userInfoEntity từ session
 			UserInfoEntity userInfoEntity = (UserInfoEntity) session
-					.getAttribute(Constant.SESSION_EDITUSER_CONFIRM + key);
+					.getAttribute(Constant.SESSION_ADDUSER_CONFIRM + key);
 			// xóa giá trị userInfo trên sesion
-			session.removeAttribute(Constant.SESSION_EDITUSER_CONFIRM + key);
-
+			session.removeAttribute(Constant.SESSION_ADDUSER_CONFIRM + key);
 			// khởi tạo đối tượng tblUserLogicImpl
 			TblUserLogic tblUserLogicImpl = new TblUserLogicImpl();
-			// kiểm tra tồn tại user
-			if (tblUserLogicImpl.checkExistUserById(userInfoEntity.getUserId())) {
-				// Kiểm tra tồn tại email
-				boolean checkExistEmail = tblUserLogicImpl.checkExistedEmail(userInfoEntity.getEmail(),
-						userInfoEntity.getUserId());
-				if (!checkExistEmail) {
-					// gọi đến hàm updateUser
-					boolean checkEdit = tblUserLogicImpl.editUser(userInfoEntity);
-					// Nếu update thành công
-					if (checkEdit) {
-						// gọi đến URL Success
-						resp.sendRedirect(Constant.URL_SUCCESS + Constant.TYPE_EDIT_SUCCESS);
-					} else {
-						// Chuyển đến màn hình System_Error
-						resp.sendRedirect(Constant.URL_SYSTEMERROR);
-					}
+			// Kiểm tra tồn tại loginName và email
+			boolean checkExistLoginName = tblUserLogicImpl.checkExistedLoginName(userInfoEntity.getLoginName());
+			boolean checkExistEmail = tblUserLogicImpl.checkExistedEmail(userInfoEntity.getEmail(),
+					userInfoEntity.getUserId());
+			// Nếu không tồn tại loginName và email
+			if (!checkExistLoginName && !checkExistEmail) {
+				// gọi đến hàm createUser
+				boolean checkInsert = tblUserLogicImpl.createUser(userInfoEntity);
+				// Nếu thêm thành công
+				if (checkInsert) {
+					// gọi đến URL Success
+					resp.sendRedirect(Constant.URL_SUCCESS + Constant.TYPE_ADD_SUCCESS);
 				} else {
-					// Chuyển đến MH System_Error hiển thị mã lỗi ER015
+					// Chuyển đến màn hình System_Error
 					resp.sendRedirect(Constant.URL_SYSTEMERROR);
 				}
 			} else {
-				// Thông báo lỗi không tồn tại Id
-				resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_NOTEXIST_ID);
+				// Chuyển đến màn hình System_Error
+				resp.sendRedirect(Constant.URL_SYSTEMERROR);
 			}
+
 		} catch (Exception e) {
 			// Hiển thị ở console lỗi
-			System.out.println("Error : EdituserConfirmController.doPost " + e.getMessage());
+			System.out.println("Error : AddUserConfirmController.doPost " + e.getMessage());
 			// Chuyển đến màn hình System_Error
 			resp.sendRedirect(Constant.URL_SYSTEMERROR);
 		}
-
 	}
 }

@@ -195,6 +195,10 @@ public class EditUserInputController extends HttpServlet {
 
 			// Lấy về type từ req
 			type = req.getParameter(Constant.REQUEST_TYPE);
+			// lấy về giá trị listMstGroup
+			listMstGroup = mstGroupLogicImpl.getAllMstGroup();
+			// Lấy về giá trị listMstJapan
+			listMstJapan = mstJapanLogicImpl.getAllMstJapan();
 			// Lấy id từ request
 			int userId = Common.convertStringToInt(req.getParameter(Constant.REQUEST_ID), Constant.USER_ID_DEFAULT);
 			if (type == null) {

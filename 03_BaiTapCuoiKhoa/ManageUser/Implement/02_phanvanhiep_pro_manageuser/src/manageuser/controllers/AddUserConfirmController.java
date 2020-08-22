@@ -40,8 +40,10 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			// khai báo session
 			HttpSession session = req.getSession();
-			// nếu từ màn ADM003 click xác nhận(Sesion confirmAdDM003 khác null)
-			if (session.getAttribute(Constant.SESSION_CONFIRM_ADM003) != null) {
+			// Lấy về keyConfirm từ ADM003 trên session
+			String confirmADM003 = (String) session.getAttribute(Constant.SESSION_CONFIRM_ADM003);
+			// nếu từ màn ADM003 click xác nhận
+			if (Common.compareString(Constant.SESSION_CONFIRM_ADM003, confirmADM003)) {
 				// Xóa session confirmAdDM003
 				session.removeAttribute(Constant.SESSION_CONFIRM_ADM003);
 				// Lấy key từ req
