@@ -30,10 +30,8 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình login
 	 * 
-	 * @param loginName
-	 *            login_name nhập từ màn hình
-	 * @param pass
-	 *            pass nhập từ màn hình
+	 * @param loginName login_name nhập từ màn hình
+	 * @param pass      pass nhập từ màn hình
 	 * @return list lỗi
 	 */
 	public static List<String> validateLogin(String loginName, String pass)
@@ -41,10 +39,10 @@ public class ValidateUser {
 		List<String> lstError = new ArrayList<String>();
 		TblUserLogicImpl userLogic = new TblUserLogicImpl();
 		try {
-			if ("".equals(loginName)) {
+			if (Common.compareString(Constant.DEFAULT_EMPTY, loginName)) {
 				lstError.add(MessageProperties.getValueByKey((Constant.ER001_USERNAME)));
 			}
-			if ("".equals(pass)) {
+			if (Common.compareString(Constant.DEFAULT_EMPTY, pass)) {
 				lstError.add(MessageProperties.getValueByKey((Constant.ER001_PASS)));
 			}
 			if (lstError.size() == 0) {
@@ -64,8 +62,7 @@ public class ValidateUser {
 	/**
 	 * hàm validate các thông tin nhập từ màn hình ADM003
 	 * 
-	 * @param userInfor
-	 *            đối tượng userInfor để validate các thuộc tính
+	 * @param userInfor đối tượng userInfor để validate các thuộc tính
 	 * @return list lỗi
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -77,7 +74,7 @@ public class ValidateUser {
 			// validate loginName
 			if (userInforEntity.getUserId() == 0) {
 				String errorLoginName = validateLoginName(userInforEntity.getLoginName());
-				if (!"".equals(errorLoginName)) {
+				if (!Common.compareString(Constant.DEFAULT_EMPTY, errorLoginName)) {
 					// thêm lỗi vào trong danh sách lỗi
 					listError.add(errorLoginName);
 				}
@@ -85,84 +82,84 @@ public class ValidateUser {
 
 			// validate selecbox group
 			String errorGroup = validateGroup(userInforEntity.getGroupId());
-			if (!"".equals(errorGroup)) {
+			if (!Common.compareString(Constant.DEFAULT_EMPTY, errorGroup)) {
 				listError.add(errorGroup);
 			}
 
 			// validate fullName
 			String errorFullName = validateFullName(userInforEntity.getFullName());
-			if (!"".equals(errorFullName)) {
+			if (!Common.compareString(Constant.DEFAULT_EMPTY, errorFullName)) {
 				listError.add(errorFullName);
 			}
 
 			// Validate fullnameKana
 			// nếu có nhập fullNameKatana
-			if (!"".equals(userInforEntity.getFullNameKatana())) {
+			if (!Common.compareString(Constant.DEFAULT_EMPTY, userInforEntity.getFullNameKatana())) {
 				String errorFullNameKatana = validateFullNameKatana(userInforEntity.getFullNameKatana());
-				if (!"".equals(errorFullNameKatana)) {
+				if (!Common.compareString(Constant.DEFAULT_EMPTY, errorFullNameKatana)) {
 					listError.add(errorFullNameKatana);
 				}
 			}
 
 			// Validate birthday
 			String errorBirthday = validateBirthday(userInforEntity.getBirthday());
-			if (!"".equals(errorBirthday)) {
+			if (!Common.compareString(Constant.DEFAULT_EMPTY, errorBirthday)) {
 				listError.add(errorBirthday);
 			}
 
 			// Validate email
 			String errorEmail = validateEmail(userInforEntity.getEmail(), userInforEntity.getUserId());
-			if (!"".equals(errorEmail)) {
+			if (!Common.compareString(Constant.DEFAULT_EMPTY, errorEmail)) {
 				listError.add(errorEmail);
 			}
 
 			// Validate Tel
 			String errorTel = validateTel(userInforEntity.getTel());
-			if (!"".equals(errorTel)) {
+			if (!Common.compareString(Constant.DEFAULT_EMPTY, errorTel)) {
 				listError.add(errorTel);
 			}
 
 			if (userInforEntity.getUserId() == 0) {
 				// Validate Password
 				String errorPassword = validatePassword(userInforEntity.getPassword());
-				if (!"".equals(errorPassword)) {
+				if (!Common.compareString(Constant.DEFAULT_EMPTY, errorPassword)) {
 					listError.add(errorPassword);
 				}
 
 				// Validate Password Confirm
 				// Nếu password không có lỗi
-				if ("".equals(errorPassword)) {
+				if (Common.compareString(Constant.DEFAULT_EMPTY, errorPassword)) {
 					String errorPassConfirm = validatePassConfirm(userInforEntity.getPassword(),
 							userInforEntity.getPasswordConfirm());
-					if (!"".equals(errorPassConfirm)) {
+					if (!Common.compareString(Constant.DEFAULT_EMPTY, errorPassConfirm)) {
 						listError.add(errorPassConfirm);
 					}
 				}
 			}
 
 			// Nếu có chọn codeLevel
-			if (!"".equals(userInforEntity.getCodeLevel())) {
+			if (!Common.compareString(Constant.DEFAULT_EMPTY, userInforEntity.getCodeLevel())) {
 				// Validate codeLevel
 				String errorCodeLevel = validateCodeLevel(userInforEntity.getCodeLevel());
-				if (!"".equals(errorCodeLevel)) {
+				if (!Common.compareString(Constant.DEFAULT_EMPTY, errorCodeLevel)) {
 					listError.add(errorCodeLevel);
 				}
 
 				// Validate startDate
 				String errorStartDate = validateStartDate(userInforEntity.getStartDate());
-				if (!"".equals(errorStartDate)) {
+				if (!Common.compareString(Constant.DEFAULT_EMPTY, errorStartDate)) {
 					listError.add(errorStartDate);
 				}
 
 				// Validate endDate
 				String errorEndDate = validateEndDate(userInforEntity.getStartDate(), userInforEntity.getEndDate());
-				if (!"".equals(errorEndDate)) {
+				if (!Common.compareString(Constant.DEFAULT_EMPTY, errorEndDate)) {
 					listError.add(errorEndDate);
 				}
 
 				// Validate Total
 				String errorTotal = validateTotal(userInforEntity.getTotal());
-				if (!"".equals(errorTotal)) {
+				if (!Common.compareString(Constant.DEFAULT_EMPTY, errorTotal)) {
 					listError.add(errorTotal);
 				}
 			}
@@ -177,13 +174,12 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục total
 	 * 
-	 * @param total
-	 *            giá trị cần kiểm tra
+	 * @param total giá trị cần kiểm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validateTotal(String total) {
 		// khai báo biến chữ lỗi
-		String errTotal = "";
+		String errTotal = Constant.DEFAULT_EMPTY;
 		// check chưa nhập(Mặc định total bằng 0 nên phải check 0)
 		if (Common.checkEmpty(total)) {
 			errTotal = Constant.ER001_TOTAL;
@@ -200,13 +196,12 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục enđate
 	 * 
-	 * @param endDate
-	 *            giá trị cần kiếm tra
+	 * @param endDate giá trị cần kiếm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validateEndDate(String startDate, String endDate) {
 		// Khởi tạo biến chứa lỗi
-		String errEndDate = "";
+		String errEndDate = Constant.DEFAULT_EMPTY;
 		// Kiểm tra ngày hợp lệ
 		if (!Common.checkDate(endDate)) {
 			errEndDate = Constant.ER011_ENDDATE;
@@ -220,13 +215,12 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục startDate
 	 * 
-	 * @param startDate
-	 *            giá trị cần kiểm tra
+	 * @param startDate giá trị cần kiểm tra
 	 * @return trả về lỗi nếu có
 	 */
 	private static String validateStartDate(String startDate) {
 		// Khởi tạo biến chứa lỗi
-		String errStartDate = "";
+		String errStartDate = Constant.DEFAULT_EMPTY;
 		// Kiểm tra ngày hợp lệ
 		if (!Common.checkDate(startDate)) {
 			errStartDate = Constant.ER011_STARTDATE;
@@ -237,15 +231,13 @@ public class ValidateUser {
 	/**
 	 * Validate pulldown codeLevel
 	 * 
-	 * @param codeLevel
-	 *            giá trị cần kiểm tra
+	 * @param codeLevel giá trị cần kiểm tra
 	 * @return lỗi nếu có
-	 * @throws SQLException,
-	 *             ClassNotFoundException
+	 * @throws SQLException, ClassNotFoundException
 	 */
 	private static String validateCodeLevel(String codeLevel) throws SQLException, ClassNotFoundException {
 		// Khởi tạo biến chứa lỗi
-		String errCodeLevel = "";
+		String errCodeLevel = Constant.DEFAULT_EMPTY;
 		// Khởi tạo đối tượng mstJapanLogicImpl
 		MstJapanLogic mstJapanLogicImpl = new MstJapanLogicImpl();
 		try {
@@ -263,15 +255,13 @@ public class ValidateUser {
 	/**
 	 * Validate passConfirm
 	 * 
-	 * @param pass
-	 *            dùng để check với passConfirm
-	 * @param passwordConfirm
-	 *            chuỗi cần kiểm tra
+	 * @param pass            dùng để check với passConfirm
+	 * @param passwordConfirm chuỗi cần kiểm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validatePassConfirm(String password, String passwordConfirm) {
 		// Khởi tạo biến chứa lỗi
-		String errPassConfirm = "";
+		String errPassConfirm = Constant.DEFAULT_EMPTY;
 		// Kiểm tra passwordConfirm có bằng password không?
 		if (!Common.compareString(password, passwordConfirm)) {
 			errPassConfirm = Constant.ER017_PASSWORD_CONFIRM;
@@ -282,8 +272,7 @@ public class ValidateUser {
 	/**
 	 * Validate hạng mục password
 	 * 
-	 * @param password
-	 *            chuỗi cần validate
+	 * @param password chuỗi cần validate
 	 * @return lỗi nếu có
 	 */
 	private static String validatePassword(String password) {
@@ -305,8 +294,7 @@ public class ValidateUser {
 	/**
 	 * validate hạng mục tel
 	 * 
-	 * @param tel
-	 *            chuỗi cần validate
+	 * @param tel chuỗi cần validate
 	 * @return lỗi nếu có lỗi
 	 */
 	private static String validateTel(String tel) {
@@ -328,17 +316,14 @@ public class ValidateUser {
 	/**
 	 * validate hạng mục email
 	 * 
-	 * @param userId
-	 *            để bổ xung điều kiện check trong trường hợp edit
-	 * @param email
-	 *            email cần kiểm tra
+	 * @param userId để bổ xung điều kiện check trong trường hợp edit
+	 * @param email  email cần kiểm tra
 	 * @return lỗi nếu có
-	 * @throws ClassNotFoundException,
-	 *             SQLException
+	 * @throws ClassNotFoundException, SQLException
 	 */
 	private static String validateEmail(String email, int userId) throws ClassNotFoundException, SQLException {
 		// Khởi tạo biến chứa lỗi
-		String errEmail = "";
+		String errEmail = Constant.DEFAULT_EMPTY;
 		// Khởi tạo đối tượng tblUserLogic
 		TblUserLogic tblUserLogic = new TblUserLogicImpl();
 		try {
@@ -366,13 +351,12 @@ public class ValidateUser {
 	/**
 	 * validate hạng mục birthday
 	 * 
-	 * @param birthday
-	 *            chuỗi cần kiểm tra
+	 * @param birthday chuỗi cần kiểm tra
 	 * @return lỗi nếu có
 	 */
 	private static String validateBirthday(String birthday) {
 		// Khởi tạo biến chứa lỗi
-		String errBirthday = "";
+		String errBirthday = Constant.DEFAULT_EMPTY;
 		// Kiểm tra ngày tháng năm hợp lệ
 		if (!Common.checkDate(birthday)) {
 			errBirthday = Constant.ER011_BIRTHDAY;
@@ -383,15 +367,14 @@ public class ValidateUser {
 	/**
 	 * validate selectbox group
 	 * 
-	 * @param groupId
-	 *            groupId cần kiểm tra
+	 * @param groupId groupId cần kiểm tra
 	 * @return lỗi nếu có
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	private static String validateGroup(int groupId) throws ClassNotFoundException, SQLException {
 		// Khởi tạo biến chứa lỗi
-		String errGroup = "";
+		String errGroup = Constant.DEFAULT_EMPTY;
 		// Khởi tạo đối tượng mstGroupLogicImpl
 		MstGroupLogic mstGroupLogicImpl = new MstGroupLogicImpl();
 		try {
@@ -413,13 +396,12 @@ public class ValidateUser {
 	/**
 	 * Validate trường Fullname Kana
 	 * 
-	 * @param fullNameKatana
-	 *            tên kana cần validate
+	 * @param fullNameKatana tên kana cần validate
 	 * @return lỗi nếu có
 	 */
 	private static String validateFullNameKatana(String fullNameKatana) {
 		// Khởi tạo biến chứa lỗi
-		String errFullNameKatana = "";
+		String errFullNameKatana = Constant.DEFAULT_EMPTY;
 		// Kiểm tra kí tư Kana
 		if (!Common.isKatakana(fullNameKatana)) {
 			errFullNameKatana = Constant.ER009_FULLNAMEKANA;
@@ -433,13 +415,12 @@ public class ValidateUser {
 	/**
 	 * Validate trường fullName
 	 * 
-	 * @param fullName
-	 *            giá trị cần validate
+	 * @param fullName giá trị cần validate
 	 * @return lỗi
 	 */
 	private static String validateFullName(String fullName) {
 		// Khởi tạo biến chữa lỗi
-		String errFullName = "";
+		String errFullName = Constant.DEFAULT_EMPTY;
 		// Kiểm tra rỗng
 		if (Common.checkEmpty(fullName)) {
 			errFullName = Constant.ER001_FULLNAME;
@@ -453,15 +434,14 @@ public class ValidateUser {
 	/**
 	 * validate giá trị của trường loginName
 	 * 
-	 * @param loginName
-	 *            giá trị cần validate
+	 * @param loginName giá trị cần validate
 	 * @return lỗi nếu có
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	private static String validateLoginName(String loginName) throws ClassNotFoundException, SQLException {
 		// Khởi tạo biến chứa lỗi
-		String errLoginName = "";
+		String errLoginName = Constant.DEFAULT_EMPTY;
 		// Khởi tạo đối tượng tblUserLogic
 		TblUserLogic tblUserLogic = new TblUserLogicImpl();
 		// Nếu rỗng thì gán mã lỗi ER001

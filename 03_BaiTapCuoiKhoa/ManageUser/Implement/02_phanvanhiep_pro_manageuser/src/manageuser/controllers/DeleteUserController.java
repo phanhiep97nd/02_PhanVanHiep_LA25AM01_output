@@ -32,10 +32,8 @@ public class DeleteUserController extends HttpServlet {
 	/**
 	 * Xử lý khi click vào button delete ở màn hình ADM005
 	 * 
-	 * @param req
-	 *            request
-	 * @param resp
-	 *            response
+	 * @param req  request
+	 * @param resp response
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,7 +48,7 @@ public class DeleteUserController extends HttpServlet {
 			// Lấy về rule của user
 			int rule = tblUserLogicImpl.getRuleById(userId);
 			// kiểm tra tồn tại user
-			if (rule == 1) {
+			if (rule == Constant.RULE_USER) {
 				// gọi đến hàm deleteUser
 				boolean checkDelete = tblUserLogicImpl.deleteUser(userId);
 				// Nếu delete thành công
@@ -65,7 +63,7 @@ public class DeleteUserController extends HttpServlet {
 			} else if (rule == -1) {
 				// Thông báo lỗi không tồn tại Id
 				resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_DELETE_NOTEXIST);
-			} else if (rule == 0) {
+			} else if (rule == Constant.RULE_ADMIN) {
 				// Thông báo lỗi không thể xóa admin
 				resp.sendRedirect(Constant.URL_SYSTEMERROR + Constant.URL_ERROR_DELETE_ADMIN);
 			}

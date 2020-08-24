@@ -76,9 +76,9 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 	 */
 	@Override
 	public String getNameLevel(String codeLevel) throws ClassNotFoundException, SQLException {
+		// khai báo groupName
+		String nameLevel = "";
 		try {
-			// khai báo groupName
-			String nameLevel = "";
 			// mở kết nối tới cơ sở dữ liệu
 			openConnection();
 			// kiểm tra xem đã kết nối được chưa
@@ -99,8 +99,6 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 					nameLevel = rs.getString("name_level");
 				}
 			}
-			// trả vè namelevel lấy được trong bảng mst_japan
-			return nameLevel;
 		} catch (ClassNotFoundException | SQLException e) {
 			// thông báo lỗi
 			System.out.println("Error: MstJapanDaoImpl.getNameLevel " + e.getMessage());
@@ -109,7 +107,8 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 			// đóng kết nối lại
 			closeConnection();
 		}
-
+		// trả vè namelevel lấy được trong bảng mst_japan
+		return nameLevel;
 	}
 
 }

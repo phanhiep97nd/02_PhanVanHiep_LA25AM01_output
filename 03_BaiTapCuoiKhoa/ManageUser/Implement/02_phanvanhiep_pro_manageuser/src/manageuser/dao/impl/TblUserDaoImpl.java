@@ -28,8 +28,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Lấy ra user trong bảng tbl_user bằng loginName
 	 * 
-	 * @param loginName
-	 *            loginName người dùng nhập vào
+	 * @param loginName loginName người dùng nhập vào
 	 * @return trả về một user tìm được trong DB
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -50,7 +49,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				// Gán giá trị tương ứng vào câu truy vấn
 				int index = 1;
 				pstm.setString(index++, loginName);
-				pstm.setInt(index++, 0);
+				pstm.setInt(index++, Constant.RULE_ADMIN);
 				// Khởi tạo một đối tượng ResultSet để nhận kết quả trả về từ
 				// câu Query
 				ResultSet rs = pstm.executeQuery();
@@ -74,25 +73,17 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	}
 
 	/**
-	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group,
-	 * mst_japan, tbl_detail_user_japan
+	 * lấy các thông tin chi tiết của user từ bảng tbl_user, mst_group, mst_japan,
+	 * tbl_detail_user_japan
 	 * 
-	 * @param offset
-	 *            vị trí bắt đầu lấy
-	 * @param limit
-	 *            số bản ghi tối đa trên 1 page
-	 * @param groupId
-	 *            là id của nhóm được chọn trong pulldown
-	 * @param fullName
-	 *            là fullname tìm kiếm nhập vào từ textbox
-	 * @param sortType
-	 *            là loại sắp xếp theo fullName, codeLevel hay endDate
-	 * @param sortByFullName
-	 *            giá trị sắp xếp (ASC/DESC) cột fullName
-	 * @param sortByCodeLevel
-	 *            giá trị sắp xếp (ASC/DESC) cột codelevel
-	 * @param sortByEndDate
-	 *            giá trị sắp xếp (ASC/DESC) cột endDate
+	 * @param offset          vị trí bắt đầu lấy
+	 * @param limit           số bản ghi tối đa trên 1 page
+	 * @param groupId         là id của nhóm được chọn trong pulldown
+	 * @param fullName        là fullname tìm kiếm nhập vào từ textbox
+	 * @param sortType        là loại sắp xếp theo fullName, codeLevel hay endDate
+	 * @param sortByFullName  giá trị sắp xếp (ASC/DESC) cột fullName
+	 * @param sortByCodeLevel giá trị sắp xếp (ASC/DESC) cột codelevel
+	 * @param sortByEndDate   giá trị sắp xếp (ASC/DESC) cột endDate
 	 * @return trả về 1 list danh sách các UserInfo
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -258,10 +249,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Đếm tổng số bảng ghi mà kết quả tìm được
 	 * 
-	 * @param groupId
-	 *            là nhóm được chọn trong selectbox
-	 * @param fullName
-	 *            là tên tìm kiếm được nhập từ textbox
+	 * @param groupId  là nhóm được chọn trong selectbox
+	 * @param fullName là tên tìm kiếm được nhập từ textbox
 	 * @return trả về số bản ghi tìm được theo điều kiện tìm kiếm
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -325,7 +314,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					countUser = rs.getInt(1);
 				}
 			}
-			return countUser;
 		} catch (ClassNotFoundException | SQLException e) {
 			// Thông báo lỗi ở màn hình console
 			System.out.println("Error: TblUserDaoImpl.getTotalUsers " + e.getMessage());
@@ -335,13 +323,13 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			// đóng kết nối
 			closeConnection();
 		}
+		return countUser;
 	}
 
 	/**
 	 * Lấy ra đối tượng user từ loginName
 	 * 
-	 * @param loginName
-	 *            loginName dùng để tìm kiếm
+	 * @param loginName loginName dùng để tìm kiếm
 	 * @return đối tượng tblUserEntity
 	 */
 	@Override
@@ -383,17 +371,15 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Lấy ra đối tượng user từ email
 	 * 
-	 * @param emai
-	 *            dùng để tìm kiếm user trong db
-	 * @param userId
-	 *            để thêm điều kiện select dùng cho trường hợp edit
+	 * @param emai   dùng để tìm kiếm user trong db
+	 * @param userId để thêm điều kiện select dùng cho trường hợp edit
 	 * @return đối tượng tblUserEntity
 	 */
 	@Override
 	public TblUserEntity getUserByEmail(String email, int userId) throws SQLException, ClassNotFoundException {
+		// Khởi taho một đối tượng TblUserEntity
+		TblUserEntity tblUserEntity = new TblUserEntity();
 		try {
-			// Khởi taho một đối tượng TblUserEntity
-			TblUserEntity tblUserEntity = new TblUserEntity();
 			// Mở kết nối DB
 			openConnection();
 			// nếu kết nối với DB thành công
@@ -422,8 +408,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					tblUserEntity.setLoginName(rs.getString("login_name"));
 				}
 			}
-			// trả về đối tượng tblUserEntity
-			return tblUserEntity;
 		} catch (SQLException | ClassNotFoundException e) {
 			// Thông báo lỗi ở màn hình consolei
 			System.out.println("Error : TblUserDaoImpl.getUserByEmail " + e.getMessage());
@@ -432,23 +416,23 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		} finally {
 			// đóng kết nối db
 			closeConnection();
-
 		}
+		// trả về đối tượng tblUserEntity
+		return tblUserEntity;
 	}
 
 	/**
 	 * ghi các thược tính của các đối tượng tblUserEntity vào DB
 	 * 
-	 * @param tblUserEntity
-	 *            giá trị cần ghi vào DB
+	 * @param tblUserEntity giá trị cần ghi vào DB
 	 * @return userId
 	 * @throws SQLException
 	 */
 	@Override
 	public int insertUser(TblUserEntity tblUserEntity) throws SQLException {
+		// userId trả về
+		int userId = 0;
 		try {
-			// userId trả về
-			int userId = 0;
 			if (conn != null) {
 				// tạo câu truy vấn
 				StringBuilder sql = new StringBuilder(
@@ -483,22 +467,20 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					userId = rs.getInt(1);
 				}
 			}
-			// trả về userid
-			return userId;
 		} catch (SQLException e) {
 			// thông báo lỗi ở màn hình console
 			System.out.println("Error : TblUserDaoImpl.insertUser " + e.getMessage());
 			// throw lỗi
 			throw e;
-
 		}
+		// trả về userid
+		return userId;
 	}
 
 	/**
 	 * Lấy ra đối tượng userInfo từ userId
 	 * 
-	 * @param userId
-	 *            để lấy ra đối tượng userInfo trong DB từ userId
+	 * @param userId để lấy ra đối tượng userInfo trong DB từ userId
 	 * @return đối tượng UserInfoEntity lấy được
 	 */
 	@Override
@@ -570,8 +552,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					userInfoEntity.setTotal(rs.getString("total"));
 				}
 			}
-			// trả về đối tượng userInfoEntity
-			return userInfoEntity;
 		} catch (ClassNotFoundException | SQLException e) {
 			// Thông báo lỗi ở màn hình console
 			System.out.println("Error: TblUserDaoImpl.getUserInfoByUserId " + e.getMessage());
@@ -581,14 +561,14 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			// đóng kết nối
 			closeConnection();
 		}
-
+		// trả về đối tượng userInfoEntity
+		return userInfoEntity;
 	}
 
 	/**
 	 * Lấy ra đối tượng user từ userId
 	 * 
-	 * @param userId
-	 *            userId dùng để tìm kiếm
+	 * @param userId userId dùng để tìm kiếm
 	 * @return đối tượng tblUserEntity tìm được
 	 */
 	@Override
@@ -630,8 +610,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Thực hiện update các trường trong bảng tbl_user
 	 * 
-	 * @param tblUserEntity
-	 *            dùng để lấy ra các giá trị cần update
+	 * @param tblUserEntity dùng để lấy ra các giá trị cần update
 	 * @return trả về true nếu update thành công
 	 * @throws SQLException
 	 */
@@ -675,8 +654,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Thực hiện xóa scasc giá trị ở bảng tbl_user
 	 * 
-	 * @param userId
-	 *            id tương ứng với đối towjng cần xóa
+	 * @param userId id tương ứng với đối towjng cần xóa
 	 * @return trả về true nếu xóa thành công và ngược lại
 	 * @throws SQLException
 	 */
@@ -712,11 +690,10 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/**
 	 * Lấy ra Rule tương ứng với Id truyền vào
 	 * 
-	 * @param userId
-	 *            userId cần kiểm tra
+	 * @param userId userId cần kiểm tra
 	 * @return trả về Rule tìm được
-	 * @throws SQLException, NullPointerException 
-	 * @throws ClassNotFoundException 
+	 * @throws SQLException,          NullPointerException
+	 * @throws ClassNotFoundException
 	 */
 	@Override
 	public int getRuleById(int userId) throws SQLException, NullPointerException, ClassNotFoundException {

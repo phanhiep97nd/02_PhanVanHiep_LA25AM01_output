@@ -19,7 +19,7 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Controller xử lí hiển thị thông tin để confirm edit
+ * Controller xử lí hiển thị thông tin để confirm edit và thực hiện edit user
  * 
  * @author Phan Van Hiep
  */

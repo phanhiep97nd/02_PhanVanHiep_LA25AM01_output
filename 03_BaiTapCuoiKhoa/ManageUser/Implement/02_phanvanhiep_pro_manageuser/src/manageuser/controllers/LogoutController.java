@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import manageuser.utils.Constant;
 
 /**
- * Controller để xử lý Logout
+ * Controller để xử lý  khi người dùng click lickLogout
  * 
  * @author Phan Van Hiep
  */
